@@ -1,0 +1,39 @@
+<div class="container text-center">
+    <div class="row align-self-center">
+        <p>Recuperar Contraseña</p>
+    </div>
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+<div class="container text-center">
+    <div class="row">
+        <div class="col align-self-center">
+            <div>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="email" pInputText placeholder="Username" formControlName="email" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2 ">
+    
+    <small *ngIf="!this.loginValidation.email.isValid() && this.loginValidation.email.valor!=''" id="username2-help" class="p-error block">
+        {{this.loginValidation.email.error}}
+    </small>
+   
+</div>
+
+<div class="container mt-3 text-center mb-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="field-radiobutton ">
+                <button [disabled]="!loginForm.valid" pButton style="width: 90%;" type="submit"
+                    label="Enviar"></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</form>
