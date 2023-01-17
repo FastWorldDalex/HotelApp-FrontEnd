@@ -1,1 +1,46 @@
-<p>sidebar works!</p>
+<p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="10000" styleClass="p-sidebar-sm">
+    <div class="user-info fs-3">
+        <p-image src="../assets/img/Nueva carpeta/user.jpg" class="user-pic" width="50px" height="50px"></p-image>
+        <div class="list-group my-3">
+            <a href="#" class="list-group-item list-group-item-action bg-transparent">Jonh Doe</a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent fs-3">jonhdoe@gmail.com</a>
+        </div>
+    </div>
+    <div class="text-left fs-4 ">Módulos</div>
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text">
+            <i class="pi pi-calendar m-2"></i>Disponibilidad</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text">
+            <i class="pi pi-users m-2"></i>Clientes</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text">
+            <i class="pi pi-tags m-2"></i>Habitaciones</a>
+    </div>
+</p-sidebar>
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+
+    <p-button type="button" (click)="visibleSidebar = true" icon="pi pi-bars"></p-button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p-image src="" class="user-pic"></p-image>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <div class="user-info fs-3">
+                            <p-image src="../assets/img/Nueva carpeta/user.jpg" class="user-pic" width="50px" height="50px"></p-image>
+                            <div class="list-group my-3">
+                                <a href="#" class="list-group-item list-group-item-action bg-transparent">Jonh Doe</a>
+                                <a href="#" class="list-group-item list-group-item-action bg-transparent fs-3">jonhdoe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><i class="pi pi-key m-2"></i>Cambiar contraseña</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="pi pi-sign-out m-2"></i>Cerrar Sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

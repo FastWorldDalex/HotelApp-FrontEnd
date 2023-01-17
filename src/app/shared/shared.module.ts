@@ -5,6 +5,11 @@ import {PasswordModule} from 'primeng/password';
 import {InputTextModule} from 'primeng/inputtext';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {ButtonModule} from 'primeng/button';
+
+import { SidebarModule } from "primeng/sidebar";
+import {ImageModule} from 'primeng/image';
+import {DropdownModule} from 'primeng/dropdown';
+
 import { FormsModule } from '@angular/forms';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import { RouterModule } from '@angular/router';
@@ -23,6 +28,11 @@ import { FooterComponent } from './components/footer/footer.component';
     FieldsetModule,
     RadioButtonModule,
     ButtonModule,
+
+    SidebarModule,
+    ImageModule,
+    DropdownModule,
+
     FormsModule,
     TriStateCheckboxModule,
     RouterModule
@@ -35,6 +45,11 @@ import { FooterComponent } from './components/footer/footer.component';
     FieldsetModule,
     RadioButtonModule,
     ButtonModule,
+
+    SidebarModule,
+    ImageModule,
+    DropdownModule,
+    
     FormsModule,
     TriStateCheckboxModule,
     RouterModule
