@@ -11,6 +11,8 @@ import {AvatarModule} from 'primeng/avatar';
 import {TreeModule} from 'primeng/tree';
 import { HttpClientModule } from '@angular/common/http';
 import {MenubarModule} from 'primeng/menubar';
+import {SplitButtonModule} from 'primeng/splitbutton';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -26,7 +28,8 @@ import {MenubarModule} from 'primeng/menubar';
     AvatarModule,
     HttpClientModule,
     TreeModule,
-    MenubarModule
+    MenubarModule,
+    SplitButtonModule
   ],
   exports:[
     HeaderComponent

@@ -4,8 +4,8 @@
         {
             "label": "Disponibilidad",
             "data": "Documents Folder",
-            "expandedIcon": "pi pi-folder-open",
-            "collapsedIcon": "pi pi-folder",
+            "expandedIcon": "pi pi-calendar-minus",
+            "collapsedIcon": "pi pi-calendar-plus",
             "children": [{
                     "label": "Disponibles",
                     "data": "Work Folder",
@@ -24,8 +24,8 @@
         {
             "label": "Clientes",
             "data": "Pictures Folder",
-            "expandedIcon": "pi pi-folder-open",
-            "collapsedIcon": "pi pi-folder",
+            "expandedIcon": "pi pi-user-minus",
+            "collapsedIcon": "pi pi-user-plus",
             "children": [{
                 "label": "Habituales",
                 "data": "Work Folder",
@@ -44,8 +44,8 @@
         {
             "label": "Habitaciones",
             "data": "Movies Folder",
-            "expandedIcon": "pi pi-folder-open",
-            "collapsedIcon": "pi pi-folder",
+            "expandedIcon": "pi pi-tag",
+            "collapsedIcon": "pi pi-tags",
             "children": [{
                 "label": "Matrimonial",
                 "data": "Work Folder",

@@ -1,5 +1,7 @@
-
-<p-button type="button" (click)="visibleSidebar = true" icon="pi pi-bars"></p-button>
+<!--
+<p-button type="button" (click)="visibleSidebar = true" icon="pi pi-bars" class="p-button-text"></p-button>
+--> 
+<button pButton type="button" (click)="visibleSidebar = true" icon="pi pi-bars" class="p-button-text"></button>
 
 <p-sidebar [(visible)]="visibleSidebar"   styleClass="p-sidebar-sm ">
 
@@ -21,7 +23,7 @@
     <br>
     <div class="text-left">
         <div class="row d-flex justify-content-md-center align-items-center">
-        <p class="text-start text-light" >Módulos</p>
+        <p class="text-start text-light">Módulos</p>
         <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedFile"
     (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
         </div>

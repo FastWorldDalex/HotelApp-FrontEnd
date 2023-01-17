@@ -1,35 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-user-sidebar',
   templateUrl: './user-sidebar.component.html',
   styleUrls: ['./user-sidebar.component.scss']
 })
-export class UserSidebarComponent {
+export class UserSidebarComponent implements OnInit{
   items: MenuItem[] = [];
-  constructor(
+  user: user ={
+        name: "John Doe",
+        role: "ADMINISTRADOR",
+        img: "../assets/img//users/user-1png.png"
+  };
 
-  ){
-    this.items = [
+  constructor(){
+
+
+    /*this.items = [
 
         {
             label:'Jhon Doe',
             icon:'pi pi-fw pi-user',
             items:[
                 {
-                    label:'New',
+                    label:'',
                     icon:'pi pi-fw pi-user-plus',
   
                 },
                 {
-                    label:'Delete',
-                    icon:'pi pi-fw pi-user-minus',
+                    label:'Nueva Contraseña',
+                    icon:'pi pi-fw pi-key',
   
                 },
                 {
-                    label:'Search',
-                    icon:'pi pi-fw pi-users',
+                    label:'Cerrar Sesión',
+                    icon:'pi pi-fw pi-sign-out',
                     items:[
                     {
                         label:'Filter',
@@ -49,9 +55,18 @@ export class UserSidebarComponent {
                 }
             ]
         }
+    ];*/
+  }
+  ngOnInit(){
+    this.items = [
+        {label: 'Cambiar Contraseña', icon: 'pi pi-key', routerLink: ['/auth/login/recover']},
+        {label: 'Cerrar Sesión', icon: 'pi pi-sign-out', routerLink: ['/auth/login']}
     ];
   }
-  OnInit(){
+}
 
-  }
+export interface user{
+    name: String;
+    role: String;
+    img: String;
 }
