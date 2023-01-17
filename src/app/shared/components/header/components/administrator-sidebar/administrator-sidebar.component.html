@@ -1,0 +1,43 @@
+
+<p-button type="button" (click)="visibleSidebar = true" icon="pi pi-bars"></p-button>
+
+<p-sidebar [(visible)]="visibleSidebar"   styleClass="p-sidebar-sm ">
+
+    <div class="text-center">
+        <p-image src="../assets/img/img-palmeras/sidebar-logo.png" alt="Image" width="250"></p-image>
+    </div>
+<br>
+    <div class="text-center">
+        <p-avatar image="../assets/img//users/user-1png.png" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+
+        <div class="row d-flex justify-content-md-center align-items-center">
+
+            <div class="col-sm-12 ">
+                <p class="text-center text-light" >Jhon Doe</p>
+                <p class="text-center text-white-50 ">ADMINISTRADOR</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="text-left">
+        <div class="row d-flex justify-content-md-center align-items-center">
+        <p class="text-start text-light" >Módulos</p>
+        <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedFile"
+    (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+        </div>
+    </div>
+</p-sidebar>
+
+
+
+
+
+<!--<div class="user-info fs-3">
+        <p-image src="../assets/img/Nueva carpeta/user.jpg" class="user-pic" width="50px" height="50px"></p-image>
+        <div class="list-group my-3">
+            <a href="#" class="list-group-item list-group-item-action bg-transparent">Jonh Doe</a>
+            <a href="#" class="list-group-item list-group-item-action bg-transparent fs-3">jonhdoe@gmail.com</a>
+        </div>
+    </div>
+    <div class="text-left fs-4 ">Módulos</div>
+--> 

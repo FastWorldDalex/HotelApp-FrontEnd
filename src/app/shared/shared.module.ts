@@ -13,22 +13,20 @@ import {DropdownModule} from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/header/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderModule } from './components/header/header.module';
+import { NodeService } from './services/node.service';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent
+    FooterComponent
   ],
   imports: [
     CommonModule,
     FieldsetModule,
     RadioButtonModule,
     ButtonModule,
-
+    HeaderModule,
     SidebarModule,
     ImageModule,
     DropdownModule,
@@ -38,21 +36,18 @@ import { FooterComponent } from './components/footer/footer.component';
     RouterModule
   ],
   exports:[
-    HeaderComponent,
+    HeaderModule,
     FooterComponent,
     PasswordModule,
     InputTextModule,
     FieldsetModule,
     RadioButtonModule,
     ButtonModule,
-
-    SidebarModule,
-    ImageModule,
-    DropdownModule,
     
     FormsModule,
     TriStateCheckboxModule,
     RouterModule
-  ]
+  ],
+  providers: [NodeService]
 })
 export class SharedModule { }

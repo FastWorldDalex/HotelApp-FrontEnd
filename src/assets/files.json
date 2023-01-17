@@ -1,0 +1,65 @@
+{
+    "data": 
+    [
+        {
+            "label": "Disponibilidad",
+            "data": "Documents Folder",
+            "expandedIcon": "pi pi-folder-open",
+            "collapsedIcon": "pi pi-folder",
+            "children": [{
+                    "label": "Disponibles",
+                    "data": "Work Folder",
+                    "expandedIcon": "pi pi-folder-open",
+                    "collapsedIcon": "pi pi-folder",
+                    "children": []
+                },
+                {
+                    "label": "Reservados",
+                    "data": "Home Folder",
+                    "expandedIcon": "pi pi-folder-open",
+                    "collapsedIcon": "pi pi-folder",
+                    "children": []
+                }]
+        },
+        {
+            "label": "Clientes",
+            "data": "Pictures Folder",
+            "expandedIcon": "pi pi-folder-open",
+            "collapsedIcon": "pi pi-folder",
+            "children": [{
+                "label": "Habituales",
+                "data": "Work Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            },
+            {
+                "label": "Nuevos",
+                "data": "Home Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            }]
+        },
+        {
+            "label": "Habitaciones",
+            "data": "Movies Folder",
+            "expandedIcon": "pi pi-folder-open",
+            "collapsedIcon": "pi pi-folder",
+            "children": [{
+                "label": "Matrimonial",
+                "data": "Work Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            },
+            {
+                "label": "Presidencial",
+                "data": "Home Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            }]
+        }
+    ]
+}
