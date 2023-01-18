@@ -19,4 +19,14 @@ export class NodeService {
         .toPromise()
         .then(res => <MenuItem[]>res.data);
       }
+
+      getEvents() {
+        return this.http
+            .get<any>('assets/calendarEvent.json')
+            .toPromise()
+            .then((res) => <any[]>res.data)
+            .then((data) => {
+                return data;
+            });
+    }
 }

@@ -4,6 +4,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { HomeComponent } from './pages/home.component';
 import { CalendarComponent } from './pages/components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 
@@ -15,7 +16,8 @@ import { CalendarComponent } from './pages/components/calendar/calendar.componen
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ]
 })
 export class HomeModule { }

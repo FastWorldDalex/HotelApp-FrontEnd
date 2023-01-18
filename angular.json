@@ -29,10 +29,13 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [    
+            "styles": [
               "node_modules/primeicons/primeicons.css",
-            "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-            "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/@fullcalendar/core/main.min.css",
+              "node_modules/@fullcalendar/daygrid/main.min.css",
+              "node_modules/@fullcalendar/timegrid/main.min.css",
               "src/styles.scss"
             ],
             "scripts": [
