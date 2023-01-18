@@ -1,7 +1,4 @@
-<!--
-<p-menubar [model]="items">
---> 
-<p-splitButton label="Info" [model]="this.items" styleClass="p-button-text p-button-info mr-2 mb-2">
+<p-splitButton label="Info" [model]="this.items" styleClass="p-button-text p-button-info">
     <ng-template pTemplate="content">
         <img alt="logo" src="{{user.img}}" style="width: 2.5rem; margin-right: 0.5rem;" />
         <span class="ml-2 flex align-items-center font-bold">{{user.name}}</span>

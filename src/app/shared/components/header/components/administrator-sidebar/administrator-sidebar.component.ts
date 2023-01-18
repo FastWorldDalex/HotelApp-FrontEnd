@@ -22,8 +22,8 @@ export class AdministratorSidebarComponent{
       this.primengConfig.ripple = true;
     }
     nodeSelect(event:any) {
-     
-  }
+      event.node.style.backgroundColor = 'red';       
+    }
   
   nodeUnselect(event:any) {
   }

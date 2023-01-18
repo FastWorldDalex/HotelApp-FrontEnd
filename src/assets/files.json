@@ -10,14 +10,14 @@
                     "label": "Disponibles",
                     "data": "Work Folder",
                     "expandedIcon": "pi pi-folder-open",
-                    "collapsedIcon": "pi pi-folder",
+                    "collapsedIcon": "pi pi-calendar",
                     "children": []
                 },
                 {
                     "label": "Reservados",
                     "data": "Home Folder",
                     "expandedIcon": "pi pi-folder-open",
-                    "collapsedIcon": "pi pi-folder",
+                    "collapsedIcon": "pi pi-calendar-times",
                     "children": []
                 }]
         },
@@ -30,14 +30,14 @@
                 "label": "Habituales",
                 "data": "Work Folder",
                 "expandedIcon": "pi pi-folder-open",
-                "collapsedIcon": "pi pi-folder",
+                "collapsedIcon": "pi pi-user",
                 "children": []
             },
             {
                 "label": "Nuevos",
                 "data": "Home Folder",
                 "expandedIcon": "pi pi-folder-open",
-                "collapsedIcon": "pi pi-folder",
+                "collapsedIcon": "pi pi-user-edit",
                 "children": []
             }]
         },
