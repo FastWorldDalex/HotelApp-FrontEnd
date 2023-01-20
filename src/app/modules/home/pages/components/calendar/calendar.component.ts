@@ -65,11 +65,22 @@ export class CalendarComponent implements OnInit {
                 textColor: 'white' // an option!
               }
             ],
-            eventContent: function(info ) {
+            eventContent: function(info) {
               return {html: '<div class="event-content">' + info.event.title + '</div>'};
             },
           //eventShortHeight: 60,
           //slotEventOverlap: true,
+          slotLabelContent : function(slot){
+            var rooms = ["H101","H102","H104","H105","H106","H107", "H108","H109",
+              "H110","H111","H112","H113","H114","H115","H116","H117","H118","H119",
+              "H120","H121","H122","","",""];
+            if(slot.date.getMinutes() == 0){
+              var room_title = rooms[slot.date.getHours()];
+            }else{
+              var room_title = "Habitación Básica";
+            }
+            return {html: room_title};
+          },
           slotDuration: '00:15:00',
           nowIndicator: true,
           allDaySlot: false,
