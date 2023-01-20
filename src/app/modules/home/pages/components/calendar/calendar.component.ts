@@ -74,13 +74,19 @@ export class CalendarComponent implements OnInit {
             var rooms = ["H101","H102","H104","H105","H106","H107", "H108","H109",
               "H110","H111","H112","H113","H114","H115","H116","H117","H118","H119",
               "H120","H121","H122","","",""];
+            var room_title = "";
             if(slot.date.getMinutes() == 0){
-              var room_title = rooms[slot.date.getHours()];
+              room_title = '<b>'+rooms[slot.date.getHours()]+'<b>';
+            }else if(slot.date.getMinutes() == 15){
+              room_title = "Habitación Básica";
+            }else if(slot.date.getMinutes() == 30){
+              room_title = "2 camas simples";
             }else{
-              var room_title = "Habitación Básica";
+              room_title = "1er piso";
             }
-            return {html: room_title};
+            return {html: '<span style="font-size:11px">'+room_title+'</span>'};
           },
+          slotLabelInterval:"00:15",
           slotDuration: '00:15:00',
           nowIndicator: true,
           allDaySlot: false,

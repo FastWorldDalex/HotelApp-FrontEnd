@@ -44,3 +44,18 @@
   font-size: 12px;
   font-weight: 500;
 }
+::ng-deep .fc-direction-ltr .fc-timegrid-slot-label-frame{
+  text-align: left;
+}
+
+::ng-deep .fc .fc-timegrid-slot-label{
+  background: #eff1f3;
+  color: #CCCCCC;
+}
+::ng-deep tr:nth-child(4n) > td:nth-child(1){
+  border-bottom: 2px solid #000000 !important;
+}
+::ng-deep .fc .fc-col-header-cell-cushion{
+  text-decoration: none !important;
+  text-transform: capitalize !important;
+}
