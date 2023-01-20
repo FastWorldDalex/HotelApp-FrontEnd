@@ -19,3 +19,28 @@
 ::ng-deep .fc .fc-toolbar-title:first-letter {
   text-transform: capitalize!important;
 }
+
+::ng-deep .fc-timegrid-axis-frame{
+  height: 3px;
+}
+
+::ng-deep .fc-timegrid-axis:after {
+  content: 'Hab';
+}
+
+::ng-deep .fc-timegrid-event .fc-event-time{
+  display: none;
+}
+
+::ng-deep .fc-v-event .fc-event-title-container{
+  padding: 5px;
+}
+::ng-deep .event-content{
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 11px;
+}
+::ng-deep .event-content span{
+  font-size: 12px;
+  font-weight: 500;
+}
