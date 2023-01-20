@@ -1,3 +1,6 @@
+.main-content{
+  padding-top: 100px;
+}
 ::ng-deep h3{
     margin-top: 1rem;
     color: #6C757D;
@@ -6,9 +9,13 @@
 ::ng-deep p{
 
     color: #6C757D;
-    
+
 }
 ::ng-deep .content{
     margin-left: 1rem;
     margin-bottom: 2rem;
+}
+
+::ng-deep .fc .fc-toolbar-title:first-letter {
+  text-transform: capitalize!important;
 }
