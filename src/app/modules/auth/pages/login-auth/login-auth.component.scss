@@ -12,11 +12,11 @@
 .container-fluid .login {
     background-color: rgb(255, 255, 255);
     width: 435px;
-    border-radius: 2%;
 }
 .container-fluid .login .row img {
-    width: 70%;
+    width: 60%;
     justify-content: center;
+    
 }
 .container-fluid .login .row p{
     font-size: 30px;
@@ -26,5 +26,6 @@
   }
   .container-fluid .login form .sesion-full-width {
     width: 100%;
+    
   }
 }
