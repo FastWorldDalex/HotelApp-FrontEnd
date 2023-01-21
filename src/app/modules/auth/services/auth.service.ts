@@ -31,6 +31,7 @@ export class AuthService {
     data: {
 
       username: string;
+      password: string;
     }
   ): Observable<{
     error: boolean;
@@ -40,46 +41,92 @@ export class AuthService {
     const response = {
       error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
     };
-    const httpOptions = {
-      headers: new HttpHeaders({
-          'Postman-Token': '<calculated when request is sent>',
-          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-          'Content-Length': '<calculated when request is sent>',
-          'Host': '<calculated when request is sent>'
-          //Authorization: 'my-auth-token'
 
-      })
-  };
-    return this.http.post<{error:boolean, msg: string, data:any}>('http://137.184.29.255/auth/token', data,httpOptions)
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data)
       .pipe(
         map( r => {
-          console.log("Recibo", r);
           response.msg = r.msg;
           response.error = r.error;
           response.data = r.data;
           this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
-         
-          
           if(!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
           }
           return response;
         }),
         catchError(e => {
-          console.log("RECIBO ERR", e);
-          this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
           response.msg = e
           return of(response)
         })
       );
   }
 
- 
-  login2(user:any):Observable<any>{
-    return this.http.post<any>('/auth/token',user)
+  recoveryUser(
+    data: {
+      username: string;
+    }
+  ): Observable<{
+    error: boolean;
+    msg: string;
+    data: any
+  }> {
+    const response = {
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
+    };
+
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.RECOVERY, data)
+      .pipe(
+        map( r => {
+          response.msg = r.msg;
+          response.error = r.error;
+          response.data = r.data;
+          this.currentUser.next(r.data);
+          if(!response.error){
+            this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
+          }
+          return response;
+        }),
+        catchError(e => {
+          response.msg = e
+          return of(response)
+        })
+      );
   }
-  
+
+  changePassword(
+    data: {
+      username: string;
+      password: string;
+      token: string;
+    }
+  ): Observable<{
+    error: boolean;
+    msg: string;
+    data: any
+  }> {
+    const response = {
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
+    };
+
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.CHANGE_PASSWORD, data)
+      .pipe(
+        map( r => {
+          response.msg = r.msg;
+          response.error = r.error;
+          response.data = r.data;
+          this.currentUser.next(r.data);
+          if(!response.error){
+            this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
+          }
+          return response;
+        }),
+        catchError(e => {
+          response.msg = e
+          return of(response)
+        })
+      );
+  }
 
   logOut(){
     localStorage.removeItem(this.nameUserSS);
