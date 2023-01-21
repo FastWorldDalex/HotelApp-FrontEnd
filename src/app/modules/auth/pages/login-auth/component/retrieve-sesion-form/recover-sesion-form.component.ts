@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CONST_LOGIN_PAGE } from 'src/app/data/constants';
+import { user } from '../../../../../../shared/components/header/components/user-sidebar/user-sidebar.component';
 
 @Component({
   selector: 'app-recover-sesion-form',
@@ -28,14 +29,14 @@ export class RecoverSesionFormComponent {
   }
 
   authenticate() {
-    this.loginValidation.email.valor = this.loginForm.get('email')?.value;
+    this.loginValidation.username.valor = this.loginForm.get('email')?.value;
 
     if(!this.loginForm.valid){
-      if(!this.loginValidation.email.isValid()){
-      console.log("valid email",this.loginValidation.email.isValid());
-      console.log("error",this.loginValidation.email.error);
+      if(!this.loginValidation.username.isValid()){
+      console.log("valid email",this.loginValidation.username.isValid());
+      console.log("error",this.loginValidation.username.error);
     }}else{
-      console.log("Correo Enviado", this.loginValidation.email.valor);
+      console.log("Correo Enviado", this.loginValidation.username.valor);
       this.router.navigateByUrl('/login');
     }
   }

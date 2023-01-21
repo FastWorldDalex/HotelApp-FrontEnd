@@ -17,6 +17,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderModule } from './components/header/header.module';
 import { NodeService } from './services/node.service';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     FooterComponent
@@ -30,7 +32,7 @@ import { NodeService } from './services/node.service';
     SidebarModule,
     ImageModule,
     DropdownModule,
-
+    HttpClientModule,
     FormsModule,
     TriStateCheckboxModule,
     RouterModule

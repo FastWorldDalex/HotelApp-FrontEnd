@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { SesionFormComponent } from './pages/login-auth/component/sesion-form/sesion-form.component';
 import { RecoverSesionFormComponent } from './pages/login-auth/component/retrieve-sesion-form/recover-sesion-form.component';
 import { RouterModule } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     LoginAuthComponent,
@@ -16,11 +17,16 @@ import { RouterModule } from '@angular/router';
     RecoverSesionFormComponent
   ],
   imports: [
+    HttpClientModule,
+    FormsModule,
     CommonModule,
     ReactiveFormsModule,
     AuthRoutingModule,
     SharedModule,
     RouterModule
+  ],
+  providers: [
+    AuthService
   ]
 })
 export class AuthModule { }
