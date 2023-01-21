@@ -39,7 +39,7 @@ export class AuthService {
     };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data'
+        'Accept': '*/*',
       })
     };
     return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data,httpOptions)
@@ -51,7 +51,7 @@ export class AuthService {
           this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           console.log("ERROR", r);
-          
+
           if(!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
           }
