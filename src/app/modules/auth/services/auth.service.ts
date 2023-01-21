@@ -37,8 +37,12 @@ export class AuthService {
     const response = {
       error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
     };
-var headers = new Headers();
-    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    };
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data,httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;

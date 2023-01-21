@@ -45,7 +45,9 @@ export class SesionFormComponent implements OnInit {
       console.log("error",this.loginValidation.password.error);
     }}else{
       console.log("Inicio de SESION", this.loginValidation.username.valor);
-      let form:FormData = new FormData(this.loginForm.value);
+      let form:FormData = new FormData();
+      form.append('username',this.loginValidation.username.valor)
+      form.append('password',this.loginValidation.password.valor)
       this.authService.login(form).subscribe(r=>{
 
         console.log("DATA",r);
