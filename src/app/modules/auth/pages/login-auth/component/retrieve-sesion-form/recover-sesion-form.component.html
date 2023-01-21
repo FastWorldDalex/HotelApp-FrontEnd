@@ -1,6 +1,6 @@
 <div class="container text-center">
     <div class="row align-self-center">
-        <p>Recuperar Contraseña</p>
+        <p>Recuperar contraseña</p>
     </div>
 </div>
 <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
@@ -17,10 +17,10 @@
     </div>
 </div>
 
-<div class="container mt-2 ">
+<div class="container mt-3">
     
-    <small *ngIf="!this.loginValidation.email.isValid() && this.loginValidation.email.valor!=''" id="username2-help" class="p-error block">
-        {{this.loginValidation.email.error}}
+    <small *ngIf="!this.loginValidation.username.isValid() && this.loginValidation.username.valor!=''" id="username2-help" class="p-error block">
+        {{this.loginValidation.username.error}}
     </small>
    
 </div>
@@ -28,8 +28,8 @@
 <div class="container mt-3 text-center mb-2">
     <div class="row">
         <div class="col-sm-12">
-            <div class="field-radiobutton ">
-                <button [disabled]="!loginForm.valid" pButton style="width: 90%;" type="submit"
+            <div class="field-radiobutton">
+                <button [disabled]="!loginForm.valid" pButton style="width: 100%;" type="submit"
                     label="Enviar"></button>
             </div>
         </div>

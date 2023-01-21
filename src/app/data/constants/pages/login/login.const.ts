@@ -4,12 +4,12 @@ import { ENUM_VALIDATION_OPTIONS } from 'src/app/data/enum';
 import { ERRORS_VALIDATIONS } from '../../error/errors-validations.const';
 export const CONST_LOGIN_PAGE:{
     FORM:{
-        email: IField;
+        username: IField;
         password: IField;
     }
 }={
         FORM:{
-            email:{
+            username:{
                 valor: '',
                 error: ERRORS_VALIDATIONS.EMAIL_REQUIRED_FLIED,
                 isValid(){
