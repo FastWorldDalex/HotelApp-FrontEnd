@@ -30,7 +30,7 @@ export class SesionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginForm.get('username')?.setValue('Ejemplo@gmail.com');
+    this.loginForm.get('username')?.setValue('admin@hotelapp.com');
   }
 
   authenticate() {
@@ -45,8 +45,8 @@ export class SesionFormComponent implements OnInit {
       console.log("error",this.loginValidation.password.error);
     }}else{
       console.log("Inicio de SESION", this.loginValidation.username.valor);
-      
-      this.authService.login(this.loginForm.value).subscribe(r=>{
+      let form:FormData = new FormData(this.loginForm.value);
+      this.authService.login(form).subscribe(r=>{
 
         console.log("DATA",r);
         

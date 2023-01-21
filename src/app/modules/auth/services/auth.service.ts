@@ -28,11 +28,7 @@ export class AuthService {
   }
 
   login(
-    data: {
-
-      username: string;
-      password: string;
-    }
+    data:FormData
   ): Observable<{
     error: boolean;
     msg: string;
@@ -41,7 +37,7 @@ export class AuthService {
     const response = {
       error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
     };
-
+var headers = new Headers();
     return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data)
       .pipe(
         map( r => {
@@ -50,6 +46,8 @@ export class AuthService {
           response.data = r.data;
           this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
+          console.log("ERROR", r);
+          
           if(!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
           }
