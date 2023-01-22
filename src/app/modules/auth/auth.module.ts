@@ -10,11 +10,13 @@ import { RecoverSesionFormComponent } from './pages/login-auth/component/retriev
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { ChangePasswordComponent } from './pages/login-auth/component/change-password/change-password.component';
 @NgModule({
   declarations: [
     LoginAuthComponent,
     SesionFormComponent,
-    RecoverSesionFormComponent
+    RecoverSesionFormComponent,
+    ChangePasswordComponent
   ],
   imports: [
     HttpClientModule,
