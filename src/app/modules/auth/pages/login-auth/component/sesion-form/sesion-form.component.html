@@ -20,14 +20,14 @@
                     <input type="password" pInputText placeholder="Contraseña" formControlName="password" >
                 </div>
             </div>
-            <div class="col-12">
-              <span class="error-message">El usuario y/o la contraseña son inválidos</span>
+            <div class="col-12"  *ngIf="erroMessage!=''">
+              <span class="error-message" [innerHTML]="erroMessage"></span>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container mt-3">
+<div class="container mt-1">
 
     <small *ngIf="!this.loginValidation.username.isValid() && this.loginValidation.username.valor!=''" id="username2-help" class="p-error block">
         {{this.loginValidation.username.error}}
@@ -38,7 +38,7 @@
     <div class="container-links row">
         <div class="col-sm-6">
             <div class="field-radiobutton-remember">
-                <p-triStateCheckbox [(ngModel)]="checked"></p-triStateCheckbox>
+                <p-triStateCheckbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}"></p-triStateCheckbox>
                 <!--label="Recordarme"<label style="margin-left: 0.5rem" >Recordarme</label>-->
                 <label style="margin-left: 0.5rem">Recordarme</label>
             </div>

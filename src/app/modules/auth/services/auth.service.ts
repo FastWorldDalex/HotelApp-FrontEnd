@@ -41,7 +41,7 @@ export class AuthService {
       headers: new HttpHeaders({
         'Accept': '*/*'})
     };
-    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data,httpOptions)
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;
@@ -57,7 +57,8 @@ export class AuthService {
           return response;
         }),
         catchError(e => {
-          response.msg = e
+          response.error = true;
+          response.msg = e.error.detail;
           return of(response)
         })
       );

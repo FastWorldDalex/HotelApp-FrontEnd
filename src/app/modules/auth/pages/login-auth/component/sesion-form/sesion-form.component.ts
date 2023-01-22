@@ -15,6 +15,7 @@ export class SesionFormComponent implements OnInit {
   loginForm: FormGroup;
   loginSubmitted: boolean = false;
   checked: any;
+  erroMessage: any;
   public data = CONST_LOGIN_PAGE;
   loginValidation = this.data.FORM;
 
@@ -36,7 +37,7 @@ export class SesionFormComponent implements OnInit {
   authenticate() {
     this.loginValidation.username.valor = this.loginForm.get('username')?.value;
     this.loginValidation.password.valor = this.loginForm.get('password')?.value;
-
+    this.erroMessage = "";
     if(!this.loginForm.valid){
       if(!this.loginValidation.username.isValid()|| !this.loginValidation.password.isValid()){
       console.log("valid username",this.loginValidation.username.isValid());
@@ -49,7 +50,7 @@ export class SesionFormComponent implements OnInit {
       form.append('username',this.loginValidation.username.valor)
       form.append('password',this.loginValidation.password.valor)
       this.authService.login(form).subscribe(r=>{
-
+        this.erroMessage = r.msg;
         console.log("DATA",r);
         //this.router.navigateByUrl('/home');
       })
