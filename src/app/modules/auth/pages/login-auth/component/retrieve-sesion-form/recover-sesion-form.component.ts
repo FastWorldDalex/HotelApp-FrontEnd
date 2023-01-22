@@ -15,6 +15,7 @@ export class RecoverSesionFormComponent {
   loginForm: FormGroup;
   public data = CONST_LOGIN_PAGE;
   loginValidation = this.data.FORM;
+  errorMessage: any;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,7 @@ export class RecoverSesionFormComponent {
 
   authenticate() {
     this.loginValidation.username.valor = this.loginForm.get('username')?.value;
-
+    this.errorMessage = "";
     if(!this.loginForm.valid){
       if(!this.loginValidation.username.isValid()){
       console.log("valid username",this.loginValidation.username.isValid());
@@ -41,9 +42,10 @@ export class RecoverSesionFormComponent {
       console.log("Correo Enviado", this.loginValidation.username.valor);
       let form =JSON.stringify(this.loginValidation.username.valor);
       this.authService.recoveryUser(this.loginForm.value).subscribe(r=>{
-
+        this.errorMessage = r.msg;
+        console.log("recoveryUser---" + r.msg);
         console.log("DATA",r);
-        
+
       })
     }
   }

@@ -14,13 +14,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
-          <span class="error-message">No existe un usuario con ese email</span>
+        <div class="col-12"  *ngIf="errorMessage!=''">
+          <span class="error-message" [innerHTML]="errorMessage"></span>
         </div>
     </div>
 </div>
 
-<div class="container mt-3">
+<div class="container mt-2">
 
     <small *ngIf="!this.loginValidation.username.isValid() && this.loginValidation.username.valor!=''" id="username2-help" class="p-error block">
         {{this.loginValidation.username.error}}

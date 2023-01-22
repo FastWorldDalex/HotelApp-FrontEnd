@@ -94,7 +94,8 @@ export class AuthService {
           return response;
         }),
         catchError(e => {
-          response.msg = e
+          response.error = true;
+          response.msg = e.error.detail;
           return of(response)
         })
       );
