@@ -39,8 +39,7 @@ export class AuthService {
     };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Accept': '*/*',
-      })
+        'Accept': '*/*'})
     };
     return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data,httpOptions)
       .pipe(
@@ -76,8 +75,12 @@ export class AuthService {
     const response = {
       error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
     };
-
-    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.RECOVERY, data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': '*/*',
+        'Content-Type': 'application/json'})
+    };
+    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.RECOVERY, data,httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;

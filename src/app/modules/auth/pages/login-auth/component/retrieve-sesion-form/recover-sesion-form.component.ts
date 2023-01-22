@@ -39,6 +39,7 @@ export class RecoverSesionFormComponent {
       console.log("error",this.loginValidation.username.error);
     }}else{
       console.log("Correo Enviado", this.loginValidation.username.valor);
+      let form =JSON.stringify(this.loginValidation.username.valor);
       this.authService.recoveryUser(this.loginForm.value).subscribe(r=>{
 
         console.log("DATA",r);
