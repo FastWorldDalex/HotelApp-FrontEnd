@@ -12,40 +12,48 @@ import { user } from '../../../../../../shared/components/header/components/user
 })
 export class RecoverSesionFormComponent {
 
-  loginForm: FormGroup;
+  recoveryForm: FormGroup;
   public data = CONST_LOGIN_PAGE;
   loginValidation = this.data.FORM;
   errorMessage: any;
+  infoMessage: any;
+  sendForm: any;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.loginForm = this.formBuilder.group({
+    this.recoveryForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email, Validators.pattern(/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{3,3})+$/)]]
     });
   }
 
   ngOnInit(): void {
-    this.loginForm.get('username')?.setValue('admin@hotelapp.com');
+    this.recoveryForm.get('username')?.setValue('admin@hotelapp.com');
   }
 
   authenticate() {
-    this.loginValidation.username.valor = this.loginForm.get('username')?.value;
+    this.loginValidation.username.valor = this.recoveryForm.get('username')?.value;
     this.errorMessage = "";
-    if(!this.loginForm.valid){
+    this.infoMessage = "";
+    this.sendForm = false;
+    if(!this.recoveryForm.valid){
       if(!this.loginValidation.username.isValid()){
       console.log("valid username",this.loginValidation.username.isValid());
       console.log("error",this.loginValidation.username.error);
     }}else{
       console.log("Correo Enviado", this.loginValidation.username.valor);
       let form =JSON.stringify(this.loginValidation.username.valor);
-      this.authService.recoveryUser(this.loginForm.value).subscribe(r=>{
-        this.errorMessage = r.msg;
-        console.log("recoveryUser---" + r.msg);
+      this.authService.recoveryUser(this.recoveryForm.value).subscribe(r=>{
+        if(r.error){
+          this.sendForm = false;
+          this.errorMessage = r.msg
+        }else{
+          this.sendForm = true;
+          this.infoMessage = r.msg;
+        }
         console.log("DATA",r);
-
       })
     }
   }

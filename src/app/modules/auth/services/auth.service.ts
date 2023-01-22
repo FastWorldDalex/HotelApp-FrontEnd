@@ -71,26 +71,22 @@ export class AuthService {
   ): Observable<{
     error: boolean;
     msg: string;
-    data: any
+    detail: any
   }> {
     const response = {
-      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, detail: null
     };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Accept': '*/*',
-        'Content-Type': 'application/json'})
+        'Accept': '*/*'})
     };
-    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.RECOVERY, data,httpOptions)
+    return this.http.post<{error:boolean, msg: string, detail:any}>(API_ROUTES.AUTH.RECOVERY, data, httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;
           response.error = r.error;
-          response.data = r.data;
-          this.currentUser.next(r.data);
-          if(!response.error){
-            this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
-          }
+          response.detail = r.detail;
+          response.msg = r.detail;
           return response;
         }),
         catchError(e => {
