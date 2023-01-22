@@ -1,5 +1,13 @@
 ::ng-deep{
+    .container-links{
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+    .container-links .col-xl-12{
+        padding-top: 5px;
+    }
     .field-radiobutton{
+
         padding-bottom: 6%;
         padding-left: 6%;
         padding-right: 6%;
@@ -7,5 +15,25 @@
     .p-inputgroup{
         padding-left: 6%;
         padding-right: 6%;
+    }
+    .field-radiobutton-login{
+      font-size: 12px;
+      margin-top: 6%;
+      text-align: center;
+      padding-top: 0px;
+      margin-top: 0px;
+    }
+    .field-radiobutton-login a{
+      text-decoration: none;
+      color: #6C757D;
+    }
+    .error-message{
+        color: #F64E60;
+        display: none;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 10px 25px;
+        text-align: left;
+        width: 100%;
     }
 }

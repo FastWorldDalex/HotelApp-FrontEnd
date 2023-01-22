@@ -16,9 +16,30 @@
     padding-top: 0%;
 }
 .field-radiobutton-remember{
+    font-size: 12px;
     margin-top: 6%;
+    text-align: left;
+}
+.field-radiobutton-remember label{
+    font-size: 500;
 }
 .field-radiobutton-forget{
+    font-size: 12px;
     margin-top: 6%;
+    text-align: right;
+    padding-top: 5px;
+}
+.field-radiobutton-forget a{
+    text-decoration: none;
+    color: #6C757D;
+}
+.error-message{
+    color: #F64E60;
+    display: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 25px;
+    text-align: left;
+    width: 100%;
 }
 }

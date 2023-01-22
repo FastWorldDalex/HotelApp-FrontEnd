@@ -51,9 +51,8 @@ export class SesionFormComponent implements OnInit {
       this.authService.login(form).subscribe(r=>{
 
         console.log("DATA",r);
-        
+        //this.router.navigateByUrl('/home');
       })
-      //this.router.navigateByUrl('/home');
     }
   }
 
@@ -71,9 +70,9 @@ export class SesionFormComponent implements OnInit {
     let resultado =  this.authService.login(this.loginForm.value).subscribe(r=>{
 
       console.log("DATA",r);
-      
+
     })
     console.log(resultado);
-    
+
   }
 }
