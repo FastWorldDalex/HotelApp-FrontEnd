@@ -60,6 +60,26 @@
                 "collapsedIcon": "pi pi-folder",
                 "children": []
             }]
+        },
+        {
+            "label": "Usuarios y Roles",
+            "data": "Movies Folder",
+            "expandedIcon": "pi pi-user",
+            "collapsedIcon": "pi pi-users",
+            "children": [{
+                "label": "Usuarios",
+                "data": "Work Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            },
+            {
+                "label": "Roles",
+                "data": "Home Folder",
+                "expandedIcon": "pi pi-folder-open",
+                "collapsedIcon": "pi pi-folder",
+                "children": []
+            }]
         }
     ]
 }
