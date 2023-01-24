@@ -4,123 +4,118 @@
         <p>Aquí podrás ver la información de todos los clientes del hotel</p>
     </div>
     <div class="container-fluid">
-        <!-- <p-toast></p-toast>
-
-        <div class="card">
-            <p-toolbar styleClass="p-mb-4">
-                <ng-template pTemplate="left">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-                    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
-                </ng-template>
-
-                <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-                </ng-template>
-            </p-toolbar>
-
-            <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
-                [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-                <ng-template pTemplate="caption">
-                    <div class="p-d-flex p-ai-center p-jc-between">
-                        <h5 class="p-m-0">Manage Products</h5>
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
-                        </span>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-                        <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-                        <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-product>
-                    <tr>
-                        <td>
-                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                        </td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.price | currency:'USD'}}</td>
-                        <td>{{product.category}}</td>
-                        <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
-                        <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
-                        <td>
-                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                    <div class="p-d-flex p-ai-center p-jc-between">
-                        In total there are {{products ? products.length : 0 }} products.
-                    </div>
-                </ng-template>
-            </p-table>
-        </div>
-
-        <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
-            <ng-template pTemplate="content">
-                <div class="p-field">
-                    <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus />
-                    <small class="p-invalid" *ngIf="submitted && !product.name">Name is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="description">Description</label>
-                    <textarea id="description" pInputTextarea [(ngModel)]="product.description" required rows="3" cols="20"></textarea>
-                </div>
-
-                <div class="p-field">
-                    <label class="p-mb-3">Category</label>
-                    <div class="p-formgrid p-grid">
-                        <div class="p-field-radiobutton p-col-6">
-                            <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.category"></p-radioButton>
-                            <label for="category1">Accessories</label>
-                        </div>
-                        <div class="p-field-radiobutton p-col-6">
-                            <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
-                            <label for="category2">Clothing</label>
-                        </div>
-                        <div class="p-field-radiobutton p-col-6">
-                            <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
-                            <label for="category3">Electronics</label>
-                        </div>
-                        <div class="p-field-radiobutton p-col-6">
-                            <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
-                            <label for="category4">Fitness</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-formgrid p-grid">
-                    <div class="p-field p-col">
-                        <label for="price">Price</label>
-                        <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
-                    </div>
-                    <div class="p-field p-col">
-                        <label for="quantity">Quantity</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
-                    </div>
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <p-button label="Crear cliente" icon="pi pi-plus" class="mr-2"></p-button>
+                <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="p-button-success" style="padding-left: 1rem"></p-button>
+            </div>
+        
+            <div class="p-toolbar-group-right">
+                <p-splitButton icon="pi pi-cog" [model]="this.items" styleClass="p-button-text p-button-info"></p-splitButton>
+            </div>
+        </p-toolbar>
+        <!--
+        <p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+            <ng-template pTemplate="caption">
+                <div class="table-header">
+                    List of Customers
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
                 </div>
             </ng-template>
-            
-            <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="country.name">Country <p-sortIcon field="country.name"></p-sortIcon></th>
+                    <th pSortableColumn="representative.name">Representative <p-sortIcon field="representative.name"></p-sortIcon></th>
+                    <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                    <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                    <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>
+                    <th style="width: 8rem"></th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'country.name', 'contains')" placeholder="Search by Country" class="p-column-filter">
+                    </th>
+                    <th>
+                        <p-multiSelect [options]="representatives" placeholder="All" (onChange)="onRepresentativeChange($event)" styleClass="p-column-filter" optionLabel="name">
+                            <ng-template let-option pTemplate="item">
+                                <div class="p-multiselect-representative-option">
+                                    <span class="p-ml-1">{{option.label}}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </th>
+                    <th>
+                        <p-calendar (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'date', 'equals')" [showButtonBar]="true" styleClass="p-column-filter" placeholder="Registration Date" [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
+                    </th>
+                    <th>
+                        <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'status', 'equals')" styleClass="p-column-filter" placeholder="Select a Status" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="onActivityChange($event)" placeholder="Minimum" class="p-column-filter" >
+                    </th>
+                    <th></th>
+                </tr>
             </ng-template>
-        </p-dialog>
+            <ng-template pTemplate="body" let-customer>
+                <tr class="p-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Name</span>
+                        {{customer.name}}
+                    </td>
+                    <td>
+                        <span class="p-column-title">Country</span>
+                        <span class="image-text">{{customer.country.name}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Representative</span>
+                        <span class="image-text">{{customer.representative.name}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Date</span>
+                        {{customer.date}}
+                    </td>
+                    <td>
+                        <span class="p-column-title">Status</span>
+                        <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Activity</span>
+                        <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+                    </td>
+                    <td style="text-align: center">
+                        <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No customers found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
 
-        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
+         -->
 
     </div>
 </div>

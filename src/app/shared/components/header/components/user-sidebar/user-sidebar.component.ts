@@ -14,49 +14,8 @@ export class UserSidebarComponent implements OnInit{
         img: "../assets/img//users/user-1png.png"
   };
 
-  constructor(){
-
-
-    /*this.items = [
-
-        {
-            label:'Jhon Doe',
-            icon:'pi pi-fw pi-user',
-            items:[
-                {
-                    label:'',
-                    icon:'pi pi-fw pi-user-plus',
+  constructor(){}
   
-                },
-                {
-                    label:'Nueva Contraseña',
-                    icon:'pi pi-fw pi-key',
-  
-                },
-                {
-                    label:'Cerrar Sesión',
-                    icon:'pi pi-fw pi-sign-out',
-                    items:[
-                    {
-                        label:'Filter',
-                        icon:'pi pi-fw pi-filter',
-                        items:[
-                            {
-                                label:'Print',
-                                icon:'pi pi-fw pi-print'
-                            }
-                        ]
-                    },
-                    {
-                        icon:'pi pi-fw pi-bars',
-                        label:'List'
-                    }
-                    ]
-                }
-            ]
-        }
-    ];*/
-  }
   ngOnInit(){
     this.items = [
         {label: 'Cambiar Contraseña', icon: 'pi pi-key', routerLink: ['/auth/login/recover']},
