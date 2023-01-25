@@ -8,7 +8,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 
-import { CustomerService } from '../administrator/services/customer.service';
 import {FormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {CalendarModule} from 'primeng/calendar';

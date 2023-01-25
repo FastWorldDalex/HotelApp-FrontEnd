@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderModule } from './components/header/header.module';
 import { NodeService } from './services/node.service';
-
+import { TagModule } from 'primeng/tag';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -35,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     FormsModule,
     TriStateCheckboxModule,
-    RouterModule
+    RouterModule,
+    TagModule,
   ],
   exports:[
     HeaderModule,
@@ -45,7 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     FieldsetModule,
     RadioButtonModule,
     ButtonModule,
-    
+    TagModule,
     FormsModule,
     TriStateCheckboxModule,
     RouterModule
