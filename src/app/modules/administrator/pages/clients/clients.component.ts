@@ -90,64 +90,70 @@ export class ClientsComponent {
             {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
             {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
         ];
-        /*
-
-
-        this.representatives = [
-          {name: "Amy Elsner", image: 'amyelsner.png'},
-          {name: "Anna Fali", image: 'annafali.png'},
-          {name: "Asiya Javayant", image: 'asiyajavayant.png'},
-          {name: "Bernardo Dominic", image: 'bernardodominic.png'},
-          {name: "Elwin Sharvill", image: 'elwinsharvill.png'},
-          {name: "Ioni Bowcher", image: 'ionibowcher.png'},
-          {name: "Ivan Magalhaes",image: 'ivanmagalhaes.png'},
-          {name: "Onyama Limba", image: 'onyamalimba.png'},
-          {name: "Stephen Shaw", image: 'stephenshaw.png'},
-          {name: "XuXue Feng", image: 'xuxuefeng.png'}
-      ];
-
-      this.statuses = [
-          {label: 'Unqualified', value: 'unqualified'},
-          {label: 'Qualified', value: 'qualified'},
-          {label: 'New', value: 'new'},
-          {label: 'Negotiation', value: 'negotiation'},
-          {label: 'Renewal', value: 'renewal'},
-          {label: 'Proposal', value: 'proposal'}
-      ]
-      this.primengConfig.ripple = true;*/
   }
-  //: { target: { value: any; }; }
-  /* onActivityChange(event: { target: { value: any; }; }) {
-      const value = event.target.value;
-      if (value && value.trim().length) {
-          const activity = parseInt(value);
 
-          if (!isNaN(activity)) {
-              this.table.filter(activity, 'activity', 'gte');
-          }
+  /*
+  Funcion click para cada item del split button
+  command:()=>{this.editProduct}
+  command:()=>{this.deleteProduct}
+
+  Funciones click() para cada boton 
+  editProduct(product: Product) {
+    this.product = { ...product };
+    this.productDialog = true;
+  }
+
+  deleteProduct(product: Product) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar al cliente ' + product.name + '?',
+      header: 'Eliminar Cliente',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.products = this.products.filter((val) => val.id !== product.id);
+        this.product = {};
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmación',
+          detail: 'Producto eliminado',
+          life: 3000,
+        });
+      },
+    });
+  }
+  hideDialog() {
+    this.productDialog = false;
+    this.submitted = false;
+  }
+
+  saveProduct() {
+    this.submitted = true;
+
+    if (this.product.name.trim()) {
+      if (this.product.id) {
+        this.products[this.findIndexById(this.product.id)] = this.product;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmación',
+          detail: 'Cliente actualizado',
+          life: 3000,
+        });
+      } else {
+        this.product.id = this.createId();
+        this.product.image = 'product-placeholder.svg';
+        this.products.push(this.product);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmación',
+          detail: 'Cliente creado',
+          life: 3000,
+        });
       }
+
+      this.products = [...this.products];
+      this.productDialog = false;
+      this.product = {};
     }
+  }
 
-    onDateSelect(value: { getMonth: () => any; getDate: () => any; getFullYear: () => string; }) {
-      this.table.filter(this.formatDate(value), 'date', 'equals')
-    }
-
-    formatDate(date: { getMonth: () => any; getDate: () => any; getFullYear: () => string; }) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-
-        if (month < 10) {
-            month = '0' + month;
-        }
-
-        if (day < 10) {
-            day = '0' + day;
-        }
-
-        return date.getFullYear() + '-' + month + '-' + day;
-    }
-
-    onRepresentativeChange(event: { value: any; }) {
-        this.table.filter(event.value, 'representative', 'in')
-    }*/
+  */
 }

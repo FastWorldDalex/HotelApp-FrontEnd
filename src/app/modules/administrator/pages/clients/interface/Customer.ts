@@ -9,6 +9,13 @@ export interface Representative {
 }
 
 export interface Customer {
+    /*id: number;
+    firstname: string;
+    lastname: string;
+    document: string;
+    phone: string;
+    email: string;
+    status: number;*/
     id?: number;
     name?: number;
     country?: Country;
