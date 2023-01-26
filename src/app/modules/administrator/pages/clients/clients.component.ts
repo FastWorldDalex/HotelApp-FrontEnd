@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { CustomerService } from '../../services/customer.service';
 import { Customer, Representative } from './interface/Customer';
@@ -13,6 +13,8 @@ export class ClientsComponent {
   items: MenuItem[] =[];
   titulos: string[] = [];
   ltsClientes: any[] = [];
+
+  clientDialog: boolean = false;
 
   constructor() {}
 
@@ -72,26 +74,41 @@ export class ClientsComponent {
     ];
     this.items = [
             {label: 'Ver detalle', icon: 'pi pi-eye', routerLink: ['/auth/login/recover']},
-            {label: 'Editar', icon: 'pi pi-file-edit', routerLink: ['/auth/login']},
+            {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.editClient() },
             {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
             {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
         ];
   }
-
-  /*
-  productDialog: boolean;
-
   
+  createClient(){
+    this.clientDialog = true;
+  }
+  editClient(){
+    this.clientDialog = true;
+  }
+  /*deleteClient(){
+    this.confirmationService.confirm({
+      message: '¿Está seguro de eliminar al cliente?',
+      header: 'Eliminar cliente',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmación',
+          detail: 'Cliente eliminado',
+          life: 3000,
+        });
+      },
+    });
+  }*/
+
+/*
   Funcion click para cada item del split button
   command:()=>{this.editProduct}
   command:()=>{this.deleteProduct}
 
-  Funciones click() para cada boton 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
-  }
 
+  Funciones click() para cada boton
   deleteProduct(product: Product) {
     this.confirmationService.confirm({
       message: '¿Estas seguro de eliminar al cliente ' + product.name + '?',

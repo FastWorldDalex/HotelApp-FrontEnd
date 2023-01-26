@@ -25,7 +25,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import {InputMaskModule} from 'primeng/inputmask';
 
 
 @NgModule({
@@ -51,7 +51,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 		ToastModule,
     InputTextModule,
     ProgressBarModule,
-    FormsModule
+    FormsModule,
+    InputNumberModule,
+    InputMaskModule,
+    RadioButtonModule
   ]
 })
 export class AdministratorModule { }
