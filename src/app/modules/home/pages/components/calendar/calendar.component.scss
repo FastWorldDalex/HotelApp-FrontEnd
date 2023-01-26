@@ -73,3 +73,11 @@
   text-decoration: none !important;
   text-transform: capitalize !important;
 }
+
+//Form Reserva
+:host ::ng-deep .p-dropdown {
+  width: 50%;
+}
+::ng-deep .row{
+  padding-bottom: 1rem;
+}

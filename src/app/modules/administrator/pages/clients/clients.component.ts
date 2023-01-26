@@ -13,20 +13,6 @@ export class ClientsComponent {
   items: MenuItem[] =[];
   titulos: string[] = [];
   ltsClientes: any[] = [];
-  /*   items: MenuItem[] =[];
-
-
-    customers: Customer[] = [];
-
-    selectedCustomers: Customer[] = [];
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    loading!: boolean;
-
-    @ViewChild('dt') table!: Table;*/
 
   constructor() {}
 
@@ -93,6 +79,9 @@ export class ClientsComponent {
   }
 
   /*
+  productDialog: boolean;
+
+  
   Funcion click para cada item del split button
   command:()=>{this.editProduct}
   command:()=>{this.deleteProduct}

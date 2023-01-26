@@ -4,8 +4,112 @@
         <p>Aquí podrás ver la disponibilidad de las habitaciones a lo largo de los días del mes</p>
     </div>
     
+    <p-button label="Registrar reserva" icon="pi pi-plus" (click)="showReservaDialog()"></p-button>
+    <!--Formulario de reservas-->
+    <p-dialog
+        [(visible)]="reservaDialog"
+        [style]="{ width: '50%' }"
+        header="Registra reserva"
+        [modal]="true"
+        styleClass="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="checkin">Checkin</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckin" [locale]="es" 
+                                    dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="checkout">Checkout</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckout" [locale]="es" 
+                                    dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="cliente">Cliente</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-dropdown [style]="{'width':'100%'}" [options]="clientes" [(ngModel)]="selectedCliente" 
+                                    placeholder="Selecciona el cliente" optionLabel="name" [showClear]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="habitacion">Habitación</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-dropdown [style]="{'width':'100%'}" [options]="clientes" [(ngModel)]="selectedCliente" 
+                                    placeholder="Selecciona la habitación" optionLabel="name" [showClear]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="adultos">Adultos</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber inputId="adultos" suffix=" adulto(s)" [showButtons]="true" [min]="0" [max]="100">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="niños">Niños</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber inputId="niños" suffix=" niño(s)" [showButtons]="true" [min]="0" [max]="100">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="total">Total</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber inputId="total" mode="currency" currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="totalPagar">Total por pagar</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber inputId="totalPagar" mode="currency" currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="totalPagado">Total pagado</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber inputId="totalPagado" mode="currency" currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button (click)="reservaDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-save" (click)="reservaDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <!--Calendario-->
     <div class="container-fluid">
-            <full-calendar  [options]="options"></full-calendar>
+        <full-calendar  [options]="options"></full-calendar>
     </div>
 </div>
 

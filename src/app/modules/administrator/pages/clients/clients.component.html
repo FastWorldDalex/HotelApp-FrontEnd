@@ -222,23 +222,9 @@
       </ng-template>
 
       <ng-template pTemplate="footer">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-text"
-          (click)="hideDialog()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          label="Guardar"
-          icon="pi pi-check"
-          class="p-button-text"
-          (click)="saveProduct()"
-        ></button>
-      </ng-template>
+            <p-button (click)="reservaDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-save" (click)="reservaDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+        </ng-template>
     </p-dialog>
 
     Mensaje de satisfaccion
