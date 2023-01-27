@@ -1,26 +1,18 @@
 export interface Country {
-    name?: string;
-    code?: string;
-}
-
-export interface Representative {
-    name?: string;
-    image?: string;
+    id: number;
+    name: string;
+    alpha3: string;
+    status: number;
 }
 
 export interface Customer {
-    /*id: number;
+    id: number;
     firstname: string;
     lastname: string;
     document: string;
     phone: string;
     email: string;
-    status: number;*/
-    id?: number;
-    name?: number;
-    country?: Country;
-    company?: string;
-    date?: string;
-    status?: string;
-    representative?: Representative;
+    status: number;
+    country_id: number;
+    country: Country;
 }

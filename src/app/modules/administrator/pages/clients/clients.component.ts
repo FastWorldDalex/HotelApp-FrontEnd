@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { ConfirmationService, MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, MenuItem, Message, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { CustomerService } from '../../services/customer.service';
-import { Customer, Representative } from './interface/Customer';
+import { Customer } from './interface/Customer';
 
 @Component({
   selector: 'app-clients',
@@ -16,7 +16,15 @@ export class ClientsComponent {
 
   clientDialog: boolean = false;
 
+  //Form Client
+  countries: Country[] = [];
+  selectedCountry: Country | undefined;
+  selectedEstado: string | undefined;
+  //Confirm Dialog
+  msgs: Message[] = [];
+
   constructor() {}
+  //private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig
 
   ngOnInit() {
     this.titulos = [
@@ -77,7 +85,16 @@ export class ClientsComponent {
             {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.editClient() },
             {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
             {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
-        ];
+    ];
+
+    //Form Client
+    this.countries = [
+      {name: 'Perú'},
+      {name: 'Chile'}
+    ];
+
+    //Confirmation Dialog
+    //this.primengConfig.ripple=true;
   }
   
   createClient(){
@@ -86,80 +103,20 @@ export class ClientsComponent {
   editClient(){
     this.clientDialog = true;
   }
+
   /*deleteClient(){
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar al cliente?',
       header: 'Eliminar cliente',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Cliente eliminado',
-          life: 3000,
-        });
-      },
+        this.msgs = [{severity:'info', summary:'Confirmación', detail:'Se ha elimado correctamente al cliente.'}];
+      }
     });
   }*/
-
-/*
-  Funcion click para cada item del split button
-  command:()=>{this.editProduct}
-  command:()=>{this.deleteProduct}
+}
 
 
-  Funciones click() para cada boton
-  deleteProduct(product: Product) {
-    this.confirmationService.confirm({
-      message: '¿Estas seguro de eliminar al cliente ' + product.name + '?',
-      header: 'Eliminar Cliente',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Producto eliminado',
-          life: 3000,
-        });
-      },
-    });
-  }
-  hideDialog() {
-    this.productDialog = false;
-    this.submitted = false;
-  }
-
-  saveProduct() {
-    this.submitted = true;
-
-    if (this.product.name.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Cliente actualizado',
-          life: 3000,
-        });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Cliente creado',
-          life: 3000,
-        });
-      }
-
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
-    }
-  }
-
-  */
+export interface Country{
+  name: string
 }

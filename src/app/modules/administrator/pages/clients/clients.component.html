@@ -1,9 +1,9 @@
 
 <div class="row main-content">
-  <div class="col-sm-12 content">
-      <h3>Clientes</h3>
-      <p>Aquí podrás ver la información de todos los clientes del hotel</p>
-  </div>
+    <div class="col-sm-12 content">
+        <h3>Clientes</h3>
+        <p>Aquí podrás ver la información de todos los clientes del hotel</p>
+    </div>
   <div class="col-sm-12 container-fluid">
       <p-toolbar>
         <div class="p-toolbar-group-left">
@@ -89,86 +89,89 @@
           </ng-template>
       </p-table>
 
-      <p-dialog
-          [(visible)]="clientDialog"
-          [style]="{ width: '50%' }"
-          header="Nuevo Cliente"
-          [modal]="true"
-          styleClass="p-fluid"
-      >
-          <ng-template pTemplate="content">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-sm-5 col-md-6">
-                          <label for="name">Nombre</label>
-                          <input type="text" pInputText id="name" required autofocus/>
-                      </div>
-                      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-                          <label for="lastname">Apellido</label>
-                          <input type="text" pInputText id="lastname" required autofocus/>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-5 col-md-6">
-                          <label for="documento">Documento</label>
-                          <p-inputNumber inputId="documento" [useGrouping]="false" [min]="0" [max]="99999999">
-                          </p-inputNumber>
-                      </div>
-                      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-                          <label for="telefono">Teléfono</label>
-                          <p-inputMask mask="999-999-999" placeholder="999-999-999"></p-inputMask>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col">
-                          <label for="email">Email</label>
-                          <input type="email" pInputText id="email" required autofocus/>
-                      </div>                      
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-5 col-md-6">
-                        <label for="pais">País</label>
-                        <input type="text" pInputText id="pais" required autofocus/>
-                      </div>
-                      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-                          <label for="adultos">Cantidad de reservas</label>
-                          <p-inputNumber inputId="adultos" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
-                          </p-inputNumber>
-                      </div>
-                  </div>
-                  <div class="p-field">
-                      <label class="p-mb-3">Category</label>
-                      <div class="p-formgrid p-grid">
-                          <div class="p-field-radiobutton p-col-6">
-                              <p-radioButton id="category1" name="category" value="Accessories"></p-radioButton>
-                              <label for="category1">Accessories</label>
-                          </div>
-                          <div class="p-field-radiobutton p-col-6">
-                              <p-radioButton id="category2" name="category" value="Clothing"></p-radioButton>
-                              <label for="category2">Clothing</label>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </ng-template>
+        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%' }" header="Nuevo Cliente" 
+                [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="name">Nombre</label>
+                            <input type="text" pInputText id="name" required autofocus/>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="lastname">Apellido</label>
+                            <input type="text" pInputText id="lastname" required autofocus/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="documento">Documento</label>
+                            <p-inputNumber inputId="documento" [useGrouping]="false" [min]="0" [max]="99999999">
+                            </p-inputNumber>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="telefono">Teléfono</label>
+                            <p-inputMask mask="999-999-999" placeholder="999-999-999"></p-inputMask>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="email">Email</label>
+                            <input type="email" pInputText id="email" required autofocus/>
+                        </div>                      
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="pais">País</label>
+                            <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="selectedCountry" 
+                                            placeholder="Selecciona el país" optionLabel="name" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="reservas">Cantidad de reservas</label>
+                            <p-inputNumber inputId="reservas" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="estado">Estado</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="p-field-radiobutton col-sm-5">
+                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                        inputId="estado1" label="Activo">
+                                </p-radioButton>
+                            </div>
+                            <div class="p-field-radiobutton col-sm-5">
+                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                        inputId="estado2" label="Inactivo">
+                                </p-radioButton>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </ng-template>
 
-          <ng-template pTemplate="footer">
+            <ng-template pTemplate="footer">
               <p-button (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
               <p-button icon="pi pi-save" (click)="clientDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
-          </ng-template>
-      </p-dialog>
-      <!--
+            </ng-template>
+        </p-dialog>
+        
+        <!--
 
-      <p-toast></p-toast>
-      
-
-      Mensaje de satisfaccion
-      <p-confirmDialog #cd [style]="{ width: '450px' }">
-          <ng-template pTemplate="footer">
-              <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-              <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
-          </ng-template>
-      </p-confirmDialog>
-      -->
+        Mensaje de confirmacion
+        <p-confirmDialog #cd [style]="{ width: '450px' }">
+            <ng-template pTemplate="footer">
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+            </ng-template>
+        </p-confirmDialog>
+        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000">
+        </p-confirmDialog>
+        <p-messages [value]="msgs"></p-messages>
+        -->
     </div>
 </div>

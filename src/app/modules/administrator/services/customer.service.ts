@@ -8,11 +8,11 @@ import { Customer } from '../pages/clients/interface/Customer';
 export class CustomerService {
 
   constructor(private http: HttpClient) { }
-
+  /*
   getCustomersLarge() {
     return this.http.get<any>('assets/customers.json')
         .toPromise()
         .then(res => <Customer[]>res.data)
         .then(data => { return data; });
-}
+}*/
 }

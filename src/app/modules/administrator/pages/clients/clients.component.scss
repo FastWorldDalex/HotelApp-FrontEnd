@@ -35,3 +35,6 @@
 .p-field * {
     display: block;
 }
+::ng-deep .row{
+    padding-bottom: 1rem;
+}

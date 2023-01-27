@@ -32,8 +32,11 @@ export class CalendarComponent implements OnInit {
   //dropdwon
   clientes: Cliente[] = [];
   selectedCliente: Cliente | undefined;
-  habitaciones: Cliente[] = [];
-  selectedHabitacion: Cliente | undefined;
+  rooms: Room[] = [];
+  selectedRoom: Room | undefined;
+  //defaultValues
+  value1: number = 5;
+  value2: number = 1200;
 
   constructor(private nodeService: NodeService) {}
 
@@ -127,6 +130,10 @@ export class CalendarComponent implements OnInit {
           {name: 'Carlos', lastname: 'Quispe'},
           {name: 'Martin', lastname: 'Bartolo'}
       ];
+      this.rooms = [
+        {name: 'H01'},
+        {name: 'H02'}
+    ];
   }
 
   //Form Reserva
@@ -138,4 +145,8 @@ export class CalendarComponent implements OnInit {
 export interface Cliente {
   name: string,
   lastname: string
+}
+
+export interface Room{
+  name: string
 }
