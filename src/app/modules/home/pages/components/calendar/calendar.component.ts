@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin ,{ Draggable }from '@fullcalendar/interaction';
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 
 
@@ -10,6 +10,8 @@ import { NodeService } from 'src/app/shared/services/node.service';
 import { CalendarOptions } from '@fullcalendar/core';
 //Dropdown
 import { SelectItem } from 'primeng/api';
+import { HomeService } from '../../../services/home.service';
+import { Reserva } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-calendar',
@@ -18,10 +20,19 @@ import { SelectItem } from 'primeng/api';
 })
 export class CalendarComponent implements OnInit {
 
-  events: any[]=[];
+  events: any[] = [];
 
-  options?: CalendarOptions ;
-
+  options?: CalendarOptions;
+  ltsReservas: Reserva[] = [];
+  reservasCalendario: {
+    title: string,
+    start: string,
+    end: string,
+  } = {
+      title: '',
+      start: '',
+      end: ''
+    }
   header: any;
 
   //Form Calendar
@@ -38,107 +49,129 @@ export class CalendarComponent implements OnInit {
   value1: number = 5;
   value2: number = 1200;
 
-  constructor(private nodeService: NodeService) {}
+  constructor(private nodeService: NodeService,
+    private homeService: HomeService) { }
 
   ngOnInit() {
-      /*this.nodeService.getEvents().then((events) => {
-          this.events = events;
-          this.options = { ...this.options, ...{ events: events } };
-      });*/
+    /*this.nodeService.getEvents().then((events) => {
+        this.events = events;
+        this.options = { ...this.options, ...{ events: events } };
+    });*/
+    this.getReservas();
+    this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      initialView: 'timeGridWeek', // dayGridWeek
+      initialDate: '2023-01-18',
+      locale: esLocale,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      eventSources: [
 
-      this.options = {
-          plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-          initialView: 'timeGridWeek', // dayGridWeek
-          initialDate: '2023-01-18',
-          locale:esLocale,
-          headerToolbar: {
-              left: 'prev,next today',
-              center: 'title',
-              right: ''
-          },
-          eventSources: [
-
-            // your event source
-              {
-                events: [ // put the array in the `events` property
-                  {
-                    title  : '<span>Carla Marin</span> <br>+51966710491 <br> carlamarin@gmail.com <br> 1 adulto - 0 niños',
-                    start  : '2023-01-18T00:00:00',
-                    end  : '2023-01-18T01:00:00',
-                  },
-                  {
-                    title  : '<span>Carmen Villaverde</span> <br>  +51966710491 <br> carmenvillaverde@gmail.com <br> 2 adultos - 0 niños',
-                    start  : '2023-01-20T02:00:00',
-                    end  : '2023-01-20T03:00:00',
-                  },
-                  {
-                    title  : '<span>Pedro Rivas</span> <br>  +51966744497 <br> pedrorivas@gmail.com <br> 1 adulto - 1 niño',
-                    start  : '2023-01-21T01:00:00',
-                    end  : '2023-01-21T02:00:00',
-                  }
-                ],
-
-                backgroundColor: '#2962FF',
-                //color: 'blue',     // an option!
-                textColor: 'white' // an option!
-              }
-            ],
-            eventContent: function(info) {
-              return {html: '<div class="event-content">' + info.event.title + '</div>'};
+        // your event source
+        {
+          events: [ // put the array in the `events` property
+            {
+              title: '<span>Carla Marin</span> <br>+51966710491 <br> carlamarin@gmail.com <br> 1 adulto - 0 niños',
+              start: '2023-01-18T00:00:00',
+              end: '2023-01-18T01:00:00',
             },
-          //eventShortHeight: 60,
-          //slotEventOverlap: true,
-          slotLabelContent : function(slot){
-            var rooms = ["H101","H102","H104","H105","H106","H107", "H108","H109",
-              "H110","H111","H112","H113","H114","H115","H116","H117","H118","H119",
-              "H120","H121","H122","","",""];
-            var room_title = "";
-            if(slot.date.getMinutes() == 0){
-              room_title = '<b>'+rooms[slot.date.getHours()]+'<b>';
-            }else if(slot.date.getMinutes() == 15){
-              room_title = "Habitación Básica";
-            }else if(slot.date.getMinutes() == 30){
-              room_title = "2 camas simples";
-            }else{
-              room_title = "1er piso";
+            {
+              title: '<span>Carmen Villaverde</span> <br>  +51966710491 <br> carmenvillaverde@gmail.com <br> 2 adultos - 0 niños',
+              start: '2023-01-20T02:00:00',
+              end: '2023-01-20T03:00:00',
+            },
+            {
+              title: '<span>Pedro Rivas</span> <br>  +51966744497 <br> pedrorivas@gmail.com <br> 1 adulto - 1 niño',
+              start: '2023-01-21T01:00:00',
+              end: '2023-01-21T02:00:00',
             }
-            return {html: '<span style="font-size:11px">'+room_title+'</span>'};
-          },
-          slotLabelInterval:"00:15",
-          slotDuration: '00:15:00',
-          nowIndicator: true,
-          allDaySlot: false,
-          editable: true,
-          selectable: true,
-          selectMirror: true,
-          dayMaxEvents: true
-      };
-      
-      //Form Calendar
-      this.es = {
-        firstDayOfWeek: 1,
-        dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
-        dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
-        dayNamesMin: [ "D","L","M","X","J","V","S" ],
-        monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
-        monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
-        today: 'Hoy',
-        clear: 'Borrar'
-      }
-      //dropdown
-      this.clientes = [
-          {name: 'Carlos', lastname: 'Quispe'},
-          {name: 'Martin', lastname: 'Bartolo'}
-      ];
-      this.rooms = [
-        {name: 'H01'},
-        {name: 'H02'}
+          ],
+
+          backgroundColor: '#2962FF',
+          //color: 'blue',     // an option!
+          textColor: 'white' // an option!
+        }
+      ],
+      eventContent: function (info) {
+        return { html: '<div class="event-content">' + info.event.title + '</div>' };
+      },
+      //eventShortHeight: 60,
+      //slotEventOverlap: true,
+      slotLabelContent: function (slot) {
+        var rooms = ["H101", "H102", "H104", "H105", "H106", "H107", "H108", "H109",
+          "H110", "H111", "H112", "H113", "H114", "H115", "H116", "H117", "H118", "H119",
+          "H120", "H121", "H122", "", "", ""];
+        var room_title = "";
+        if (slot.date.getMinutes() == 0) {
+          room_title = '<b>' + rooms[slot.date.getHours()] + '<b>';
+        } else if (slot.date.getMinutes() == 15) {
+          room_title = "Habitación Básica";
+        } else if (slot.date.getMinutes() == 30) {
+          room_title = "2 camas simples";
+        } else {
+          room_title = "1er piso";
+        }
+        return { html: '<span style="font-size:11px">' + room_title + '</span>' };
+      },
+      slotLabelInterval: "00:15",
+      slotDuration: '00:15:00',
+      nowIndicator: true,
+      allDaySlot: false,
+      editable: true,
+      selectable: true,
+      selectMirror: true,
+      dayMaxEvents: true
+    };
+
+    //Form Calendar
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+      dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+      monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
+    //dropdown
+    this.clientes = [
+      { name: 'Carlos', lastname: 'Quispe' },
+      { name: 'Martin', lastname: 'Bartolo' }
+    ];
+    this.rooms = [
+      { name: 'H01' },
+      { name: 'H02' }
     ];
   }
 
   //Form Reserva
-  showReservaDialog(){
+  showReservaDialog() {
     this.reservaDialog = true;
+  }
+
+  getReservas() {
+    this.homeService.GetReservation(null, null).then((reservas) => {
+      if (reservas != null || reservas.length > 0) {
+        this.ltsReservas = reservas;
+        console.log(this.ltsReservas)
+        this.ltsReservas.forEach((element)=>{
+
+          this.reservasCalendario = {
+            title: `<span>Pedro Rivas</span>'+
+            ' <br>  +51966744497 <br>' +
+            'pedrorivas@gmail.com <br> 1 adulto - 1 niño`,
+            start: `2023-01-21T01:00:00`,
+            end: `2023-01-21T02:00:00`
+          }
+
+        });
+        
+      }
+    });
   }
 }
 
@@ -147,6 +180,6 @@ export interface Cliente {
   lastname: string
 }
 
-export interface Room{
+export interface Room {
   name: string
 }
