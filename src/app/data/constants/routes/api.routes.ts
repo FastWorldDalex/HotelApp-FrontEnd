@@ -15,5 +15,8 @@ export const API_ROUTES ={
     },
     COUNTRY:{
         GET_COUNTRY:`${ENV.url}countries/`
+    },
+    ROOM: {
+        GET_ROOM:`${ENV.url}rooms/`
     }
 };

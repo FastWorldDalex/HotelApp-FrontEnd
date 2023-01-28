@@ -2,8 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem, Message, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { AdministratorService } from '../../services/administrator.service';
-import { Client, Country, POSTClient } from './interface/iclient';
+import { POSTClient } from './interface/iclient';
 import { NodeService } from '../../../../shared/services/node.service';
+import { Client, Country } from 'src/app/shared/interface/interfaces';
 
 
 

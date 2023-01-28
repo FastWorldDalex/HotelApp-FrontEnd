@@ -11,7 +11,9 @@ import { CalendarOptions } from '@fullcalendar/core';
 //Dropdown
 import { SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
-import { Reserva } from '../../interfaces/ireserva';
+import { POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
+import { Client } from 'src/app/shared/interface/interfaces';
+import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 
 @Component({
   selector: 'app-calendar',
@@ -24,15 +26,28 @@ export class CalendarComponent implements OnInit {
 
   options?: CalendarOptions;
   ltsReservas: Reserva[] = [];
-  reservasCalendario: {
-    title: string,
-    start: string,
-    end: string,
-  } = {
+  reservaFiltro: labelCalendar = {
       title: '',
       start: '',
       end: ''
+    };
+    reservasCalendario: labelCalendar[]=[ // put the array in the `events` property
+    {
+      title: '<span>Carla Marin</span> <br>+51966710491 <br> carlamarin@gmail.com <br> 1 adulto - 0 niños',
+      start: '2023-01-18T00:00:00',
+      end: '2023-01-18T01:00:00',
+    },
+    {
+      title: '<span>Carmen Villaverde</span> <br>  +51966710491 <br> carmenvillaverde@gmail.com <br> 2 adultos - 0 niños',
+      start: '2023-01-20T02:00:00',
+      end: '2023-01-20T03:00:00',
+    },
+    {
+      title: '<span>Pedro Rivas</span> <br>  +51966744497 <br> pedrorivas@gmail.com <br> 1 adulto - 1 niño',
+      start: '2023-01-21T01:00:00',
+      end: '2023-01-21T02:00:00',
     }
+  ]
   header: any;
 
   //Form Calendar
@@ -41,22 +56,49 @@ export class CalendarComponent implements OnInit {
   dateCheckout!: Date;
   es: any;
   //dropdwon
-  clientes: Cliente[] = [];
-  selectedCliente: Cliente | undefined;
-  rooms: Room[] = [];
-  selectedRoom: Room | undefined;
+  ltsClientes: Client[] = [];
+  ltsRooms: Room[] = [];
   //defaultValues
   value1: number = 5;
   value2: number = 1200;
-
+  postReserva:POSTReserva = {
+    checkin: new Date(),
+    checkout: new Date(),
+    adults: 0,
+    children: 0,
+    total: 0,
+    done_payment: 0,
+    pending_payment: 0,
+    status: 0,
+    client_id: 0,
+    room_id: 0
+  }
   constructor(private nodeService: NodeService,
-    private homeService: HomeService) { }
+    private homeService: HomeService,
+    private administratorService:AdministratorService) { }
 
   ngOnInit() {
     /*this.nodeService.getEvents().then((events) => {
         this.events = events;
         this.options = { ...this.options, ...{ events: events } };
     });*/
+    this.administratorService.getClients().then((res)=>{
+      if(res!= null || res.length>0){
+        
+        this.ltsClientes = res;
+        this.ltsClientes.forEach((element) =>{
+          element.nameComplete = element.firstname + ' '+element.lastname;
+        });
+      }
+    });
+
+    this.homeService.GetRoom().then((res)=>{
+      if(res!= null || res.length>0){
+        this.ltsRooms = res;
+      }
+    });
+
+
     this.getReservas();
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -72,23 +114,7 @@ export class CalendarComponent implements OnInit {
 
         // your event source
         {
-          events: [ // put the array in the `events` property
-            {
-              title: '<span>Carla Marin</span> <br>+51966710491 <br> carlamarin@gmail.com <br> 1 adulto - 0 niños',
-              start: '2023-01-18T00:00:00',
-              end: '2023-01-18T01:00:00',
-            },
-            {
-              title: '<span>Carmen Villaverde</span> <br>  +51966710491 <br> carmenvillaverde@gmail.com <br> 2 adultos - 0 niños',
-              start: '2023-01-20T02:00:00',
-              end: '2023-01-20T03:00:00',
-            },
-            {
-              title: '<span>Pedro Rivas</span> <br>  +51966744497 <br> pedrorivas@gmail.com <br> 1 adulto - 1 niño',
-              start: '2023-01-21T01:00:00',
-              end: '2023-01-21T02:00:00',
-            }
-          ],
+          events: this.reservasCalendario,
 
           backgroundColor: '#2962FF',
           //color: 'blue',     // an option!
@@ -138,14 +164,6 @@ export class CalendarComponent implements OnInit {
       clear: 'Borrar'
     }
     //dropdown
-    this.clientes = [
-      { name: 'Carlos', lastname: 'Quispe' },
-      { name: 'Martin', lastname: 'Bartolo' }
-    ];
-    this.rooms = [
-      { name: 'H01' },
-      { name: 'H02' }
-    ];
   }
 
   //Form Reserva
@@ -158,28 +176,47 @@ export class CalendarComponent implements OnInit {
       if (reservas != null || reservas.length > 0) {
         this.ltsReservas = reservas;
         console.log(this.ltsReservas)
-        this.ltsReservas.forEach((element)=>{
-
-          this.reservasCalendario = {
-            title: `<span>Pedro Rivas</span>'+
-            ' <br>  +51966744497 <br>' +
-            'pedrorivas@gmail.com <br> 1 adulto - 1 niño`,
-            start: `2023-01-21T01:00:00`,
-            end: `2023-01-21T02:00:00`
+        let cliente: string;
+        this.ltsReservas.forEach((element) => {
+          cliente = element.client.firstname.split(' ')[0] + ' ' + element.client.lastname.split(' ')[0];
+          this.reservaFiltro = {
+            title: `<span>${cliente}</span>'+
+            ' <br>  ${element.client.phone} <br>' +
+            '${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
+            start: `${element.checkin}T02:00:00`,
+            end: `${element.checkout}T03:00:00`
           }
-
+          console.log(this.reservaFiltro);
+          
+          this.reservasCalendario.push(this.reservaFiltro);
         });
-        
+
+
       }
     });
   }
+
+
+  posReserva() {
+    this.postReserva.room_id= this.postReserva.room_id.id;
+    this.postReserva.client_id =this.postReserva.client_id.id;
+    this.postReserva.status =1;
+    let checkin = new Date(this.postReserva.checkin.getFullYear(),this.postReserva.checkin.getMonth(),this.postReserva.checkin.getDate());
+    this.postReserva.checkin = checkin;
+    let checkout = new Date(this.postReserva.checkout.getFullYear(),this.postReserva.checkout.getMonth(),this.postReserva.checkout.getDate());
+    this.postReserva.checkout = checkout;
+    this.homeService.PostReservation(this.postReserva).then((response) =>{
+      if(response != null){
+        console.log(response);
+        this.reservaDialog=false;
+        this.getReservas();
+      }
+    })
+  }
 }
 
-export interface Cliente {
-  name: string,
-  lastname: string
-}
-
-export interface Room {
-  name: string
+export interface labelCalendar{
+  title: string,
+  start: string,
+  end: string,
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ERRORS_CONST } from 'src/app/data/constants';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { Client, POSTClient } from '../pages/clients/interface/iclient';
+import { POSTClient } from '../pages/clients/interface/iclient';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NodeService } from 'src/app/shared/services/node.service';
+import { HomeService } from '../services/home.service';
+import { POSTReserva } from './interfaces/ireserva';
 
 @Component({
   selector: 'app-home',
@@ -6,4 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+  
+
 }

@@ -22,7 +22,7 @@
                                 <label class="formLabel" for="checkin">Checkin</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckin" [locale]="es" 
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkin" [locale]="es" 
                                             dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <label class="formLabel" for="checkout">Checkout</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckout" [locale]="es" 
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkout" [locale]="es" 
                                             dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
                             </div>
                         </div>
@@ -40,8 +40,8 @@
                                 <label class="formLabel" for="cliente">Cliente</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="clientes" [(ngModel)]="selectedCliente" 
-                                            placeholder="Selecciona el cliente" optionLabel="name" [showClear]="true">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes" [(ngModel)]="postReserva.client_id" 
+                                            placeholder="Selecciona el cliente" optionLabel="nameComplete" [showClear]="true"  [filter]="true">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -50,8 +50,8 @@
                                 <label class="formLabel" for="habitacion">Habitación</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="rooms" [(ngModel)]="selectedRoom" 
-                                            placeholder="Selecciona la habitación" optionLabel="name" [showClear]="true">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="postReserva.room_id" 
+                                            placeholder="Selecciona la habitación" optionLabel="name" [showClear]="true" [filter]="true">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 <label class="formLabel" for="adultos">Adultos</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-inputNumber [(ngModel)]="value1" inputId="adultos" suffix=" adulto(s)" [showButtons]="true" [min]="0" [max]="100">
+                                <p-inputNumber [(ngModel)]="postReserva.adults" inputId="adultos" suffix=" adulto(s)" [showButtons]="true" [min]="0" [max]="100">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <label class="formLabel" for="niños">Niños</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-inputNumber [(ngModel)]="value1" inputId="niños" suffix=" niño(s)" [showButtons]="true" [min]="0" [max]="100">
+                                <p-inputNumber [(ngModel)]="postReserva.children" inputId="niños" suffix=" niño(s)" [showButtons]="true" [min]="0" [max]="100">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                                 <label class="formLabel" for="total">Total</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-inputNumber [(ngModel)]="value2" inputId="total" mode="currency" currency="PEN" locale="es-PE">
+                                <p-inputNumber [(ngModel)]="postReserva.pending_payment" inputId="total" mode="currency" currency="PEN" locale="es-PE">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 <label class="formLabel" for="totalPagar">Total por pagar</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-inputNumber [(ngModel)]="value2" inputId="totalPagar" mode="currency" currency="PEN" locale="es-PE">
+                                <p-inputNumber [(ngModel)]="postReserva.done_payment" inputId="totalPagar" mode="currency" currency="PEN" locale="es-PE">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                 <label class="formLabel" for="totalPagado">Total pagado</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-inputNumber [(ngModel)]="value2" inputId="totalPagado" mode="currency" currency="PEN" locale="es-PE">
+                                <p-inputNumber [(ngModel)]="postReserva.total" inputId="totalPagado" mode="currency" currency="PEN" locale="es-PE">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
 
                 <ng-template pTemplate="footer">
                     <p-button (click)="reservaDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
-                    <p-button icon="pi pi-save" (click)="reservaDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+                    <p-button icon="pi pi-save" (click)="posReserva()" label="Guardar" styleClass="p-button-info"></p-button>
                 </ng-template>
             </p-dialog>
         </div>

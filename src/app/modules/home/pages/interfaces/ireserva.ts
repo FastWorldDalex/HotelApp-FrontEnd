@@ -14,7 +14,7 @@ export interface Reserva {
     room:            Room;
 }
 
-export interface Client {
+interface Client {
     id:                    number;
     firstname:             string;
     lastname:              string;
@@ -35,4 +35,17 @@ export interface Room {
     capacity:     number;
     room_type_id: number;
     status:       number;
+}
+
+export interface POSTReserva {
+    checkin:         Date;
+    checkout:        Date;
+    adults:          number;
+    children:        number;
+    total:           number;
+    done_payment:    number; //pagado
+    pending_payment: number; // por pagar
+    status:          number;
+    client_id:       any;
+    room_id:         any;
 }
