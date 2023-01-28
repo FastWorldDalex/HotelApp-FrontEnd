@@ -7,7 +7,7 @@
   <div class="col-sm-12 container-fluid">
       <p-toolbar>
         <div class="p-toolbar-group-left">
-            <p-button label="Crear cliente" icon="pi pi-plus" class="mr-2" (click)="createClient()"></p-button>
+            <p-button label="Crear cliente" icon="pi pi-plus" class="mr-2" (click)="abrirModal('NUEVO')"></p-button>
             <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="p-button-success" 
                       style="padding-left: 1rem">
             </p-button>
@@ -40,45 +40,45 @@
           <ng-template pTemplate="body" let-cliente>
               <tr style="font-size: 15px;">
                   <td>
-                      {{ cliente.num | uppercase }}
+                      {{ cliente.id | number }}
                   </td>
                   <td>
-                      {{ cliente.nombres | uppercase }}
+                      {{ cliente.firstname | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.apellidos | uppercase }}
+                      {{ cliente.lastname | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.documento | uppercase }}
+                      {{ cliente.document | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.celular | uppercase }}
+                      {{ cliente.phone | uppercase }}
                   </td>
                   <td>
                       {{ cliente.email | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.pais | uppercase }}
+                      {{ cliente.country.name | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.cantReservas | uppercase }}
+                      {{ cliente.reservations_quantity | number }}
                   </td>
                   <td>
-                      {{ cliente.fchUltReserva | uppercase }}
+                      {{ cliente.last_reservation | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.fchCreacion | uppercase }}
+                      {{ cliente.created_date | uppercase }}
                   </td>
                   <td>
-                      <p-tag *ngIf="cliente.estado == 'Activo'"
+                      <p-tag *ngIf="cliente.status == 1"
                         styleClass="mr-2"
                         severity="success"
-                        value="{{ cliente.estado | uppercase }}"
+                        value="ACTIVO"
                       ></p-tag>
-                      <p-tag *ngIf="cliente.estado == 'Inactivo'"
+                      <p-tag *ngIf="cliente.status == 0"
                         styleClass="mr-2"
                         severity="danger"
-                        value="{{ cliente.estado | uppercase }}"
+                        value="INACTIVO"
                       ></p-tag>
                   </td>
                   <td>
@@ -89,74 +89,74 @@
           </ng-template>
       </p-table>
 
-        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%' }" header="Nuevo Cliente" 
+        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%',height: '100%'}" header="Nuevo Cliente" 
                 [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-5 col-md-6">
                             <label for="name">Nombre</label>
-                            <input type="text" pInputText id="name" required autofocus/>
+                            <input type="text" pInputText id="name" [(ngModel)]="POSTclient.firstname" required autofocus/>
                         </div>
                         <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
                             <label for="lastname">Apellido</label>
-                            <input type="text" pInputText id="lastname" required autofocus/>
+                            <input type="text" pInputText id="lastname" [(ngModel)]="POSTclient.lastname" required autofocus/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5 col-md-6">
                             <label for="documento">Documento</label>
-                            <p-inputNumber inputId="documento" [useGrouping]="false" [min]="0" [max]="99999999">
+                            <p-inputNumber inputId="documento" [useGrouping]="false" [(ngModel)]="POSTclient.document" [min]="0" [max]="99999999">
                             </p-inputNumber>
                         </div>
                         <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
                             <label for="telefono">Teléfono</label>
-                            <p-inputMask mask="999-999-999" placeholder="999-999-999"></p-inputMask>
+                            <p-inputMask mask="999-999-999" [(ngModel)]="POSTclient.phone" placeholder="999-999-999"></p-inputMask>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="email">Email</label>
-                            <input type="email" pInputText id="email" required autofocus/>
+                            <input type="email" pInputText id="email" [(ngModel)]="POSTclient.email" required autofocus/>
                         </div>                      
                     </div>
                     <div class="row">
                         <div class="col-sm-5 col-md-6">
                             <label for="pais">País</label>
-                            <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="selectedCountry" 
-                                            placeholder="Selecciona el país" optionLabel="name" [showClear]="true">
+                            <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="POSTclient.country_id" 
+                                            placeholder="Selecciona el país" optionLabel="name" [showClear]="true" [filter]="true">
                             </p-dropdown>
                         </div>
-                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                        <!--<div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
                             <label for="reservas">Cantidad de reservas</label>
                             <p-inputNumber inputId="reservas" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
                             </p-inputNumber>
-                        </div>
+                        </div>-->
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-sm-4">
                             <label for="estado">Estado</label>
                         </div>
                         <div class="col-sm-8">
                             <div class="p-field-radiobutton col-sm-5">
-                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                <p-radioButton name="estado" [(ngModel)]="selectedEstado"
                                         inputId="estado1" label="Activo">
                                 </p-radioButton>
                             </div>
                             <div class="p-field-radiobutton col-sm-5">
-                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                <p-radioButton name="estado" [(ngModel)]="selectedEstado"
                                         inputId="estado2" label="Inactivo">
                                 </p-radioButton>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
               <p-button (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
-              <p-button icon="pi pi-save" (click)="clientDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+              <p-button icon="pi pi-save" (click)="posClient()" label="Guardar" styleClass="p-button-info"></p-button>
             </ng-template>
         </p-dialog>
         

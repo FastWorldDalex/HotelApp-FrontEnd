@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { MenuItem, TreeNode } from 'primeng/api';
+import { API_ROUTES } from 'src/app/data/constants/routes';
 
 @Injectable()
 export class NodeService {
@@ -28,5 +29,12 @@ export class NodeService {
             .then((data) => {
                 return data;
             });
+    }
+
+    getCountry(){
+      return this.http.get(API_ROUTES.COUNTRY.GET_COUNTRY)
+        .toPromise()
+        .then(response => response as any[])
+        .catch(error => error)
     }
 }

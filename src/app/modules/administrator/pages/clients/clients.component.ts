@@ -1,7 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem, Message, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Customer } from './interface/Customer';
+import { AdministratorService } from '../../services/administrator.service';
+import { Client, Country, POSTClient } from './interface/iclient';
+import { NodeService } from '../../../../shared/services/node.service';
+
+
 
 @Component({
   selector: 'app-clients',
@@ -11,18 +15,42 @@ import { Customer } from './interface/Customer';
 export class ClientsComponent {
   items: MenuItem[] =[];
   titulos: string[] = [];
-  ltsClientes: any[] = [];
-
+  ltsClientes: Client[] = [];
   clientDialog: boolean = false;
+
+  client:Client = {
+    id: 0,
+    firstname: '',
+    lastname: '',
+    document: '',
+    phone: '',
+    email: '',
+    status: 0,
+    country_id: 0,
+    reservations_quantity: 0,
+    last_reservation: new Date(),
+    created_date: new Date()
+  };
+  POSTclient:POSTClient = {
+    firstname: '',
+    lastname: '',
+    document: '',
+    phone: '',
+    email: '',
+    status: 0,
+    country_id: 0,
+  };
 
   //Form Client
   countries: Country[] = [];
-  selectedCountry: Country | undefined;
   selectedEstado: string | undefined;
   //Confirm Dialog
   msgs: Message[] = [];
 
-  constructor() {}
+  constructor(
+    private administratorService:AdministratorService,
+    private nodeService:NodeService
+  ) {}
   //private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig
 
   ngOnInit() {
@@ -41,67 +69,65 @@ export class ClientsComponent {
       'Acciones',
     ];
 
-    this.ltsClientes = [
-      {
-      num:'1',
-      nombres:'Geampier. A',
-      apellidos:'Santamaria de la Cruz',
-      documento:'70691538',
-      celular:'939377020',
-      email:'geampier.smc@gmail.com',
-      pais:'Perú',
-      cantReservas:'2',
-      fchUltReserva:'16/01/2023',
-      fchCreacion:'24/01/2022',
-      estado:'Activo'},
-      {
-        num:'1',
-        nombres:'Luis. D',
-        apellidos:'Santamaria de la Cruz',
-        documento:'70691538',
-        celular:'939377020',
-        email:'geampier.smc@gmail.com',
-        pais:'Perú',
-        cantReservas:'2',
-        fchUltReserva:'16/01/2023',
-        fchCreacion:'24/01/2022',
-        estado:'Inactivo'},
-        {
-          num:'1',
-          nombres:'Ximena. A',
-          apellidos:'Santamaria de la Cruz',
-          documento:'70691538',
-          celular:'939377020',
-          email:'geampier.smc@gmail.com',
-          pais:'Perú',
-          cantReservas:'2',
-          fchUltReserva:'16/01/2023',
-          fchCreacion:'24/01/2022',
-          estado:'Activo'}
-    ];
+    
     this.items = [
-            {label: 'Ver detalle', icon: 'pi pi-eye', routerLink: ['/auth/login/recover']},
-            {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.editClient() },
+            {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
+            {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
             {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
             {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
     ];
-
-    //Form Client
-    this.countries = [
-      {name: 'Perú'},
-      {name: 'Chile'}
-    ];
-
+    this.getClient();
+    this.nodeService.getCountry().then((paises)=>{
+      this.countries = paises;
+    })
     //Confirmation Dialog
     //this.primengConfig.ripple=true;
   }
   
-  createClient(){
-    this.clientDialog = true;
+  getClient(){
+    this.administratorService.getClients().then((clientes) => {
+      if(clientes!=null || clientes.length >0){
+      this.ltsClientes =clientes;
+      
+      console.log("LISTA CLIENTES", this.ltsClientes);
+      }else{
+        console.log("FALLO BUSCAR CLIENTE");
+        
+      }
+    });
   }
-  editClient(){
-    this.clientDialog = true;
+
+  abrirModal(operacion:string){
+    switch(operacion){
+      case "NUEVO":
+        this.clientDialog = true;
+        break;
+      case "EDITAR":
+        this.clientDialog = true;
+        break;
+        case "VER":
+          this.clientDialog = true;
+          break;
+    }
+    
   }
+
+  posClient(){
+    this.POSTclient.status = 1;
+    this.POSTclient.country_id= this.POSTclient.country_id.id
+    this.administratorService.postClients(this.POSTclient).then((response) => {
+      if(response!=null || response.length >0){
+      
+      console.log("RESPUESTA", response);
+      this.getClient();
+      this.clientDialog = false;
+      }else{
+        console.log("FALLO INSERTAR CLIENTE");
+        
+      }
+    });
+  }
+
 
   /*deleteClient(){
     this.confirmationService.confirm({
@@ -115,7 +141,3 @@ export class ClientsComponent {
   }*/
 }
 
-
-export interface Country{
-  name: string
-}
