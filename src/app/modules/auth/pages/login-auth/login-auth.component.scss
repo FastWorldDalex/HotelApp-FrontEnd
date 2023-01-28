@@ -5,10 +5,16 @@
     place-items: center;
     background-image: 
     url("../../../../../assets/img/backbrounds/bg-login.jpg");
-
-  background-size: 100%;
+    background-size: cover;
+    max-height: 100%;
 }
 ::ng-deep{
+  .loginMain{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 .container-fluid .login {
     background-color: rgb(255, 255, 255);
     width: 435px;

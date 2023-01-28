@@ -33,12 +33,12 @@
         [rowHover]="true"
       >
           <ng-template pTemplate="header">
-              <tr style="font-size: 15px;">
+              <tr style="font-size: 12px;">
                   <th *ngFor="let titulo of titulos">{{ titulo | uppercase }}</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-cliente>
-              <tr style="font-size: 15px;">
+              <tr style="font-size: 10px;">
                   <td>
                       {{ cliente.id | number }}
                   </td>
@@ -82,8 +82,14 @@
                       ></p-tag>
                   </td>
                   <td>
-                      <p-splitButton icon="pi pi-cog" [model]="this.items" styleClass="p-button-text p-button-info"
-                      ></p-splitButton>
+                        <button pButton pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
+                            class="p-button-rounded p-button-secondary p-mr-2"></button>
+                        <button pButton pRipple icon="pi pi-file-edit" (click)="abrirModal('EDITAR')"
+                            class="p-button-rounded p-mr-2"></button>
+                        <button pButton pRipple icon="pi pi-trash" 
+                            class="p-button-rounded p-button-danger p-mr-2"></button>
+                        <button pButton pRipple icon="pi pi-check-square" 
+                            class="p-button-rounded p-button-warning "></button>
                   </td>
               </tr>
           </ng-template>
