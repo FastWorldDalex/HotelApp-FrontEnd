@@ -20,6 +20,7 @@ export class ClientsComponent {
   ltsClientes: Client[] = [];
   clientDialog: boolean = false;
   titleModal:string='';
+  puedeEditar:boolean = false;
   client:Client = {
     id: 0,
     firstname: '',
@@ -139,6 +140,7 @@ export class ClientsComponent {
         case "VER":
           this.titleModal = operacion + ' CLIENTE';
           this.clientDialog = true;
+          this.puedeEditar = true;
           break;
     }
     

@@ -101,45 +101,40 @@
           </ng-template>
       </p-table>
 
-        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%',height: '100%'}" header="{{titleModal}}" 
+        <p-dialog [(visible)]="clientDialog" [style]="{ width: '25%',height: '750px'}" header="{{titleModal}}" 
                 [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-5 col-md-6">
+                        <div class="col-sm-12 col-md-12">
                             <label for="name">Nombre</label>
-                            <input type="text" pInputText id="name" [(ngModel)]="POSTclient.firstname" required autofocus/>
+                            <input type="text" pInputText id="name" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.firstname" required autofocus/>
                         </div>
-                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                        <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
                             <label for="lastname">Apellido</label>
-                            <input type="text" pInputText id="lastname" [(ngModel)]="POSTclient.lastname" required autofocus/>
+                            <input type="text" pInputText id="lastname" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.lastname" required autofocus/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5 col-md-6">
+                        <div class="col-sm-12 col-md-12">
                             <label for="documento">Documento</label>
-                            <p-inputNumber inputId="documento" [useGrouping]="false" [(ngModel)]="POSTclient.document" [min]="0" [max]="99999999">
+                            <p-inputNumber inputId="documento" [disabled]="puedeEditar"  [useGrouping]="false" [(ngModel)]="POSTclient.document" [min]="0" [max]="99999999">
                             </p-inputNumber>
                         </div>
-                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-                            <label for="telefono">Teléfono</label>
-                            <p-inputMask mask="999-999-999" [(ngModel)]="POSTclient.phone" placeholder="999-999-999"></p-inputMask>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="email">Email</label>
-                            <input type="email" pInputText id="email" [(ngModel)]="POSTclient.email" required autofocus/>
-                        </div>                      
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5 col-md-6">
+                        <div class="col-sm-12 col-md-12">
                             <label for="pais">País</label>
                             <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="POSTclient.country_id" 
-                                            placeholder="Selecciona el país"  [showClear]="true" [filter]="true">
+                                            placeholder="Selecciona el país" [disabled]="puedeEditar"  [showClear]="true" [filter]="true">
                             </p-dropdown>
                         </div>
-                        <!--<div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+
+                        <div class="col-sm-12 col-md-12">
+                            <label for="email">Email</label>
+                            <input type="email" [disabled]="puedeEditar"  pInputText id="email" [(ngModel)]="POSTclient.email" required autofocus/>
+                        </div>         
+                        <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
+                            <label for="telefono">Teléfono</label>
+                            <p-inputMask mask="999-999-999" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.phone" placeholder="999-999-999"></p-inputMask>
+                        </div>
+                        <!--<div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
                             <label for="reservas">Cantidad de reservas</label>
                             <p-inputNumber inputId="reservas" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
                             </p-inputNumber>
@@ -150,12 +145,12 @@
                             <label for="estado">Estado</label>
                         </div>
                         <div class="col-sm-8">
-                            <div class="p-field-radiobutton col-sm-5">
+                            <div class="p-field-radiobutton col-sm-12">
                                 <p-radioButton name="estado" [(ngModel)]="selectedEstado"
                                         inputId="estado1" label="Activo">
                                 </p-radioButton>
                             </div>
-                            <div class="p-field-radiobutton col-sm-5">
+                            <div class="p-field-radiobutton col-sm-12">
                                 <p-radioButton name="estado" [(ngModel)]="selectedEstado"
                                         inputId="estado2" label="Inactivo">
                                 </p-radioButton>
@@ -166,9 +161,9 @@
                 </div>
             </ng-template>
 
-            <ng-template pTemplate="footer">
-              <p-button (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
-              <p-button icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
+            <ng-template pTemplate="footer" >
+              <p-button *ngIf="puedeEditar ==false" (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+              <p-button *ngIf="puedeEditar ==false" icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
             </ng-template>
         </p-dialog>
         
