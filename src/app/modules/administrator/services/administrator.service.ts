@@ -33,4 +33,11 @@ export class AdministratorService {
       .then(response => response)
       .catch(error => error)
   }
+
+  deleteClients(idClient?: number) {
+    return this.http.delete(`${API_ROUTES.CLIENTS.GET_CLIENTS}${idClient}`)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
 }

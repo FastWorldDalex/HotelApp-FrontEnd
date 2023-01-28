@@ -91,8 +91,8 @@
                         <button pButton  pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
                             class="p-button-rounded p-button-secondary p-mr-2" style="margin-right: 3px;"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="abrirModal('EDITAR')"
-                            class="p-button-rounded p-mr-2"></button>
-                        <button pButton pRipple icon="pi pi-trash" 
+                            class="p-button-rounded p-mr-2" ></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteClient()"
                             class="p-button-rounded p-button-danger p-mr-2"></button>
                         <button pButton pRipple icon="pi pi-check-square" 
                             class="p-button-rounded p-button-warning "></button>
@@ -162,8 +162,8 @@
             </ng-template>
 
             <ng-template pTemplate="footer" >
-              <p-button *ngIf="puedeEditar ==false" (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
-              <p-button *ngIf="puedeEditar ==false" icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
+              <p-button [disabled]="puedeEditar" (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+              <p-button [disabled]="puedeEditar" icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
             </ng-template>
         </p-dialog>
         

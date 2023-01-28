@@ -199,6 +199,20 @@ export class ClientsComponent {
 
     }
   }
+  deleteClient(){
+    this.administratorService.deleteClients(this.POSTclient.id).then((response) => {
+      if(response!=null || response.length >0){
+      
+      console.log("RESPUESTA", response);
+      this.getClient();
+      this.clientDialog = false;
+      this.showSuccess('success','success',`Se Elimino al cliente ${this.POSTclient.lastname}.`)
+      }else{
+        console.log("FALLO INSERTAR CLIENTE");
+        this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
+      }
+    });
+  }
 showSuccess(type:string,title:string,msg:string) {
         this.messageService.add({severity:type, summary: title, detail: msg});
     }
