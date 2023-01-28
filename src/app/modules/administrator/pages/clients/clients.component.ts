@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuItem, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { CustomerService } from '../../services/customer.service';
 import { Customer, Representative } from './interface/Customer';
 
 @Component({
