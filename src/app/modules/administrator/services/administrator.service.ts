@@ -11,21 +11,26 @@ import { POSTClient } from '../pages/clients/interface/iclient';
 export class AdministratorService {
 
   constructor(private http: HttpClient) { }
-  
 
-getClients() {
 
-  return this.http.get(API_ROUTES.CLIENTS.GET_CLIENTS)
-    .toPromise()
-    .then(response => response as any[])
-    .catch(error => error)
-}
+  getClients() {
 
-postClients(client: POSTClient) {
-  return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client)
-    .toPromise()
-    .then(response => response)
-    .catch(error => error)
+    return this.http.get(API_ROUTES.CLIENTS.GET_CLIENTS)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
   }
 
+  postClients(client: POSTClient) {
+    return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  putClients(client: POSTClient) {
+    return this.http.put(`${API_ROUTES.CLIENTS.GET_CLIENTS}${client.id}`, client)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
 }

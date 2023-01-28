@@ -16,7 +16,17 @@ export interface Client {
     reservations_quantity?: number;
     last_reservation?:      Date;
     status:                number;
-    country_id:            number;
+    country_id:            any;
     created_date?:          Date;
     country?:               Country;
+    countryName?:            string;
+}
+
+export interface SelectItem<T = any> {
+    label?: string;
+    value: T;
+    styleClass?: string;
+    icon?: string;
+    title?: string;
+    disabled?: boolean;
 }

@@ -1,4 +1,4 @@
-
+<p-toast></p-toast>
 <div class="row main-content">
     <div class="col-sm-12 content">
         <h3>Clientes</h3>
@@ -21,9 +21,11 @@
             </span>
         </div>
       </p-toolbar>
-      <p-table
+      <p-table  
+        [(selection)]="POSTclient"
+        dataKey="id"
         [value]="ltsClientes"
-        styleClass="p-datatable-striped"
+       
         [tableStyle]="{ 'min-width': '50rem' }"
         [paginator]="true"
         [showCurrentPageReport]="true"
@@ -34,11 +36,15 @@
       >
           <ng-template pTemplate="header">
               <tr style="font-size: 12px;">
-                  <th *ngFor="let titulo of titulos">{{ titulo | uppercase }}</th>
+                <th style="width: 4rem;"></th>
+                  <th class="text-center "style="font-size: 12px;" *ngFor="let titulo of titulos" >{{ titulo | uppercase }}</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-cliente>
               <tr style="font-size: 10px;">
+                <td>
+                    <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
+                </td>
                   <td>
                       {{ cliente.id | number }}
                   </td>
@@ -58,7 +64,7 @@
                       {{ cliente.email | uppercase }}
                   </td>
                   <td>
-                      {{ cliente.country.name | uppercase }}
+                      {{ cliente.countryName | uppercase }}
                   </td>
                   <td>
                       {{ cliente.reservations_quantity | number }}
@@ -82,8 +88,8 @@
                       ></p-tag>
                   </td>
                   <td>
-                        <button pButton pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
-                            class="p-button-rounded p-button-secondary p-mr-2"></button>
+                        <button pButton  pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
+                            class="p-button-rounded p-button-secondary p-mr-2" style="margin-right: 3px;"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="abrirModal('EDITAR')"
                             class="p-button-rounded p-mr-2"></button>
                         <button pButton pRipple icon="pi pi-trash" 
@@ -95,7 +101,7 @@
           </ng-template>
       </p-table>
 
-        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%',height: '100%'}" header="Nuevo Cliente" 
+        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%',height: '100%'}" header="{{titleModal}}" 
                 [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="container">
@@ -130,7 +136,7 @@
                         <div class="col-sm-5 col-md-6">
                             <label for="pais">País</label>
                             <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="POSTclient.country_id" 
-                                            placeholder="Selecciona el país" optionLabel="name" [showClear]="true" [filter]="true">
+                                            placeholder="Selecciona el país"  [showClear]="true" [filter]="true">
                             </p-dropdown>
                         </div>
                         <!--<div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
@@ -162,7 +168,7 @@
 
             <ng-template pTemplate="footer">
               <p-button (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
-              <p-button icon="pi pi-save" (click)="posClient()" label="Guardar" styleClass="p-button-info"></p-button>
+              <p-button icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
             </ng-template>
         </p-dialog>
         
@@ -179,5 +185,4 @@
         </p-confirmDialog>
         <p-messages [value]="msgs"></p-messages>
         -->
-    </div>
 </div>

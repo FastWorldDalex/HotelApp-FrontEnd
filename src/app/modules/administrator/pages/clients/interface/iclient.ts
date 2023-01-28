@@ -1,4 +1,5 @@
 export interface POSTClient {
+    id?:                     number;
     firstname:             string;
     lastname:              string;
     document:              string;

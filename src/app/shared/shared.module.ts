@@ -18,12 +18,13 @@ import { HeaderModule } from './components/header/header.module';
 import { NodeService } from './services/node.service';
 import { TagModule } from 'primeng/tag';
 import { HttpClientModule } from '@angular/common/http';
-
+import {ToastModule} from 'primeng/toast';
 @NgModule({
   declarations: [
     FooterComponent
   ],
   imports: [
+    ToastModule,
     CommonModule,
     FieldsetModule,
     RadioButtonModule,
@@ -39,6 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     TagModule,
   ],
   exports:[
+    ToastModule,
     HeaderModule,
     FooterComponent,
     PasswordModule,
