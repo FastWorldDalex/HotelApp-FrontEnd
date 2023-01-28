@@ -38,8 +38,8 @@ export interface Room {
 }
 
 export interface POSTReserva {
-    checkin:         Date;
-    checkout:        Date;
+    checkin:         any;
+    checkout:        any;
     adults:          number;
     children:        number;
     total:           number;

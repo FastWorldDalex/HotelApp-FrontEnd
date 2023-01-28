@@ -62,8 +62,8 @@ export class CalendarComponent implements OnInit {
   value1: number = 5;
   value2: number = 1200;
   postReserva:POSTReserva = {
-    checkin: new Date(),
-    checkout: new Date(),
+    checkin: '',
+    checkout: '',
     adults: 0,
     children: 0,
     total: 0,
@@ -201,10 +201,12 @@ export class CalendarComponent implements OnInit {
     this.postReserva.room_id= this.postReserva.room_id.id;
     this.postReserva.client_id =this.postReserva.client_id.id;
     this.postReserva.status =1;
-    let checkin = new Date(this.postReserva.checkin.getFullYear(),this.postReserva.checkin.getMonth(),this.postReserva.checkin.getDate());
+    let checkin:string = `${this.postReserva.checkin.getFullYear()}-${this.postReserva.checkin.getMonth()+1}-${this.postReserva.checkin.getDate()}`;
     this.postReserva.checkin = checkin;
-    let checkout = new Date(this.postReserva.checkout.getFullYear(),this.postReserva.checkout.getMonth(),this.postReserva.checkout.getDate());
+
+    let checkout:string = `${this.postReserva.checkout.getFullYear()}-${this.postReserva.checkout.getMonth()+1}-${this.postReserva.checkout.getDate()}`;
     this.postReserva.checkout = checkout;
+
     this.homeService.PostReservation(this.postReserva).then((response) =>{
       if(response != null){
         console.log(response);

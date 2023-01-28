@@ -136,7 +136,7 @@ export class ClientsComponent {
         this.titleModal = operacion + ' CLIENTE';
         this.clientDialog = true;
         console.log(this.POSTclient);
-        
+        this.puedeEditar = false;
         break;
         case "VER":
           this.titleModal = operacion + ' CLIENTE';
