@@ -1,253 +1,177 @@
+
 <div class="row main-content">
-  <div class="col-sm-12 content">
-    <h3>Clientes</h3>
-    <p>Aquí podrás ver la información de todos los clientes del hotel</p>
-  </div>
+    <div class="col-sm-12 content">
+        <h3>Clientes</h3>
+        <p>Aquí podrás ver la información de todos los clientes del hotel</p>
+    </div>
   <div class="col-sm-12 container-fluid">
-    <p-toolbar>
-      <div class="p-toolbar-group-left">
-        <p-button
-          label="Crear cliente"
-          icon="pi pi-plus"
-          class="mr-2"
-        ></p-button>
-        <p-button
-          label="Descargar excel"
-          icon="pi pi-file-excel"
-          styleClass="p-button-success"
-          style="padding-left: 1rem"
-        ></p-button>
-      </div>
-
-      <div class="p-toolbar-group-right">
-        <span class="p-float-label p-input-icon-right">
-          <i class="pi pi-search"></i>
-          <input type="text" id="Busqueda" pInputText />
-          <label for="inputtext-right">Buscar:</label>
-        </span>
-      </div>
-    </p-toolbar>
-    <p-table
-      [value]="ltsClientes"
-      styleClass="p-datatable-striped"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [paginator]="true"
-      [showCurrentPageReport]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cliente"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      [rows]="10"
-      [rowHover]="true"
-    >
-      <ng-template pTemplate="header">
-        <tr style="font-size: 15px;">
-          <th *ngFor="let titulo of titulos">{{ titulo | uppercase }}</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-cliente>
-        <tr style="font-size: 15px;">
-          <td>
-            {{ cliente.num | uppercase }}
-          </td>
-          <td>
-            {{ cliente.nombres | uppercase }}
-          </td>
-          <td>
-            {{ cliente.apellidos | uppercase }}
-          </td>
-          <td>
-            {{ cliente.documento | uppercase }}
-          </td>
-          <td>
-            {{ cliente.celular | uppercase }}
-          </td>
-          <td>
-            {{ cliente.email | uppercase }}
-          </td>
-          <td>
-            {{ cliente.pais | uppercase }}
-          </td>
-          <td>
-            {{ cliente.cantReservas | uppercase }}
-          </td>
-          <td>
-            {{ cliente.fchUltReserva | uppercase }}
-          </td>
-          <td>
-            {{ cliente.fchCreacion | uppercase }}
-          </td>
-          <td>
-            <p-tag *ngIf="cliente.estado == 'Activo'"
-              styleClass="mr-2"
-              severity="success"
-              value="{{ cliente.estado | uppercase }}"
-            ></p-tag>
-            <p-tag *ngIf="cliente.estado == 'Inactivo'"
-            styleClass="mr-2"
-            severity="danger"
-            value="{{ cliente.estado | uppercase }}"
-          ></p-tag>
-          </td>
-          <td>
-            <p-splitButton
-              icon="pi pi-cog"
-              [model]="this.items"
-              styleClass="p-button-text p-button-info"
-            ></p-splitButton>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <!--
-    <p-toast></p-toast>
-    
-    Plantilla de formulario para el "crear" y "editar" cliente
-    <p-dialog
-      [(visible)]="productDialog"
-      [style]="{ width: '450px' }"
-      header="Infomación del Cliente"
-      [modal]="true"
-      styleClass="p-fluid"
-    >
-      <ng-template pTemplate="content">
-        <div class="p-field">
-          <label for="name">Nombres</label>
-          <input
-            type="text"
-            pInputText
-            id="name"
-            [(ngModel)]="product.name"
-            required
-            autofocus
-          />
-          <small class="p-invalid" *ngIf="submitted && !product.name"
-            >Name is required.</small
-          >
-        </div>
-        <div class="p-field">
-            <label for="name">Apellidos</label>
-            <input
-            type="text"
-            pInputText
-            id="name"
-            [(ngModel)]="product.name"
-            required
-            autofocus
-            />
-            <small class="p-invalid" *ngIf="submitted && !product.name"
-            >Name is required.</small
-            >
-        </div>
-        <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <label for="name">Documento</label>
-                <input
-                    type="number"
-                    pInputText
-                    id="name"
-                    [(ngModel)]="product.name"
-                    required
-                    autofocus
-                />
-                <small class="p-invalid" *ngIf="submitted && !product.name"
-                    >Name is required.</small
-                >
-            </div>
-            <div class="p-field p-col">
-                <label for="name">Teléfono</label>
-                <input
-                    type="number"
-                    pInputText
-                    id="name"
-                    [(ngModel)]="product.name"
-                    required
-                    autofocus
-                />
-                <small class="p-invalid" *ngIf="submitted && !product.name"
-                    >Name is required.</small
-                >
-            </div>
-        </div>
-        <div class="p-field">
-            <label for="name">Email</label>
-            <input
-                type="email"
-                pInputText
-                id="name"
-                [(ngModel)]="product.name"
-                required
-                autofocus
-            />
-            <small class="p-invalid" *ngIf="submitted && !product.name"
-                >Name is required.</small
-            >
-        </div>
-        <div class="p-field">
-            <label for="name">País</label>
-            <input
-                type="text"
-                pInputText
-                id="name"
-                [(ngModel)]="product.name"
-                required
-                autofocus
-            />
-            <small class="p-invalid" *ngIf="submitted && !product.name"
-                >Name is required.</small
-            >
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <p-button label="Crear cliente" icon="pi pi-plus" class="mr-2" (click)="createClient()"></p-button>
+            <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="p-button-success" 
+                      style="padding-left: 1rem">
+            </p-button>
         </div>
 
-        <div class="p-field">
-          <label class="p-mb-3">Estado</label>
-          <div class="p-formgrid p-grid">
-            <div class="p-field-radiobutton p-col-6">
-              <p-radioButton
-                id="category3"
-                name="category"
-                value="Activo"
-                [(ngModel)]="product.category"
-              ></p-radioButton>
-              <label for="category3">Activo</label>
-            </div>
-            <div class="p-field-radiobutton p-col-6">
-              <p-radioButton
-                id="category4"
-                name="category"
-                value="Inactivo"
-                [(ngModel)]="product.category"
-              ></p-radioButton>
-              <label for="category4">Inactivo</label>
-            </div>
-          </div>
+        <div class="p-toolbar-group-right">
+            <span class="p-float-label p-input-icon-right">
+                <i class="pi pi-search"></i>
+                <input type="text" id="Busqueda" pInputText />
+                <label for="inputtext-right">Buscar:</label>
+            </span>
         </div>
-      </ng-template>
+      </p-toolbar>
+      <p-table
+        [value]="ltsClientes"
+        styleClass="p-datatable-striped"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cliente"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [rows]="10"
+        [rowHover]="true"
+      >
+          <ng-template pTemplate="header">
+              <tr style="font-size: 15px;">
+                  <th *ngFor="let titulo of titulos">{{ titulo | uppercase }}</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cliente>
+              <tr style="font-size: 15px;">
+                  <td>
+                      {{ cliente.num | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.nombres | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.apellidos | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.documento | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.celular | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.email | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.pais | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.cantReservas | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.fchUltReserva | uppercase }}
+                  </td>
+                  <td>
+                      {{ cliente.fchCreacion | uppercase }}
+                  </td>
+                  <td>
+                      <p-tag *ngIf="cliente.estado == 'Activo'"
+                        styleClass="mr-2"
+                        severity="success"
+                        value="{{ cliente.estado | uppercase }}"
+                      ></p-tag>
+                      <p-tag *ngIf="cliente.estado == 'Inactivo'"
+                        styleClass="mr-2"
+                        severity="danger"
+                        value="{{ cliente.estado | uppercase }}"
+                      ></p-tag>
+                  </td>
+                  <td>
+                      <p-splitButton icon="pi pi-cog" [model]="this.items" styleClass="p-button-text p-button-info"
+                      ></p-splitButton>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
 
-      <ng-template pTemplate="footer">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-text"
-          (click)="hideDialog()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          label="Guardar"
-          icon="pi pi-check"
-          class="p-button-text"
-          (click)="saveProduct()"
-        ></button>
-      </ng-template>
-    </p-dialog>
+        <p-dialog [(visible)]="clientDialog" [style]="{ width: '50%' }" header="Nuevo Cliente" 
+                [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="name">Nombre</label>
+                            <input type="text" pInputText id="name" required autofocus/>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="lastname">Apellido</label>
+                            <input type="text" pInputText id="lastname" required autofocus/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="documento">Documento</label>
+                            <p-inputNumber inputId="documento" [useGrouping]="false" [min]="0" [max]="99999999">
+                            </p-inputNumber>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="telefono">Teléfono</label>
+                            <p-inputMask mask="999-999-999" placeholder="999-999-999"></p-inputMask>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="email">Email</label>
+                            <input type="email" pInputText id="email" required autofocus/>
+                        </div>                      
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6">
+                            <label for="pais">País</label>
+                            <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="selectedCountry" 
+                                            placeholder="Selecciona el país" optionLabel="name" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                            <label for="reservas">Cantidad de reservas</label>
+                            <p-inputNumber inputId="reservas" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="estado">Estado</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="p-field-radiobutton col-sm-5">
+                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                        inputId="estado1" label="Activo">
+                                </p-radioButton>
+                            </div>
+                            <div class="p-field-radiobutton col-sm-5">
+                                <p-radioButton name="estado" value="1" [(ngModel)]="selectedEstado"
+                                        inputId="estado2" label="Inactivo">
+                                </p-radioButton>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </ng-template>
 
-    Mensaje de satisfaccion
-    <p-confirmDialog #cd [style]="{ width: '450px' }">
-        <ng-template pTemplate="footer">
-            <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-            <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
-        </ng-template>
-    </p-confirmDialog>
-    -->
-  </div>
+            <ng-template pTemplate="footer">
+              <p-button (click)="clientDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+              <p-button icon="pi pi-save" (click)="clientDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+            </ng-template>
+        </p-dialog>
+        
+        <!--
+
+        Mensaje de confirmacion
+        <p-confirmDialog #cd [style]="{ width: '450px' }">
+            <ng-template pTemplate="footer">
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+            </ng-template>
+        </p-confirmDialog>
+        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000">
+        </p-confirmDialog>
+        <p-messages [value]="msgs"></p-messages>
+        -->
+    </div>
 </div>

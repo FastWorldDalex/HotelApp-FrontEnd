@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, MenuItem, Message, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Customer, Representative } from './interface/Customer';
+import { CustomerService } from '../../services/customer.service';
+import { Customer } from './interface/Customer';
 
 @Component({
   selector: 'app-clients',
@@ -12,22 +14,18 @@ export class ClientsComponent {
   items: MenuItem[] =[];
   titulos: string[] = [];
   ltsClientes: any[] = [];
-  /*   items: MenuItem[] =[];
 
+  clientDialog: boolean = false;
 
-    customers: Customer[] = [];
-
-    selectedCustomers: Customer[] = [];
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    loading!: boolean;
-
-    @ViewChild('dt') table!: Table;*/
+  //Form Client
+  countries: Country[] = [];
+  selectedCountry: Country | undefined;
+  selectedEstado: string | undefined;
+  //Confirm Dialog
+  msgs: Message[] = [];
 
   constructor() {}
+  //private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig
 
   ngOnInit() {
     this.titulos = [
@@ -85,74 +83,41 @@ export class ClientsComponent {
     ];
     this.items = [
             {label: 'Ver detalle', icon: 'pi pi-eye', routerLink: ['/auth/login/recover']},
-            {label: 'Editar', icon: 'pi pi-file-edit', routerLink: ['/auth/login']},
+            {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.editClient() },
             {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
             {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
-        ];
+    ];
+
+    //Form Client
+    this.countries = [
+      {name: 'Perú'},
+      {name: 'Chile'}
+    ];
+
+    //Confirmation Dialog
+    //this.primengConfig.ripple=true;
+  }
+  
+  createClient(){
+    this.clientDialog = true;
+  }
+  editClient(){
+    this.clientDialog = true;
   }
 
-  /*
-  Funcion click para cada item del split button
-  command:()=>{this.editProduct}
-  command:()=>{this.deleteProduct}
-
-  Funciones click() para cada boton 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
-  }
-
-  deleteProduct(product: Product) {
+  /*deleteClient(){
     this.confirmationService.confirm({
-      message: '¿Estas seguro de eliminar al cliente ' + product.name + '?',
-      header: 'Eliminar Cliente',
+      message: '¿Está seguro de eliminar al cliente?',
+      header: 'Eliminar cliente',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Producto eliminado',
-          life: 3000,
-        });
-      },
-    });
-  }
-  hideDialog() {
-    this.productDialog = false;
-    this.submitted = false;
-  }
-
-  saveProduct() {
-    this.submitted = true;
-
-    if (this.product.name.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Cliente actualizado',
-          life: 3000,
-        });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmación',
-          detail: 'Cliente creado',
-          life: 3000,
-        });
+        this.msgs = [{severity:'info', summary:'Confirmación', detail:'Se ha elimado correctamente al cliente.'}];
       }
+    });
+  }*/
+}
 
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
-    }
-  }
 
-  */
+export interface Country{
+  name: string
 }

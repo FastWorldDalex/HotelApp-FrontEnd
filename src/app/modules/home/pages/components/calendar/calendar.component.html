@@ -5,7 +5,113 @@
     </div>
     
     <div class="container-fluid">
-            <full-calendar  [options]="options"></full-calendar>
+        <!--Formulario de reservas-->
+        <div class="button-container">
+            <p-button label="Registrar reserva" icon="pi pi-plus" (click)="showReservaDialog()"></p-button>
+            <p-dialog
+                [(visible)]="reservaDialog"
+                [style]="{ width: '50%' }"
+                header="Registra reserva"
+                [modal]="true"
+                styleClass="p-fluid"
+            >
+                <ng-template pTemplate="content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="checkin">Checkin</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckin" [locale]="es" 
+                                            dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="checkout">Checkout</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="dateCheckout" [locale]="es" 
+                                            dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="cliente">Cliente</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="clientes" [(ngModel)]="selectedCliente" 
+                                            placeholder="Selecciona el cliente" optionLabel="name" [showClear]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="habitacion">Habitación</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="rooms" [(ngModel)]="selectedRoom" 
+                                            placeholder="Selecciona la habitación" optionLabel="name" [showClear]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="adultos">Adultos</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-inputNumber [(ngModel)]="value1" inputId="adultos" suffix=" adulto(s)" [showButtons]="true" [min]="0" [max]="100">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="niños">Niños</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-inputNumber [(ngModel)]="value1" inputId="niños" suffix=" niño(s)" [showButtons]="true" [min]="0" [max]="100">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="total">Total</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-inputNumber [(ngModel)]="value2" inputId="total" mode="currency" currency="PEN" locale="es-PE">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="totalPagar">Total por pagar</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-inputNumber [(ngModel)]="value2" inputId="totalPagar" mode="currency" currency="PEN" locale="es-PE">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="formLabel" for="totalPagado">Total pagado</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p-inputNumber [(ngModel)]="value2" inputId="totalPagado" mode="currency" currency="PEN" locale="es-PE">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <p-button (click)="reservaDialog=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+                    <p-button icon="pi pi-save" (click)="reservaDialog=false" label="Guardar" styleClass="p-button-info"></p-button>
+                </ng-template>
+            </p-dialog>
+        </div>
+        
+        <!--Calendario-->
+        <full-calendar  [options]="options"></full-calendar>
     </div>
 </div>
 

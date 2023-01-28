@@ -8,6 +8,9 @@ import esLocale from '@fullcalendar/core/locales/es';
 // @fullcalendar plugins
 import { NodeService } from 'src/app/shared/services/node.service';
 import { CalendarOptions } from '@fullcalendar/core';
+//Dropdown
+import { SelectItem } from 'primeng/api';
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -20,6 +23,21 @@ export class CalendarComponent implements OnInit {
   options?: CalendarOptions ;
 
   header: any;
+
+  //Form Calendar
+  reservaDialog: boolean = false;
+  dateCheckin!: Date;
+  dateCheckout!: Date;
+  es: any;
+  //dropdwon
+  clientes: Cliente[] = [];
+  selectedCliente: Cliente | undefined;
+  rooms: Room[] = [];
+  selectedRoom: Room | undefined;
+  //defaultValues
+  value1: number = 5;
+  value2: number = 1200;
+
   constructor(private nodeService: NodeService) {}
 
   ngOnInit() {
@@ -95,5 +113,40 @@ export class CalendarComponent implements OnInit {
           selectMirror: true,
           dayMaxEvents: true
       };
+      
+      //Form Calendar
+      this.es = {
+        firstDayOfWeek: 1,
+        dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+        dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+        dayNamesMin: [ "D","L","M","X","J","V","S" ],
+        monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+        monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+        today: 'Hoy',
+        clear: 'Borrar'
+      }
+      //dropdown
+      this.clientes = [
+          {name: 'Carlos', lastname: 'Quispe'},
+          {name: 'Martin', lastname: 'Bartolo'}
+      ];
+      this.rooms = [
+        {name: 'H01'},
+        {name: 'H02'}
+    ];
   }
+
+  //Form Reserva
+  showReservaDialog(){
+    this.reservaDialog = true;
+  }
+}
+
+export interface Cliente {
+  name: string,
+  lastname: string
+}
+
+export interface Room{
+  name: string
 }
