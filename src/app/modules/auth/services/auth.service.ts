@@ -47,12 +47,14 @@ export class AuthService {
           response.msg = r.msg;
           response.error = r.error;
           response.data = r.data;
-          this.setUserToLocalStorage(r.data);
+          //this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           console.log("ERROR", r);
 
           if(!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
+            console.log("entro");
+            
           }
           return response;
         }),
@@ -136,6 +138,8 @@ export class AuthService {
     let nulo:any;
     this.currentUser.next(nulo);
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
+    console.log("Sesion");
+    
   }
 
   private setUserToLocalStorage(user: iApiUserAuthenticated){

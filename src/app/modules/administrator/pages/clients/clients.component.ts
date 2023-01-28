@@ -55,6 +55,7 @@ export class ClientsComponent {
 
   //Form Client
   countries: SelectItem[] = [];
+  lstEstado: SelectItem[] = [];
   selectedEstado: string | undefined;
   //Confirm Dialog
   msgs: Message[] = [];
