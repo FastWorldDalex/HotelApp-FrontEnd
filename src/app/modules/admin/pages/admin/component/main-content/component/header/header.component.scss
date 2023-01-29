@@ -1,0 +1,64 @@
+.navbar{
+  .account-menu{
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    .account-image{
+      img{
+        height: 40px;
+      }
+    }
+    .account-options{
+      display: none;
+      padding: 0px;
+      margin: 0px;
+      .account-detail{
+        background: #3699FF;
+        color: #FFFFFF;
+        padding: 10px 10px;
+        a{
+          cursor: pointer;
+          background: #3699FF;
+          &:hover{
+            background:#3699FF;
+          }
+          img{
+            height: 40px;
+            display: inline-block;
+            vertical-align: sub;
+          }
+          .detail{
+            display: inline-block;
+            padding: 10px 10px;
+            span{
+              display: block;
+              color: #FFFFFF;
+              font-size: 11px;
+            }
+          }
+        }
+
+
+      }
+    }
+    .option{
+      padding: 10px 10px;
+      color: #6C757D;
+      font-size: 12px;
+      a{
+        cursor: pointer;
+        background: #FFFFFF;
+        &:hover{
+          color: #a7adb3;
+        }
+      }
+    }
+  }
+
+  .dropdown-toggle{
+    &::after{
+      display: none;
+    }
+  }
+
+}
