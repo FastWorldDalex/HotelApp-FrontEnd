@@ -1,0 +1,82 @@
+.sidebar{
+  position: fixed;
+  background: #272b34;
+  width: 250px;
+  height: 100%;
+  top: 0;
+  z-index: 10;
+  padding-top: 10px;
+  box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
+  .navbar-logo{
+    display: block;
+    padding: 10px;
+    img{
+      padding: 10px;
+      height: 80px;
+    }
+  }
+  .account{
+    padding: 10px 20px;
+    img{
+      height: 40px;
+    }
+    .account-name{
+      color: #FFFFFF;
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .account-email{
+      color: #6C757D;
+      display: block;
+      font-size: 12px;
+    }
+  }
+  .modules{
+    padding: 30px 20px 20px 20px;
+    h4{
+      display: block;
+      color: #FFFFFF;
+      font-weight: 500;
+      font-size: 18px;
+      width: 100%;
+      line-height: 28px;
+    }
+    .list-group{
+      background: transparent;
+      .list-group-item{
+        background-color: transparent;
+        border: 0px solid;
+        color: #6C757D;
+        font-size: 14px;
+        font-weight: 500;
+        &.active{
+          color: #FFFFFF;
+        }
+
+      }
+      .list-group-item-action{
+        padding-right: 0px;
+        cursor: pointer;
+        i{
+          margin-right: 10px;
+        }
+        .title{
+          display: inline;
+          padding-right: 10px;
+        }
+        .child{
+          float: right;
+          display: inline-block;
+          max-width: 10px;
+        }
+        &:hover{
+          color: #c7c7c7;
+        }
+      }
+    }
+    .module-name{
+
+    }
+  }
+}

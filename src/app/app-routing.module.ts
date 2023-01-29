@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: ()=> import('../app/modules/administrator/administrator.module').then(m => m.AdministratorModule)
   },
   {
+    path: 'admin',
+    loadChildren: ()=> import('../app/modules/admin/admin.module').then(m => m.AdminModule)
+  },
+  {
     path: '**',
     redirectTo: '/auth/login'
   }
