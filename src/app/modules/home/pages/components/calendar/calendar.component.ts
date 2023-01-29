@@ -7,7 +7,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 
 // @fullcalendar plugins
 import { NodeService } from 'src/app/shared/services/node.service';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg, EventApi   } from '@fullcalendar/core';
 //Dropdown
 import { SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
@@ -84,7 +84,7 @@ export class CalendarComponent implements OnInit {
     });*/
     this.administratorService.getClients().then((res)=>{
       if(res!= null || res.length>0){
-        
+
         this.ltsClientes = res;
         this.ltsClientes.forEach((element) =>{
           element.nameComplete = element.firstname + ' '+element.lastname;
@@ -105,6 +105,7 @@ export class CalendarComponent implements OnInit {
       initialView: 'timeGridWeek', // dayGridWeek
       initialDate: '2023-01-18',
       locale: esLocale,
+      dateClick: this.handleDateClick.bind(this),
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -121,6 +122,7 @@ export class CalendarComponent implements OnInit {
           textColor: 'white' // an option!
         }
       ],
+      eventClick: this.handleEventClick.bind(this),
       eventContent: function (info) {
         return { html: '<div class="event-content">' + info.event.title + '</div>' };
       },
@@ -165,7 +167,21 @@ export class CalendarComponent implements OnInit {
     }
     //dropdown
   }
+  currentEvents: EventApi[] = [];
 
+  handleEventClick(clickInfo: EventClickArg) {
+    this.showReservaDialog();
+  }
+
+  handleDateClick() {
+    this.showReservaDialog();
+  }
+
+  handleEvents(events: EventApi[]) {
+    console.log(events);
+    this.currentEvents = events;
+    //this.changeDetector.detectChanges();
+  }
   //Form Reserva
   showReservaDialog() {
     this.reservaDialog = true;
@@ -187,7 +203,7 @@ export class CalendarComponent implements OnInit {
             end: `${element.checkout}T03:00:00`
           }
           console.log(this.reservaFiltro);
-          
+
           this.reservasCalendario.push(this.reservaFiltro);
         });
 
