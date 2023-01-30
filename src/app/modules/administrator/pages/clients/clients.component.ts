@@ -16,7 +16,7 @@ import { Client, Country } from 'src/app/shared/interface/interfaces';
 })
 export class ClientsComponent {
   items: MenuItem[] =[];
-  titulos: string[] = [];
+  titulos: Titles[] = [];
   ltsClientes: Client[] = [];
   clientDialog: boolean = false;
   titleModal:string='';
@@ -70,26 +70,26 @@ export class ClientsComponent {
 
   ngOnInit() {
     this.titulos = [
-      '#',
-      'Nombres',
-      'Apellidos',
-      'Documento',
-      'Teléfono',
-      'Email',
-      'País',
-      'Cantidad de Reservas',
-      'Última Reserva',
-      'Fecha de Creación',
-      'Estado',
-      'Acciones',
+      {title: '#', width: 8},
+      {title: 'Nombres', width: 2},
+      {title: 'Apellidos', width: 2},
+      {title: 'Documento', width: 2},
+      {title: 'Teléfono', width: 2},
+      {title: 'Email', width: 2},
+      {title: 'País', width: 2},
+      {title: 'Cantidad de Reservas', width: 2},
+      {title: 'Última Reserva', width: 2},
+      {title: 'Fecha de Creación', width: 2},
+      {title: 'Estado', width: 2},
+      {title: 'Acciones', width: 2}
     ];
 
     
     this.items = [
-            {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
-            {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
-            {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
-            {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
+        {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
+        {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
+        {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
+        {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
     ];
     this.getClient();
     this.nodeService.getCountry().then((paises:Country[])=>{
@@ -144,10 +144,11 @@ export class ClientsComponent {
           this.puedeEditar = true;
           break;
     }
-    
   }
-  coreGuardar(operacion:string){
 
+  
+
+  coreGuardar(operacion:string){
     switch(operacion){
       case 'NUEVO CLIENTE':
         this.posClient();
@@ -229,3 +230,7 @@ showSuccess(type:string,title:string,msg:string) {
   }*/
 }
 
+export interface Titles{
+  title: string;
+  width: number
+}

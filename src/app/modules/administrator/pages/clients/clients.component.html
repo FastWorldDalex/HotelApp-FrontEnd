@@ -1,106 +1,114 @@
 <p-toast></p-toast>
 <div class="row main-content">
-    <div class="col-sm-12 content">
+    <div class="col-sm-12 col-md-12 content">
         <h3>Clientes</h3>
         <p>Aquí podrás ver la información de todos los clientes del hotel</p>
     </div>
-  <div class="col-sm-12 container-fluid">
-      <p-toolbar>
-        <div class="p-toolbar-group-left">
-            <p-button label="Crear cliente" icon="pi pi-plus" class="mr-2" (click)="abrirModal('NUEVO')"></p-button>
-            <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="p-button-success" 
-                      style="padding-left: 1rem">
-            </p-button>
-        </div>
+    <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <p-button label="Crear cliente" icon="pi pi-plus" styleClass="textSizeTable" (click)="abrirModal('NUEVO')"></p-button>
+                <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
+                        style="padding-left: 1rem">
+                </p-button>
+            </div>
 
-        <div class="p-toolbar-group-right">
-            <span class="p-float-label p-input-icon-right">
-                <i class="pi pi-search"></i>
-                <input type="text" id="Busqueda" pInputText />
-                <label for="inputtext-right">Buscar:</label>
-            </span>
-        </div>
-      </p-toolbar>
-      <p-table  
-        [(selection)]="POSTclient"
-        dataKey="id"
-        [value]="ltsClientes"
-       
-        [tableStyle]="{ 'min-width': '50rem' }"
-        [paginator]="true"
-        [showCurrentPageReport]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cliente"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [rows]="10"
-        [rowHover]="true"
-      >
-          <ng-template pTemplate="header">
-              <tr style="font-size: 12px;">
-                <th style="width: 4rem;"></th>
-                  <th class="text-center "style="font-size: 12px;" *ngFor="let titulo of titulos" >{{ titulo | uppercase }}</th>
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-cliente>
-              <tr style="font-size: 10px;">
-                <td>
-                    <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
-                </td>
-                  <td>
-                      {{ cliente.id | number }}
-                  </td>
-                  <td>
-                      {{ cliente.firstname | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.lastname | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.document | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.phone | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.email | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.countryName | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.reservations_quantity | number }}
-                  </td>
-                  <td>
-                      {{ cliente.last_reservation | uppercase }}
-                  </td>
-                  <td>
-                      {{ cliente.created_date | uppercase }}
-                  </td>
-                  <td>
-                      <p-tag *ngIf="cliente.status == 1"
-                        styleClass="mr-2"
-                        severity="success"
-                        value="ACTIVO"
-                      ></p-tag>
-                      <p-tag *ngIf="cliente.status == 0"
-                        styleClass="mr-2"
-                        severity="danger"
-                        value="INACTIVO"
-                      ></p-tag>
-                  </td>
-                  <td>
-                        <button pButton  pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
-                            class="p-button-rounded p-button-secondary p-mr-2" style="margin-right: 3px;"></button>
+            <div class="p-toolbar-group-right">
+                <span class="p-float-label p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input type="text" id="Busqueda" pInputText />
+                    <label for="inputtext-right">Buscar:</label>
+                </span>
+            </div>
+        </p-toolbar>
+        
+        <!--Start of DataTable-->
+        <p-table 
+            [(selection)]="POSTclient"
+            dataKey="id"
+            [value]="ltsClientes"
+        
+            [tableStyle]="{ 'min-width': '50rem' }"
+
+            [paginator]="true"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} clientes"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [rows]="10"
+            [rowHover]="true"
+        >
+            <ng-template pTemplate="header">
+                <tr class="textSizeTable">
+                    <!--<th></th>-->
+                    <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
+                </tr>
+            </ng-template>
+            <ng-template  pTemplate="body" let-cliente>
+                <tr class="textSizeTable">
+                    <!--<td>
+                        <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
+                    </td>-->
+                    <td class="text-md-center">
+                        {{ cliente.id | number }}
+                    </td>
+                    <td>
+                        {{ cliente.firstname }}
+                    </td>
+                    <td>
+                        {{ cliente.lastname }}
+                    </td>
+                    <td class="text-md-center">
+                        {{ cliente.document }}
+                    </td>
+                    <td class="text-md-center">
+                        {{ cliente.phone }}
+                    </td>
+                    <td>
+                        {{ cliente.email }}
+                    </td>
+                    <td>
+                        {{ cliente.countryName }}
+                    </td>
+                    <td class="text-md-end">
+                        {{ cliente.reservations_quantity | number }}
+                    </td>
+                    <td class="text-md-end">
+                        {{ cliente.last_reservation | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td class="text-md-end">
+                        {{ cliente.created_date | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td>
+                        <p-tag *ngIf="cliente.status == 1"
+                            styleClass="textSizeTable mr-2"
+                            severity="success"
+                            value="ACTIVO"
+                        ></p-tag>
+                        <p-tag *ngIf="cliente.status == 0"
+                            styleClass="textSizeTable mr-2"
+                            severity="danger"
+                            value="INACTIVO"
+                        ></p-tag>
+                    </td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
+                            class="buttonTable p-button-secondary"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="abrirModal('EDITAR')"
-                            class="p-button-rounded p-mr-2" ></button>
+                            class="buttonTable" ></button>
                         <button pButton pRipple icon="pi pi-trash" (click)="deleteClient()"
-                            class="p-button-rounded p-button-danger p-mr-2"></button>
-                        <button pButton pRipple icon="pi pi-check-square" 
-                            class="p-button-rounded p-button-warning "></button>
-                  </td>
-              </tr>
-          </ng-template>
-      </p-table>
+                            class="buttonTable p-button-danger"></button>
+                        <button pButton pRipple icon="pi pi-check-square"
+                            class="buttonTable p-button-warning"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!--End of DataTable-->
 
+
+
+
+        <!--Start of Modal Form-->
         <p-dialog [(visible)]="clientDialog" [style]="{ width: '25%',height: '750px'}" header="{{titleModal}}" 
                 [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
@@ -108,31 +116,35 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12">
                             <label for="name">Nombre</label>
-                            <input type="text" pInputText id="name" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.firstname" required autofocus/>
+                            <input type="text" pInputText id="name" [disabled]="puedeEditar"
+                                    [(ngModel)]="POSTclient.firstname" required autofocus/>
                         </div>
                         <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
                             <label for="lastname">Apellido</label>
-                            <input type="text" pInputText id="lastname" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.lastname" required autofocus/>
+                            <input type="text" pInputText id="lastname" [disabled]="puedeEditar" 
+                                    [(ngModel)]="POSTclient.lastname" required autofocus/>
                         </div>
                         <div class="col-sm-12 col-md-12">
                             <label for="documento">Documento</label>
-                            <p-inputNumber inputId="documento" [disabled]="puedeEditar"  [useGrouping]="false" [(ngModel)]="POSTclient.document" [min]="0" [max]="99999999">
-                            </p-inputNumber>
+                            <!--<p-inputNumber inputId="documento" [disabled]="puedeEditar"
+                                    [useGrouping]="false" [(ngModel)]="POSTclient.document" [min]="0" [max]="99999999">
+                            </p-inputNumber>-->
+                            <p-inputMask mask="99999999" [disabled]="puedeEditar" [(ngModel)]="POSTclient.document"></p-inputMask>
                         </div>
                         <div class="col-sm-12 col-md-12">
                             <label for="pais">País</label>
                             <p-dropdown [style]="{'width':'100%'}" [options]="countries" [(ngModel)]="POSTclient.country_id" 
-                                            placeholder="Selecciona el país" [disabled]="puedeEditar"  [showClear]="true" [filter]="true">
+                                    placeholder="Selecciona el país" [disabled]="puedeEditar"  [showClear]="true" [filter]="true">
                             </p-dropdown>
                         </div>
 
                         <div class="col-sm-12 col-md-12">
                             <label for="email">Email</label>
-                            <input type="email" [disabled]="puedeEditar"  pInputText id="email" [(ngModel)]="POSTclient.email" required autofocus/>
+                            <input type="email" [disabled]="puedeEditar" pInputText id="email" [(ngModel)]="POSTclient.email" required autofocus/>
                         </div>         
                         <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
                             <label for="telefono">Teléfono</label>
-                            <p-inputMask mask="999-999-999" [disabled]="puedeEditar"  [(ngModel)]="POSTclient.phone" placeholder="999-999-999"></p-inputMask>
+                            <p-inputMask mask="999999999" [disabled]="puedeEditar" [(ngModel)]="POSTclient.phone"></p-inputMask>
                         </div>
                         <!--<div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
                             <label for="reservas">Cantidad de reservas</label>
@@ -166,9 +178,13 @@
               <p-button [disabled]="puedeEditar" icon="pi pi-save" (click)="coreGuardar(titleModal)" label="Guardar" styleClass="p-button-info"></p-button>
             </ng-template>
         </p-dialog>
+        <!--End of Modal Form-->
         
-        <!--
 
+
+
+
+        <!--
         Mensaje de confirmacion
         <p-confirmDialog #cd [style]="{ width: '450px' }">
             <ng-template pTemplate="footer">

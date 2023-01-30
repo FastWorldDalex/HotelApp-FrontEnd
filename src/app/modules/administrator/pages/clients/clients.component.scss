@@ -20,6 +20,17 @@
 }*/
 
 // table
+:host ::ng-deep {
+    .textSizeTable{
+        font-size: 80%;
+    }
+    .buttonTable{
+        margin-right: 0.2rem;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+    }
+}
 
 //Form Nuevo y Editar cliente
 .sizes {
