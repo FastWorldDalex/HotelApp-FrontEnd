@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ERRORS_CONST } from 'src/app/data/constants';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { POSTClient } from '../pages/clients/interface/iclient';
+import { Client } from '../pages/clients/interface/iclient';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +21,13 @@ export class AdministratorService {
       .catch(error => error)
   }
 
-  postClients(client: POSTClient) {
+  postClients(client: Client) {
     return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client)
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
-  putClients(client: POSTClient) {
+  putClients(client: Client) {
     return this.http.put(`${API_ROUTES.CLIENTS.GET_CLIENTS}${client.id}`, client)
       .toPromise()
       .then(response => response)

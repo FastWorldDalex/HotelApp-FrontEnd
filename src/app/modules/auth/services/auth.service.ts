@@ -32,28 +32,31 @@ export class AuthService {
   ): Observable<{
     error: boolean;
     msg: string;
-    data: any
+    data: any;
+    access_token:string;
   }> {
     const response = {
-      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:''
     };
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': '*/*'})
     };
-    return this.http.post<{error:boolean, msg: string, data:any}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
+    return this.http.post<{error:boolean, msg: string, data:any, access_token:string}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;
           response.error = r.error;
           response.data = r.data;
+          response.access_token = r.access_token
           //this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           console.log("ERROR", r);
 
           if(!response.error){
+            sessionStorage.setItem("access_token",JSON.stringify(r.access_token));
             this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
-            console.log("entro");
+            console.log("entro",r.access_token);
             
           }
           return response;
@@ -138,7 +141,8 @@ export class AuthService {
     let nulo:any;
     this.currentUser.next(nulo);
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
-    console.log("Sesion");
+    sessionStorage.removeItem("access_token");
+    sessionStorage.clear();
     
   }
 

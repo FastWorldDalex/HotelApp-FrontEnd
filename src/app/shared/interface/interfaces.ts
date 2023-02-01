@@ -5,23 +5,10 @@ export interface Country {
     status: number;
 }
 
-export interface Client {
-    id?:                    number;
-    nameComplete?:           string;
-    firstname:             string;
-    lastname:              string;
-    document:              string;
-    phone:                 string;
-    email:                 string;
-    reservations_quantity?: number;
-    last_reservation?:      Date;
-    status:                number;
-    country_id:            any;
-    created_date?:          Date;
-    country?:               Country;
-    countryName?:            string;
-}
 
+/**
+ * interfaces global
+ */
 export interface SelectItem<T = any> {
     label?: string;
     value: T;
@@ -30,3 +17,7 @@ export interface SelectItem<T = any> {
     title?: string;
     disabled?: boolean;
 }
+export interface Titles{
+    title: string;
+    width: number
+  }

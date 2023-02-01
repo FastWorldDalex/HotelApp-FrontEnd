@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ConfirmationService, MenuItem, Message, MessageService, PrimeNGConfig, SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { AdministratorService } from '../../services/administrator.service';
-import { POSTClient } from './interface/iclient';
 import { NodeService } from '../../../../shared/services/node.service';
-import { Client, Country } from 'src/app/shared/interface/interfaces';
+import { Country, Titles } from 'src/app/shared/interface/interfaces';
+import { Client } from './interface/iclient';
+import { NewClientsComponent } from './components/new-clients/new-clients.component';
 
 
 
@@ -14,35 +15,17 @@ import { Client, Country } from 'src/app/shared/interface/interfaces';
   styleUrls: ['./clients.component.scss'],
   providers: [MessageService]
 })
-export class ClientsComponent {
+export class ClientsComponent implements OnInit{
+  @ViewChild(NewClientsComponent, { static: false })
+  newClientsComponent: NewClientsComponent = new NewClientsComponent(this.nodeService,this.administratorService,this.messageService);
+
   items: MenuItem[] =[];
   titulos: Titles[] = [];
   ltsClientes: Client[] = [];
   clientDialog: boolean = false;
   titleModal:string='';
   puedeEditar:boolean = false;
-  client:Client = {
-    id: 0,
-    firstname: '',
-    lastname: '',
-    document: '',
-    phone: '',
-    email: '',
-    status: 0,
-    country_id: 0,
-    reservations_quantity: 0,
-    last_reservation: new Date(),
-    created_date: new Date()
-  };
-  POSTclient:POSTClient = {
-    firstname: '',
-    lastname: '',
-    document: '',
-    phone: '',
-    email: '',
-    status: 0,
-    country_id: 0,
-  };
+  client: Client;
   selectedClient: Client = {
     firstname: '',
     lastname: '',
@@ -50,7 +33,8 @@ export class ClientsComponent {
     phone: '',
     email: '',
     status: 0,
-    country_id: 0
+    country_id: 0,
+    country_name: ''
   };
 
   //Form Client
@@ -59,83 +43,65 @@ export class ClientsComponent {
   selectedEstado: string | undefined;
   //Confirm Dialog
   msgs: Message[] = [];
-
   constructor(
     private administratorService:AdministratorService,
     private nodeService:NodeService,
     private messageService: MessageService
     
-  ) {}
+  ) {
+    this.client = new Client();
+    console.log(this.client);
+    
+  }
   //private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig
 
   ngOnInit() {
-    this.titulos = [
-      {title: '#', width: 8},
-      {title: 'Nombres', width: 2},
-      {title: 'Apellidos', width: 2},
-      {title: 'Documento', width: 2},
-      {title: 'Teléfono', width: 2},
-      {title: 'Email', width: 2},
-      {title: 'País', width: 2},
-      {title: 'Cantidad de Reservas', width: 2},
-      {title: 'Última Reserva', width: 2},
-      {title: 'Fecha de Creación', width: 2},
-      {title: 'Estado', width: 2},
-      {title: 'Acciones', width: 2}
-    ];
 
+    const carga_1 = this.getClient();
+    const carga_2 = this.getCountry();
+    const carga_3 = this.componentsInitials();
     
-    this.items = [
-        {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
-        {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
-        {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
-        {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
-    ];
-    this.getClient();
-    this.nodeService.getCountry().then((paises:Country[])=>{
-      paises.forEach(e => {
-        this.countries.push({ label: e.name, value: e.id });
-      });
-    })
-    //Confirmation Dialog
-    //this.primengConfig.ripple=true;
+    Promise.all([carga_1,carga_2,carga_3]).then((resp)=>{
+
+    });
   }
   
   getClient(){
     this.administratorService.getClients().then((clientes) => {
       if(clientes!=null || clientes.length >0){
+
       this.ltsClientes =clientes;
-      this.ltsClientes.forEach(e=>{
-        e.countryName= e.country?.name;
-      })
-      
-      console.log("LISTA CLIENTES", this.ltsClientes);
+      this.ltsClientes.forEach((e)=>{
+        e.country_name = e.country?.name;
+      });
+      this.message('success', 'exitoso', 'Busqueda realizada.')
       }else{
-        console.log("FALLO BUSCAR CLIENTE");
-        
+        this.message('error', 'error', 'Busqueda fallida.')
       }
     });
   }
-
+  getCountry(){
+    this.nodeService.getCountry().then((paises:Country[])=>{
+      paises.forEach(e => {
+        this.countries.push({ label: e.name, value: e.id });
+      });
+    })
+  }
+  coreNuevo(accion:string){
+    
+    this.newClientsComponent.componentsInitials(accion,"CLIENTE");
+  }
   abrirModal(operacion:string){
     switch(operacion){
       case "NUEVO":
+        
         this.titleModal = operacion + ' CLIENTE';
         this.clientDialog = true;
-        this.POSTclient = {
-          firstname: '',
-          lastname: '',
-          document: '',
-          phone: '',
-          email: '',
-          status: 0,
-          country_id: 0,
-        };
         break;
       case "EDITAR":
         this.titleModal = operacion + ' CLIENTE';
         this.clientDialog = true;
-        console.log(this.POSTclient);
+        console.log(this.client);
         this.puedeEditar = false;
         break;
         case "VER":
@@ -148,67 +114,15 @@ export class ClientsComponent {
 
   
 
-  coreGuardar(operacion:string){
-    switch(operacion){
-      case 'NUEVO CLIENTE':
-        this.posClient();
-        break;
-      case 'EDITAR CLIENTE':
-        this.putClient();
-    }
-  }
-  posClient(){
-    this.POSTclient.status = 1;
-    if(this.POSTclient.document.length >8 || this.POSTclient.document != '')
-    {
-    this.administratorService.postClients(this.POSTclient).then((response) => {
-      if(response!=null || response.length >0){
-      
-      console.log("RESPUESTA", response);
-      this.getClient();
-      this.clientDialog = false;
-      this.showSuccess('success','success', 'Se registro al nuevo cliente.')
-      }else{
-        console.log("FALLO INSERTAR CLIENTE");
-        this.showSuccess('Error','Error', 'No se pudo registrar al cliente.')
-      }
-    });}else{
-      this.showSuccess('error','error', 'Datos incorrectos.')
 
-    }
-  }
-  putClient(){
-    this.POSTclient.status = 1;
-    if(this.POSTclient.document == null){
-      this.showSuccess('error','error', 'Datos incorrectos.');
-      return;
-    }
-    if(this.POSTclient.document.length >8 || this.POSTclient.document != '' ||this.POSTclient.document != null)
-    {
-    this.administratorService.putClients(this.POSTclient).then((response) => {
-      if(response!=null || response.length >0){
-      
-      console.log("RESPUESTA", response);
-      this.getClient();
-      this.clientDialog = false;
-      this.showSuccess('success','success',`Se Actualizo al cliente ${this.client.lastname}.`)
-      }else{
-        console.log("FALLO INSERTAR CLIENTE");
-        this.showSuccess('Error','Error', 'No se pudo registrar al cliente.')
-      }
-    });}else{
-      this.showSuccess('error','error', 'Datos incorrectos.')
-
-    }
-  }
   deleteClient(){
-    this.administratorService.deleteClients(this.POSTclient.id).then((response) => {
+    this.administratorService.deleteClients(this.client.id).then((response) => {
       if(response!=null || response.length >0){
       
       console.log("RESPUESTA", response);
       this.getClient();
       this.clientDialog = false;
-      this.showSuccess('success','success',`Se Elimino al cliente ${this.POSTclient.lastname}.`)
+      this.showSuccess('success','success',`Se Elimino al cliente ${this.client.lastname}.`)
       }else{
         console.log("FALLO INSERTAR CLIENTE");
         this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
@@ -228,9 +142,34 @@ showSuccess(type:string,title:string,msg:string) {
       }
     });
   }*/
+
+componentsInitials(){
+  this.titulos = [
+    {title: '#', width: 8},
+    {title: 'Nombres', width: 2},
+    {title: 'Apellidos', width: 2},
+    {title: 'Documento', width: 2},
+    {title: 'Teléfono', width: 2},
+    {title: 'Email', width: 2},
+    {title: 'País', width: 2},
+    {title: 'Cantidad de Reservas', width: 2},
+    {title: 'Última Reserva', width: 2},
+    {title: 'Fecha de Creación', width: 2},
+    {title: 'Estado', width: 2},
+    {title: 'Acciones', width: 2}
+  ];
+
+  this.items = [
+    {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
+    {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
+    {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
+    {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
+];
 }
 
-export interface Titles{
-  title: string;
-  width: number
+message(type:string, titulo:string, msg:string){
+  this.showSuccess(type,titulo, msg)
 }
+}
+
+

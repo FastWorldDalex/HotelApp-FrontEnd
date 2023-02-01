@@ -12,8 +12,8 @@ import { CalendarOptions, EventClickArg, EventApi   } from '@fullcalendar/core';
 import { SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
 import { POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
-import { Client } from 'src/app/shared/interface/interfaces';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
+import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 
 @Component({
   selector: 'app-calendar',

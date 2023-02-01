@@ -26,19 +26,21 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageService } from 'primeng/api';
 import {InputMaskModule} from 'primeng/inputmask';
 import { MessagesModule } from 'primeng/messages';
+import { NewClientsComponent } from './pages/clients/components/new-clients/new-clients.component';
 
-
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
     AdministratorComponent,
-    ClientsComponent
+    ClientsComponent,
+    NewClientsComponent
   ],
   imports: [
     CommonModule,
     AdministratorRoutingModule,
     SharedModule,
-
+    ScrollPanelModule,
     ToolbarModule,
     SplitButtonModule,
     TableModule,
