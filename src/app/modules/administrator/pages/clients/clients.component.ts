@@ -91,6 +91,12 @@ export class ClientsComponent implements OnInit{
     
     this.newClientsComponent.componentsInitials(accion,"CLIENTE");
   }
+  coreEditar(accion:string, client: Client){
+    
+    this.newClientsComponent.componentsInitials(accion,"CLIENTE", this.selectedClient = client);
+  }
+
+
   abrirModal(operacion:string){
     switch(operacion){
       case "NUEVO":

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { Country } from 'src/app/shared/interface/interfaces';
@@ -18,6 +18,7 @@ export class NewClientsComponent implements OnInit{
   isEdit: boolean = false;
   eventHtpp:boolean = false;
   client: Client;
+  @Input() selectedClient: any = null;
 
   countries: SelectItem[] = [];
   constructor(
@@ -37,6 +38,12 @@ export class NewClientsComponent implements OnInit{
     this.accion = _accion;
     this.titulo = `${_titulo} ${_accion}`;
     this.isDisplay = true;
+    if(typeof this.selectedClient !== undefined){
+      this.selectedClient = _data;
+    }else{
+      this.selectedClient = null;
+    }
+    
   }
 
   getCountry(){

@@ -23,8 +23,8 @@
         </p-toolbar>
         
         <!--Start of DataTable-->
-        <p-table 
-            [(selection)]="client"
+        <p-table
+            [(selection)]="selectedClient"
             dataKey="id"
             [value]="ltsClientes"
         
@@ -44,7 +44,7 @@
                 </tr>
             </ng-template>
             <ng-template  pTemplate="body" let-cliente>
-                <tr class="textSizeTable">
+                <tr class="textSizeTable" [pSelectableRow]="client">
                     <!--<td>
                         <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
                     </td>-->
@@ -93,7 +93,7 @@
                     <td>
                         <button pButton pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
                             class="buttonTable p-button-secondary"></button>
-                        <button pButton pRipple icon="pi pi-file-edit" (click)="abrirModal('EDITAR')"
+                        <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',selectedClient)"
                             class="buttonTable" ></button>
                         <button pButton pRipple icon="pi pi-trash" (click)="deleteClient()"
                             class="buttonTable p-button-danger"></button>
@@ -129,5 +129,7 @@
         <p-messages [value]="msgs"></p-messages>
         -->
 </div>
-<app-new-clients></app-new-clients>
+<app-new-clients
+    [selectedClient]= "selectedClient"
+></app-new-clients>
 
