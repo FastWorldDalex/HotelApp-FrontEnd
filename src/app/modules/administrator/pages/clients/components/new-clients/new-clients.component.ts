@@ -18,7 +18,13 @@ export class NewClientsComponent implements OnInit{
   isEdit: boolean = false;
   eventHtpp:boolean = false;
   client: Client;
-  @Input() selectedClient: any = null;
+  Estados:SelectItem[]=[{
+    label: 'ACTIVO',
+    value: 1,
+  },{
+    label: 'INACTIVO',
+    value: 2,
+  }];
 
   countries: SelectItem[] = [];
   constructor(
@@ -34,15 +40,23 @@ export class NewClientsComponent implements OnInit{
 
     });
   }
-  componentsInitials(_accion: string, _titulo: string, _data?: any,): void {
+  componentsInitials(_accion: string, _titulo: string, _data?: any): void {
     this.accion = _accion;
     this.titulo = `${_titulo} ${_accion}`;
     this.isDisplay = true;
-    if(typeof this.selectedClient !== undefined){
-      this.selectedClient = _data;
-    }else{
-      this.selectedClient = null;
+    switch(_accion){
+      case 'NUEVO':
+        break;
+      case 'EDITAR':
+        this.client = _data;
+
+        break;
+      case 'VER':
+        this.client = _data;
+        this.isDisplay = false;
+        break;
     }
+    
     
   }
 

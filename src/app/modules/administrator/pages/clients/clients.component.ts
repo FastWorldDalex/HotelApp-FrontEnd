@@ -93,7 +93,11 @@ export class ClientsComponent implements OnInit{
   }
   coreEditar(accion:string, client: Client){
     
-    this.newClientsComponent.componentsInitials(accion,"CLIENTE", this.selectedClient = client);
+    this.newClientsComponent.componentsInitials(accion,"CLIENTE", client);
+  }
+  coreVer(accion:string, client: Client){
+    
+    this.newClientsComponent.componentsInitials(accion,"CLIENTE",client);
   }
 
 
