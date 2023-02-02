@@ -125,14 +125,14 @@ export class ClientsComponent implements OnInit{
   
 
 
-  deleteClient(){
-    this.administratorService.deleteClients(this.client.id).then((response) => {
+  deleteClient(client: Client){
+    this.administratorService.deleteClients(client.id).then((response) => {
       if(response!=null || response.length >0){
       
       console.log("RESPUESTA", response);
       this.getClient();
       this.clientDialog = false;
-      this.showSuccess('success','success',`Se Elimino al cliente ${this.client.lastname}.`)
+      this.showSuccess('success','success',`Se elimino al cliente ${client.lastname}.`)
       }else{
         console.log("FALLO INSERTAR CLIENTE");
         this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
@@ -155,7 +155,7 @@ showSuccess(type:string,title:string,msg:string) {
 
 componentsInitials(){
   this.titulos = [
-    {title: '#', width: 8},
+    {title: '#', width: 2},
     {title: 'Nombres', width: 2},
     {title: 'Apellidos', width: 2},
     {title: 'Documento', width: 2},

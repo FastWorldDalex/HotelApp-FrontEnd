@@ -24,7 +24,7 @@
         
         <!--Start of DataTable-->
         <p-table
-            [(selection)]="selectedClient"
+            [(selection)]="client"
             dataKey="id"
             [value]="ltsClientes"
         
@@ -44,11 +44,11 @@
                 </tr>
             </ng-template>
             <ng-template  pTemplate="body" let-cliente>
-                <tr class="textSizeTable" [pSelectableRow]="client">
+                <tr class="textSizeTable">
                     <!--<td>
                         <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
                     </td>-->
-                    <td class="text-md-center">
+                    <td>
                         {{ cliente.id | number }}
                     </td>
                     <td>
@@ -57,25 +57,25 @@
                     <td>
                         {{ cliente.lastname }}
                     </td>
-                    <td class="text-md-center">
+                    <td>
                         {{ cliente.document }}
                     </td>
-                    <td class="text-md-center">
+                    <td>
                         {{ cliente.phone }}
                     </td>
                     <td>
                         {{ cliente.email }}
                     </td>
-                    <td>
+                    <td style="width: 7rem;">
                         {{ cliente.country_name }}
                     </td>
-                    <td class="text-md-end">
+                    <td class="text-md-end" style="width: 7rem;">
                         {{ cliente.reservations_quantity | number }}
                     </td>
-                    <td class="text-md-end">
+                    <td class="text-md-end" style="width: 7,1rem;">
                         {{ cliente.last_reservation | date: 'dd/MM/yyyy' }}
                     </td>
-                    <td class="text-md-end">
+                    <td class="text-md-end" style="width: 6rem;">
                         {{ cliente.created_date | date: 'dd/MM/yyyy' }}
                     </td>
                     <td>
@@ -90,15 +90,15 @@
                             value="INACTIVO"
                         ></p-tag>
                     </td>
-                    <td>
-                        <button pButton pRipple icon="pi pi-eye" (click)="abrirModal('VER')"
-                            class="buttonTable p-button-secondary"></button>
+                    <td style="width: 10.8rem;">
+                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER',cliente)"
+                            class="buttonTable p-button-secondary" title="Ver detalle"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',cliente)"
-                            class="buttonTable" ></button>
-                        <button pButton pRipple icon="pi pi-trash" (click)="deleteClient()"
-                            class="buttonTable p-button-danger"></button>
+                            class="buttonTable" title="Editar cliente"></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteClient(cliente)"
+                            class="buttonTable p-button-danger" title="Eliminar cliente"></button>
                         <button pButton pRipple icon="pi pi-check-square"
-                            class="buttonTable p-button-warning"></button>
+                            class="buttonTable p-button-warning" title="Desactivar cliente"></button>
                     </td>
                 </tr>
             </ng-template>

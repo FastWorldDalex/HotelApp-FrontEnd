@@ -16,6 +16,7 @@ export class NewClientsComponent implements OnInit{
   titulo: string = '';
   isDisplay: boolean = false;
   isEdit: boolean = false;
+  isNew: boolean = false;
   eventHtpp:boolean = false;
   client: Client;
   Estados:SelectItem[]=[{
@@ -23,7 +24,7 @@ export class NewClientsComponent implements OnInit{
     value: 1,
   },{
     label: 'INACTIVO',
-    value: 2,
+    value: 0,
   }];
 
   countries: SelectItem[] = [];
@@ -42,22 +43,22 @@ export class NewClientsComponent implements OnInit{
   }
   componentsInitials(_accion: string, _titulo: string, _data?: any): void {
     this.accion = _accion;
-    this.titulo = `${_titulo} ${_accion}`;
+    this.titulo = `${_accion} ${_titulo}`;
     this.isDisplay = true;
+    this.isNew = true;
+    this.isEdit = false;
     switch(_accion){
       case 'NUEVO':
         break;
       case 'EDITAR':
         this.client = _data;
-
+        this.isNew = false;
         break;
       case 'VER':
         this.client = _data;
-        this.isDisplay = false;
+        this.isEdit = true;
         break;
     }
-    
-    
   }
 
   getCountry(){
@@ -74,7 +75,7 @@ export class NewClientsComponent implements OnInit{
         this.posClient();
         break;
       case 'EDITAR':
-        this.putClient();
+        this.putClient(); 
     }
   }
   posClient(){
@@ -99,7 +100,6 @@ export class NewClientsComponent implements OnInit{
   }
 
   putClient(){
-    this.client.status = 1;
     if(this.client.document == null){
       this.showSuccess('error','error', 'Datos incorrectos.');
       return;

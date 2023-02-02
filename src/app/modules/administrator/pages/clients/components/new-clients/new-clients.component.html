@@ -65,10 +65,18 @@
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <div  class="row" *ngFor="let estado of Estados">
-                            <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value" [(ngModel)]="client.status"></p-radioButton>
-                            <label [for]="estado.value">{{estado.label}}</label>
+                        <div class="row">
+                            <div class="col-sm-12 p-0">
+                                <label class="mb-2">Estado:</label>
+                            </div>
+                            <div class="col" *ngFor="let estado of Estados" style="width: 100%;">
+                                <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value" 
+                                        [(ngModel)]="client.status" [disabled]="isNew"></p-radioButton>
+                                <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
+                            </div>
                         </div>
+                        
+                        
                         
                     </div>
                     <!--<div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
@@ -99,7 +107,7 @@
         </ng-template>
     </p-scrollPanel>
     <ng-template pTemplate="footer">
-        <p-button [disabled]="isEdit" (click)="isDisplay=false" label="Cancelar"
+        <p-button (click)="isDisplay=false" label="Cancelar"
             styleClass="p-button-danger"></p-button>
         <p-button [disabled]="isEdit" icon="pi pi-save" (click)="coreGuardar(accion)" label="Guardar"
             styleClass="p-button-info"></p-button>
