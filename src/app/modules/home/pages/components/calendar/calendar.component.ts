@@ -24,30 +24,52 @@ export class CalendarComponent implements OnInit {
 
   events: any[] = [];
 
-  options?: CalendarOptions;
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    initialView: 'timeGridWeek', // dayGridWeek
+    initialDate: '2023-01-30',
+    locale: esLocale,
+     headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: ''
+    },
+    eventContent: function (info) {
+      return { html: '<div class="event-content">' + info.event.title + '</div>' };
+    },
+    slotLabelContent: function (slot) {
+      var rooms = ["H101", "H102", "H104", "H105", "H106", "H107", "H108", "H109",
+        "H110", "H111", "H112", "H113", "H114", "H115", "H116", "H117", "H118", "H119",
+        "H120", "H121", "H122", "", "", ""];
+      var room_title = "";
+      if (slot.date.getMinutes() == 0) {
+        room_title = '<b>' + rooms[slot.date.getHours()] + '<b>';
+      } else if (slot.date.getMinutes() == 15) {
+        room_title = "Habitación Básica";
+      } else if (slot.date.getMinutes() == 30) {
+        room_title = "2 camas simples";
+      } else {
+        room_title = "1er piso";
+      }
+      return { html: '<span style="font-size:11px">' + room_title + '</span>' };
+    },
+    slotLabelInterval: "00:15",
+    slotDuration: '00:15:00',
+    nowIndicator: true,
+    allDaySlot: false,
+    editable: true,
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true
+  };
+
   ltsReservas: Reserva[] = [];
   reservaFiltro: labelCalendar = {
       title: '',
       start: '',
       end: ''
-    };
-    reservasCalendario: labelCalendar[]=[ // put the array in the `events` property
-    {
-      title: '<span>Carla Prado</span> <br>+51966710491 <br> carlaprado@gmail.com <br> 1 adulto - 0 niños',
-      start: '2023-01-18T00:00:00',
-      end: '2023-01-18T01:00:00',
-    },
-    {
-      title: '<span>Carmen Villa</span> <br>  +51966710491 <br> carmenvilla@gmail.com <br> 2 adultos - 0 niños',
-      start: '2023-01-20T02:00:00',
-      end: '2023-01-20T03:00:00',
-    },
-    {
-      title: '<span>Pedro Torres</span> <br>  +51966744497 <br> pedrotorres@gmail.com <br> 1 adulto - 1 niño',
-      start: '2023-01-21T01:00:00',
-      end: '2023-01-21T02:00:00',
-    }
-  ]
+  };
+  calendarEvents: any[] = [];
   header: any;
 
   //Form Calendar
@@ -79,10 +101,13 @@ export class CalendarComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    /*this.nodeService.getEvents().then((events) => {
-        this.events = events;
-        this.options = { ...this.options, ...{ events: events } };
-    });*/
+    setTimeout(() => {
+      this.getReservas();
+    }, 1000);
+    setTimeout(() => {
+      this.updateCalendar();
+    }, 2000);
+
     this.administratorService.getClients().then((res)=>{
       if(res!= null || res.length>0){
 
@@ -99,9 +124,7 @@ export class CalendarComponent implements OnInit {
       }
     });
 
-
-    this.getReservas();
-    this.options = {
+    /*this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
       initialDate: '2023-01-18',
@@ -116,7 +139,7 @@ export class CalendarComponent implements OnInit {
 
         // your event source
         {
-          events: this.reservasCalendario,
+          events: this.calendarEvents,
 
           backgroundColor: '#2962FF',
           //color: 'blue',     // an option!
@@ -124,6 +147,7 @@ export class CalendarComponent implements OnInit {
         }
       ],
       eventClick: this.handleEventClick.bind(this),
+      eventsSet: this.handleEvents.bind(this),
       eventContent: function (info) {
         return { html: '<div class="event-content">' + info.event.title + '</div>' };
       },
@@ -153,7 +177,7 @@ export class CalendarComponent implements OnInit {
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true
-    };
+    };*/
 
     //Form Calendar
     this.es = {
@@ -170,6 +194,60 @@ export class CalendarComponent implements OnInit {
   }
   currentEvents: EventApi[] = [];
 
+  updateCalendar(){
+    this.calendarOptions = {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      initialView: 'timeGridWeek', // dayGridWeek
+      initialDate: '2023-01-30',
+      locale: esLocale,
+       headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      dateClick: this.handleDateClick.bind(this),
+      eventSources: [
+        // your event source
+        {
+          events: this.calendarEvents,
+
+          backgroundColor: '#2962FF',
+          //color: 'blue',     // an option!
+          textColor: 'white' // an option!
+        }
+      ],
+      eventClick: this.handleEventClick.bind(this),
+      eventsSet: this.handleEvents.bind(this),
+      eventContent: function (info) {
+        return { html: '<div class="event-content">' + info.event.title + '</div>' };
+      },
+      slotLabelContent: function (slot) {
+        var rooms = ["H101", "H102", "H104", "H105", "H106", "H107", "H108", "H109",
+          "H110", "H111", "H112", "H113", "H114", "H115", "H116", "H117", "H118", "H119",
+          "H120", "H121", "H122", "", "", ""];
+        var room_title = "";
+        if (slot.date.getMinutes() == 0) {
+          room_title = '<b>' + rooms[slot.date.getHours()] + '<b>';
+        } else if (slot.date.getMinutes() == 15) {
+          room_title = "Habitación Básica";
+        } else if (slot.date.getMinutes() == 30) {
+          room_title = "2 camas simples";
+        } else {
+          room_title = "1er piso";
+        }
+        return { html: '<span style="font-size:11px">' + room_title + '</span>' };
+      },
+      slotLabelInterval: "00:15",
+      slotDuration: '00:15:00',
+      nowIndicator: true,
+      allDaySlot: false,
+      editable: true,
+      selectable: true,
+      selectMirror: true,
+      dayMaxEvents: true
+    };
+  }
+
   handleEventClick(clickInfo: EventClickArg) {
     this.showReservaDialog();
   }
@@ -177,10 +255,38 @@ export class CalendarComponent implements OnInit {
   handleDateClick(date: any) {
     console.log(date.dateStr);
     this.showReservaDialog();
+
+    this.calendarEvents = [ // put the array in the `events` property
+      {
+        title: '<span>Juan Prado</span> <br>+51966710491 <br> carlaprado@gmail.com <br> 1 adulto - 0 niños',
+        start: '2023-01-18T00:00:00',
+        end: '2023-01-18T01:00:00',
+      },
+      {
+        title: '<span>Juana Villa</span> <br>  +51966710491 <br> carmenvilla@gmail.com <br> 2 adultos - 0 niños',
+        start: '2023-01-20T02:00:00',
+        end: '2023-01-20T03:00:00',
+      }
+    ];
+
+    this.currentEvents = this.calendarEvents;
+
   }
 
   handleEvents(events: EventApi[]) {
     console.log("handleEvents");
+    this.events = [ // put the array in the `events` property
+      {
+        title: '<span>Juan Prado</span> <br>+51966710491 <br> carlaprado@gmail.com <br> 1 adulto - 0 niños',
+        start: '2023-01-18T00:00:00',
+        end: '2023-01-18T01:00:00',
+      },
+      {
+        title: '<span>Juana Villa</span> <br>  +51966710491 <br> carmenvilla@gmail.com <br> 2 adultos - 0 niños',
+        start: '2023-01-20T02:00:00',
+        end: '2023-01-20T03:00:00',
+      }
+    ];
     this.currentEvents = events;
     this.changeDetector.detectChanges();
   }
@@ -190,6 +296,120 @@ export class CalendarComponent implements OnInit {
   }
 
   getReservas() {
+    this.homeService.GetReservation(null, null).then((reservas) => {
+      if (reservas != null || reservas.length > 0) {
+        this.ltsReservas = reservas;
+        let cliente: string;
+        let room_start: string;
+        let room_end: string;
+        this.calendarEvents = [];
+        this.ltsReservas.forEach(element => {
+          cliente = element.client.firstname + ' ' + element.client.lastname;
+          switch(element.room.name){
+            case 'H101':
+              room_start = "00:00:00";
+              room_end = "01:00:00";
+              break;
+              case 'H102':
+                room_start = "01:00:00";
+                room_end = "02:00:00";
+                break;
+              case 'H104':
+                room_start = "02:00:00";
+                room_end = "03:00:00";
+                break;
+              case 'H105':
+                room_start = "03:00:00";
+                room_end = "04:00:00";
+                break;
+              case 'H106':
+                room_start = "04:00:00";
+                room_end = "05:00:00";
+                break;
+              case 'H107':
+                room_start = "05:00:00";
+                room_end = "06:00:00";
+                break;
+              case 'H108':
+                room_start = "06:00:00";
+                room_end = "07:00:00";
+                break;
+              case 'H109':
+                room_start = "07:00:00";
+                room_end = "08:00:00";
+                break;
+              case 'H109':
+                room_start = "08:00:00";
+                room_end = "09:00:00";
+                break;
+              case 'H110':
+                room_start = "09:00:00";
+                room_end = "10:00:00";
+                break;
+              case 'H111':
+                room_start = "09:00:00";
+                room_end = "10:00:00";
+                break;
+              case 'H112':
+                room_start = "10:00:00";
+                room_end = "11:00:00";
+                break;
+              case 'H113':
+                room_start = "11:00:00";
+                room_end = "12:00:00";
+                break;
+              case 'H114':
+                room_start = "12:00:00";
+                room_end = "13:00:00";
+                break;
+              case 'H115':
+                room_start = "13:00:00";
+                room_end = "14:00:00";
+                break;
+              case 'H116':
+                room_start = "14:00:00";
+                room_end = "15:00:00";
+                break;
+              case 'H117':
+                room_start = "15:00:00";
+                room_end = "16:00:00";
+                break;
+              case 'H118':
+                room_start = "16:00:00";
+                room_end = "17:00:00";
+                break;
+              case 'H119':
+                room_start = "17:00:00";
+                room_end = "18:00:00";
+                break;
+              case 'H120':
+                room_start = "18:00:00";
+                room_end = "19:00:00";
+                break;
+              case 'H121':
+                room_start = "19:00:00";
+                room_end = "20:00:00";
+                break;
+              case 'H122':
+                room_start = "20:00:00";
+                room_end = "21:00:00";
+                break;
+          }
+
+          let reservaFiltro = {
+            title: `<span>${cliente}</span> <br> ${element.client.phone} <br>
+            ${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
+            start: `${element.checkin}T${room_start}`,
+            end: `${element.checkout}T${room_end}`
+          }
+
+          this.calendarEvents.push(reservaFiltro);
+        });
+      }
+    });
+  }
+
+  getReservas2() {
     this.homeService.GetReservation(null, null).then((reservas) => {
       if (reservas != null || reservas.length > 0) {
         this.ltsReservas = reservas;
@@ -206,14 +426,12 @@ export class CalendarComponent implements OnInit {
           }
           console.log(this.reservaFiltro);
 
-          this.reservasCalendario.push(this.reservaFiltro);
         });
 
 
       }
     });
   }
-
 
   posReserva() {
     this.postReserva.room_id= this.postReserva.room_id.id;
@@ -229,7 +447,12 @@ export class CalendarComponent implements OnInit {
       if(response != null){
         console.log(response);
         this.reservaDialog=false;
-        this.getReservas();
+        setTimeout(() => {
+          this.getReservas();
+        }, 1000);
+        setTimeout(() => {
+          this.updateCalendar();
+        }, 2000);
       }
     })
   }

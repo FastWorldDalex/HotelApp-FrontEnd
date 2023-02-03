@@ -11,13 +11,13 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   GetReservation(FechaInicio: string | null, FechaFin: string | null) {
-    //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-01-28'
+    //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'
 
       return this.http.get(API_ROUTES.RESERVATION.GET_RESERVATION)
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
-    
+
   }
 
   PostReservation(postReserva: POSTReserva) {
@@ -27,7 +27,7 @@ export class HomeService {
       .toPromise()
       .then(response => response as any)
       .catch(error => error);
-    
+
   }
 
   GetRoom() {
@@ -36,6 +36,6 @@ export class HomeService {
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
-    
+
   }
 }

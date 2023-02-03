@@ -3,7 +3,7 @@
         <h3>Calendario de Disponibilidad</h3>
         <p>Aquí podrás ver la disponibilidad de las habitaciones a lo largo de los días del mes</p>
     </div>
-    
+
     <div class="container-fluid">
         <!--Formulario de reservas-->
         <div class="button-container">
@@ -22,7 +22,7 @@
                                 <label class="formLabel" for="checkin">Checkin</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkin" [locale]="es" 
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkin" [locale]="es"
                                             dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <label class="formLabel" for="checkout">Checkout</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkout" [locale]="es" 
+                                <p-calendar [style]="{'width':'100%'}" [(ngModel)]="postReserva.checkout" [locale]="es"
                                             dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 <label class="formLabel" for="cliente">Cliente</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes" [(ngModel)]="postReserva.client_id" 
+                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes" [(ngModel)]="postReserva.client_id"
                                             placeholder="Selecciona el cliente" optionLabel="nameComplete" [showClear]="true"  [filter]="true">
                                 </p-dropdown>
                             </div>
@@ -50,7 +50,7 @@
                                 <label class="formLabel" for="habitacion">Habitación</label>
                             </div>
                             <div class="col-sm-8">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="postReserva.room_id" 
+                                <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="postReserva.room_id"
                                             placeholder="Selecciona la habitación" optionLabel="name" [showClear]="true" [filter]="true">
                                 </p-dropdown>
                             </div>
@@ -109,9 +109,9 @@
                 </ng-template>
             </p-dialog>
         </div>
-        
+
         <!--Calendario-->
-        <full-calendar  [options]="options"></full-calendar>
+        <full-calendar  [options]="calendarOptions"></full-calendar>
     </div>
 </div>
 
