@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-main-content',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-content.component.scss']
 })
 export class MainContentComponent {
-
+  collapsed: boolean = true;
 }
