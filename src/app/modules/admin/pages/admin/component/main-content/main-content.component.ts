@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-main-content',
@@ -6,5 +6,11 @@ import { Component, Input} from '@angular/core';
   styleUrls: ['./main-content.component.scss']
 })
 export class MainContentComponent {
+  @Output() collapsedEvent = new EventEmitter<boolean>();
   collapsed: boolean = true;
+
+  changeCollapsed() {
+    this.collapsed = !this.collapsed;
+    this.collapsedEvent.emit(this.collapsed);
+  }
 }
