@@ -39,15 +39,11 @@
         >
             <ng-template pTemplate="header">
                 <tr class="textSizeTable">
-                    <!--<th></th>-->
                     <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
                 </tr>
             </ng-template>
             <ng-template  pTemplate="body" let-cliente>
                 <tr class="textSizeTable">
-                    <!--<td>
-                        <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
-                    </td>-->
                     <td>
                         {{ cliente.id | number }}
                     </td>
@@ -78,7 +74,7 @@
                     <td class="text-md-end" style="width: 6rem;">
                         {{ cliente.created_date | date: 'dd/MM/yyyy' }}
                     </td>
-                    <td>
+                    <td style="width: 6rem;">
                         <p-tag *ngIf="cliente.status == 1"
                             styleClass="textSizeTable mr-2"
                             severity="success"
@@ -90,14 +86,14 @@
                             value="INACTIVO"
                         ></p-tag>
                     </td>
-                    <td style="width: 10.8rem;">
+                    <td style="width: 12rem;">
                         <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER',cliente)"
                             class="buttonTable p-button-secondary" title="Ver detalle"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',cliente)"
                             class="buttonTable" title="Editar cliente"></button>
                         <button pButton pRipple icon="pi pi-trash" (click)="deleteClient(cliente)"
                             class="buttonTable p-button-danger" title="Eliminar cliente"></button>
-                        <button pButton pRipple icon="pi pi-check-square"
+                        <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusClient(cliente)"
                             class="buttonTable p-button-warning" title="Desactivar cliente"></button>
                     </td>
                 </tr>
@@ -107,27 +103,16 @@
 
 
 
-
-        <!--Start of Modal Form-->
-
-        <!--End of Modal Form-->
-        
-
-
-
-
-        <!--
-        Mensaje de confirmacion
-        <p-confirmDialog #cd [style]="{ width: '450px' }">
+        <!--Start of Confirmation-->
+        <p-confirmDialog #cd icon="pi pi-exclamation-triangle">
             <ng-template pTemplate="footer">
-                <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-                <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+                <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
+                </button>
+                <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
+                </button>
             </ng-template>
         </p-confirmDialog>
-        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000">
-        </p-confirmDialog>
-        <p-messages [value]="msgs"></p-messages>
-        -->
+        <!--End of Confirmation Modal-->
 </div>
 <app-new-clients
 ></app-new-clients>

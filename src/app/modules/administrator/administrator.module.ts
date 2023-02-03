@@ -22,7 +22,8 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import {InputMaskModule} from 'primeng/inputmask';
 import { MessagesModule } from 'primeng/messages';
@@ -60,6 +61,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     RadioButtonModule,
     ConfirmDialogModule,
     MessagesModule
-  ]
+  ],
+  providers: [ConfirmationService]
 })
 export class AdministratorModule { }

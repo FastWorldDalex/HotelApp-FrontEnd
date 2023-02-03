@@ -46,17 +46,14 @@ export class ClientsComponent implements OnInit{
   constructor(
     private administratorService:AdministratorService,
     private nodeService:NodeService,
-    private messageService: MessageService
-    
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.client = new Client();
     console.log(this.client);
-    
   }
-  //private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig
 
   ngOnInit() {
-
     const carga_1 = this.getClient();
     const carga_2 = this.getCountry();
     const carga_3 = this.componentsInitials();
@@ -87,19 +84,16 @@ export class ClientsComponent implements OnInit{
       });
     })
   }
+
   coreNuevo(accion:string){
-    
     this.newClientsComponent.componentsInitials(accion,"CLIENTE");
   }
   coreEditar(accion:string, client: Client){
-    
     this.newClientsComponent.componentsInitials(accion,"CLIENTE", client);
   }
   coreVer(accion:string, client: Client){
-    
     this.newClientsComponent.componentsInitials(accion,"CLIENTE",client);
   }
-
 
   abrirModal(operacion:string){
     switch(operacion){
@@ -122,59 +116,86 @@ export class ClientsComponent implements OnInit{
     }
   }
 
-  
-
-
   deleteClient(client: Client){
-    this.administratorService.deleteClients(client.id).then((response) => {
-      if(response!=null || response.length >0){
-      
-      console.log("RESPUESTA", response);
-      this.getClient();
-      this.clientDialog = false;
-      this.showSuccess('success','success',`Se elimino al cliente ${client.lastname}.`)
-      }else{
-        console.log("FALLO INSERTAR CLIENTE");
-        this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
+    this.confirmationService.confirm({
+      header: 'Eliminar cliente',
+      message: `¿Está seguro de eliminar al cliente ${client.lastname}?`,
+      accept: () => {
+        this.administratorService.deleteClients(client.id).then((response) => {
+          if(response!=null || response.length >0){
+          
+          console.log("RESPUESTA", response);
+          this.getClient();
+          this.clientDialog = false;
+          this.showSuccess('success','success',`Se elimino al cliente ${client.lastname}.`)
+          }else{
+            console.log("FALLO INSERTAR CLIENTE");
+            this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
+          }
+        });
       }
     });
   }
-showSuccess(type:string,title:string,msg:string) {
-        this.messageService.add({severity:type, summary: title, detail: msg});
+  changeStatusClient(client: Client){
+    if(client.status == 1){
+      this.confirmationService.confirm({
+        header: 'Desactivar cliente',
+        message: `¿Está seguro de desactivar al cliente ${client.lastname}?`,
+        accept: () => {
+          client.status = 0;
+          this.administratorService.putClients(client).then((response) => {
+            if(response!=null || response.length >0){
+            
+            console.log("RESPUESTA", response);
+            this.getClient();
+            this.showSuccess('success','success',`Se desactivo al cliente ${client.lastname}.`)
+            }else{
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo desactivar al cliente.')
+            }
+          });
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar cliente',
+        message: `¿Está seguro de activar al cliente ${client.lastname}?`,
+        accept: () => {
+          client.status = 1;
+          this.administratorService.putClients(client).then((response) => {
+            if(response!=null || response.length >0){
+            
+            console.log("RESPUESTA", response);
+            this.showSuccess('success','success',`Se activo al cliente ${client.lastname}.`)
+            }else{
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo activar al cliente.')
+            }
+          });
+        }
+      });
     }
-  /*deleteClient(){
-    this.confirmationService.confirm({
-      message: '¿Está seguro de eliminar al cliente?',
-      header: 'Eliminar cliente',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.msgs = [{severity:'info', summary:'Confirmación', detail:'Se ha elimado correctamente al cliente.'}];
+  }
+  
+  showSuccess(type:string,title:string,msg:string) {
+          this.messageService.add({severity:type, summary: title, detail: msg});
       }
-    });
-  }*/
 
-componentsInitials(){
-  this.titulos = [
-    {title: '#', width: 2},
-    {title: 'Nombres', width: 2},
-    {title: 'Apellidos', width: 2},
-    {title: 'Documento', width: 2},
-    {title: 'Teléfono', width: 2},
-    {title: 'Email', width: 2},
-    {title: 'País', width: 2},
-    {title: 'Cantidad de Reservas', width: 2},
-    {title: 'Última Reserva', width: 2},
-    {title: 'Fecha de Creación', width: 2},
-    {title: 'Estado', width: 2},
-    {title: 'Acciones', width: 2}
-  ];
-
-  this.items = [
-    {label: 'Ver detalle', icon: 'pi pi-eye', command: ()=>this.abrirModal("VER")},
-    {label: 'Editar', icon: 'pi pi-file-edit', command: ()=>this.abrirModal("EDITAR") },
-    {label: 'Eliminar', icon: 'pi pi-trash', routerLink: ['/auth/login']},
-    {label: 'Desactivar', icon: 'pi pi-check-square', routerLink: ['/auth/login']}
-];
+  componentsInitials(){
+    this.titulos = [
+      {title: '#', width: 2},
+      {title: 'Nombres', width: 2},
+      {title: 'Apellidos', width: 2},
+      {title: 'Documento', width: 2},
+      {title: 'Teléfono', width: 2},
+      {title: 'Email', width: 2},
+      {title: 'País', width: 2},
+      {title: 'Cantidad de Reservas', width: 2},
+      {title: 'Última Reserva', width: 2},
+      {title: 'Fecha de Creación', width: 2},
+      {title: 'Estado', width: 2},
+      {title: 'Acciones', width: 2}
+    ];
 }
 
 message(type:string, titulo:string, msg:string){
