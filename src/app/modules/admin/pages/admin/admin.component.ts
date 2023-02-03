@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
+  sidebarCollapsed = false
 
+  collapseSidebar(value: boolean){
+    this.sidebarCollapsed = !value;
+  }
 }

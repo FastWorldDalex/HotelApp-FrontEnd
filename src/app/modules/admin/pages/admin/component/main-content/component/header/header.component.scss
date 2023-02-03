@@ -1,4 +1,9 @@
 .navbar{
+  .btn-toogle {
+    a{
+      cursor: pointer;
+    }
+  }
   .account-menu{
     position: absolute;
     right: 20px;

@@ -7,6 +7,40 @@
   z-index: 10;
   padding-top: 10px;
   box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
+  &.collapsed{
+    width: 80px;
+    .navbar-logo{
+      display: none;
+    }
+    .account{
+      .col-3 {
+        width: 100%;
+      }
+      .col-9{
+        display: none;
+      }
+    }
+    .modules {
+      padding: 20px 10px 20px 10px;
+      h4{
+        display: none;
+      }
+      .list-group{
+        .list-group-item-action{
+          i{
+            margin-right: 10px;
+          }
+          .title {
+            display: none;
+            padding-right: 0px;
+          }
+          .child{
+            max-width: 15px;
+          }
+        }
+      }
+    }
+  }
   .navbar-logo{
     display: block;
     padding: 10px;

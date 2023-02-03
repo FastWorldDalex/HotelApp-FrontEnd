@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
+  @Output() collapsedChange = new EventEmitter<boolean>();
+  status: boolean = false;
+  toggleSidebar(){
+    this.status = !this.status;
+    this.collapsedChange.emit(this.status);
+  }
 }

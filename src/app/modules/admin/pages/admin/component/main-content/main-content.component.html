@@ -1,5 +1,5 @@
-<div class="main-content">
-  <app-header></app-header>
+<div class="main-content" [ngClass]="collapsed ? 'collapsed' : ''">
+  <app-header (collapsedChange)="collapsedHeader($event)"></app-header>
   <app-page-content></app-page-content>
   <app-footer></app-footer>
 </div>

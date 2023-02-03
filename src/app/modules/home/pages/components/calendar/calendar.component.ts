@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
@@ -33,17 +33,17 @@ export class CalendarComponent implements OnInit {
     };
     reservasCalendario: labelCalendar[]=[ // put the array in the `events` property
     {
-      title: '<span>Carla Marin</span> <br>+51966710491 <br> carlamarin@gmail.com <br> 1 adulto - 0 niños',
+      title: '<span>Carla Prado</span> <br>+51966710491 <br> carlaprado@gmail.com <br> 1 adulto - 0 niños',
       start: '2023-01-18T00:00:00',
       end: '2023-01-18T01:00:00',
     },
     {
-      title: '<span>Carmen Villaverde</span> <br>  +51966710491 <br> carmenvillaverde@gmail.com <br> 2 adultos - 0 niños',
+      title: '<span>Carmen Villa</span> <br>  +51966710491 <br> carmenvilla@gmail.com <br> 2 adultos - 0 niños',
       start: '2023-01-20T02:00:00',
       end: '2023-01-20T03:00:00',
     },
     {
-      title: '<span>Pedro Rivas</span> <br>  +51966744497 <br> pedrorivas@gmail.com <br> 1 adulto - 1 niño',
+      title: '<span>Pedro Torres</span> <br>  +51966744497 <br> pedrotorres@gmail.com <br> 1 adulto - 1 niño',
       start: '2023-01-21T01:00:00',
       end: '2023-01-21T02:00:00',
     }
@@ -75,7 +75,8 @@ export class CalendarComponent implements OnInit {
   }
   constructor(private nodeService: NodeService,
     private homeService: HomeService,
-    private administratorService:AdministratorService) { }
+    private administratorService:AdministratorService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     /*this.nodeService.getEvents().then((events) => {
@@ -173,14 +174,15 @@ export class CalendarComponent implements OnInit {
     this.showReservaDialog();
   }
 
-  handleDateClick() {
+  handleDateClick(date: any) {
+    console.log(date.dateStr);
     this.showReservaDialog();
   }
 
   handleEvents(events: EventApi[]) {
-    console.log(events);
+    console.log("handleEvents");
     this.currentEvents = events;
-    //this.changeDetector.detectChanges();
+    this.changeDetector.detectChanges();
   }
   //Form Reserva
   showReservaDialog() {
