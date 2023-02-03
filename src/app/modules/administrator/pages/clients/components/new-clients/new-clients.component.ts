@@ -72,9 +72,11 @@ export class NewClientsComponent implements OnInit{
   coreGuardar(operacion:string){
     switch(operacion){
       case 'NUEVO':
+        window.location.reload();
         this.posClient();
         break;
       case 'EDITAR':
+        window.location.reload();
         this.putClient(); 
     }
   }
@@ -98,7 +100,6 @@ export class NewClientsComponent implements OnInit{
 
     }
   }
-
   putClient(){
     if(this.client.document == null){
       this.showSuccess('error','error', 'Datos incorrectos.');
@@ -121,22 +122,10 @@ export class NewClientsComponent implements OnInit{
 
     }
   }
-  deleteClient(){
-    this.administratorService.deleteClients(this.client.id).then((response) => {
-      if(response!=null || response.length >0){
-      
-      console.log("RESPUESTA", response);
-      this.isDisplay = false;
-      this.showSuccess('success','success',`Se Elimino al cliente ${this.client.lastname}.`)
-      }else{
-        console.log("FALLO INSERTAR CLIENTE");
-        this.showSuccess('Error','Error', 'No se pudo eliminar al cliente.')
-      }
-    });
-  }
+
   showSuccess(type:string,title:string,msg:string) {
     this.messageService.add({severity:type, summary: title, detail: msg});
-}
+  }
   message(type:string, titulo:string, msg:string){
     this.showSuccess(type,titulo, msg)
   }

@@ -1,6 +1,5 @@
 <p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '30%',height: '760px'}"
     [maximizable]="true" [draggable]="false" [resizable]="false">
-
     <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar1">
         <ng-template pTemplate="content">
             <div class="container">
@@ -75,37 +74,12 @@
                                 <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
                             </div>
                         </div>
-                        
-                        
-                        
                     </div>
-                    <!--<div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0">
-                <label for="reservas">Cantidad de reservas</label>
-                <p-inputNumber inputId="reservas" suffix=" reserva(s)" [showButtons]="true" [min]="0" [max]="100">
-                </p-inputNumber>
-            </div>-->
                 </div>
-                <!--<div class="row">
-            <div class="col-sm-4">
-                <label for="estado">Estado</label>
-            </div>
-            <div class="col-sm-8">
-                <div class="p-field-radiobutton col-sm-12">
-                    <p-radioButton name="estado" [(ngModel)]="selectedEstado"
-                            inputId="estado1" label="Activo">
-                    </p-radioButton>
-                </div>
-                <div class="p-field-radiobutton col-sm-12">
-                    <p-radioButton name="estado" [(ngModel)]="selectedEstado"
-                            inputId="estado2" label="Inactivo">
-                    </p-radioButton>
-                </div>
-            </div>
-        </div>-->
-
             </div>
         </ng-template>
     </p-scrollPanel>
+
     <ng-template pTemplate="footer">
         <p-button (click)="isDisplay=false" label="Cancelar"
             styleClass="p-button-danger"></p-button>

@@ -100,20 +100,16 @@
             </ng-template>
         </p-table>
         <!--End of DataTable-->
-
-
-
-        <!--Start of Confirmation-->
-        <p-confirmDialog #cd icon="pi pi-exclamation-triangle">
-            <ng-template pTemplate="footer">
-                <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
-                </button>
-                <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
-                </button>
-            </ng-template>
-        </p-confirmDialog>
-        <!--End of Confirmation Modal-->
 </div>
-<app-new-clients
-></app-new-clients>
+<app-new-clients></app-new-clients>
+<!--Start of Confirmation Modal-->
+<p-confirmDialog #cd icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="footer">
+        <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
+        </button>
+        <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
+        </button>
+    </ng-template>
+</p-confirmDialog>
+<!--End of Confirmation Modal-->
 
