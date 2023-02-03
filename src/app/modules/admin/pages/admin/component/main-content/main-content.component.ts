@@ -6,11 +6,10 @@ import { Component, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./main-content.component.scss']
 })
 export class MainContentComponent {
-  @Output() collapsedEvent = new EventEmitter<boolean>();
+  @Output() collapseSidebar = new EventEmitter<boolean>();
   collapsed: boolean = true;
-
-  changeCollapsed() {
-    this.collapsed = !this.collapsed;
-    this.collapsedEvent.emit(this.collapsed);
+  collapsedHeader(value:boolean){
+    this.collapsed = value;
+    this.collapseSidebar.emit(value);
   }
 }

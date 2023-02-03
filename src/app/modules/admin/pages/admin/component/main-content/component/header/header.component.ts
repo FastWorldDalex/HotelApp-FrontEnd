@@ -6,10 +6,10 @@ import { Component, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Output() collapsedChange = new EventEmitter<{ collapsed: boolean }>();
+  @Output() collapsedChange = new EventEmitter<boolean>();
   status: boolean = false;
-  clickEvent(){
+  toggleSidebar(){
     this.status = !this.status;
-    this.collapsedChange.emit({ collapsed: this.status });
+    this.collapsedChange.emit(this.status);
   }
 }

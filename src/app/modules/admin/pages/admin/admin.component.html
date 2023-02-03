@@ -1,4 +1,4 @@
 <div class="container-fluid">
   <app-sidebar [collapsed]="sidebarCollapsed"></app-sidebar>
-  <app-main-content></app-main-content>
+  <app-main-content (collapseSidebar)="collapseSidebar($event)"></app-main-content>
 </div>
