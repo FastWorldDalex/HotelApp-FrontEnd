@@ -29,6 +29,14 @@ export class HomeService {
       .catch(error => error);
 
   }
+  PutReservation(postReserva: POSTReserva) {
+
+      return this.http.put(`${API_ROUTES.RESERVATION.GET_RESERVATION}${postReserva.id}`,postReserva)
+      .toPromise()
+      .then(response => response as any)
+      .catch(error => error);
+
+  }
 
   GetReservationId(idReservation:number) {
     //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'

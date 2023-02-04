@@ -32,6 +32,7 @@ export class Room {
 }
 
 export interface POSTReserva {
+    id?:            number,
     checkin:         any;
     checkout:        any;
     adults:          number;

@@ -93,6 +93,17 @@ export class NewReservtationComponent implements OnInit {
     });
   }
 
+  coreGuardar(){
+    switch(this.accion){
+      case 'NUEVA':
+        this.posReserva();
+        break;
+      case 'EDITAR':
+        this.putReserva();
+        break;
+    }
+  }
+
   posReserva() {
     this.reserva.status = 1;
     let checkin: string = `${this.reserva.checkin.getFullYear()}-${this.reserva.checkin.getMonth() + 1}-${this.reserva.checkin.getDate()}`;
@@ -124,6 +135,36 @@ export class NewReservtationComponent implements OnInit {
         setTimeout(() => {
           this.updateCalendar();
         }, 2000);*/
+      }
+    })
+  }
+
+  putReserva() {
+    this.reserva.status = 1;
+    let checkin: string = `${this.reserva.checkin.getFullYear()}-${this.reserva.checkin.getMonth() + 1}-${this.reserva.checkin.getDate()}`;
+    this.reserva.checkin = checkin;
+
+    let checkout: string = `${this.reserva.checkout.getFullYear()}-${this.reserva.checkout.getMonth() + 1}-${this.reserva.checkout.getDate()}`;
+    this.reserva.checkout = checkout;
+    console.log(this.reserva);
+
+    let POSTReserva: POSTReserva = {
+      id: this.reserva.id,
+      checkin: checkin,
+      checkout: checkout,
+      adults: this.reserva.adults,
+      children: this.reserva.children,
+      total: this.reserva.total,
+      done_payment: this.reserva.done_payment,
+      pending_payment: this.reserva.pending_payment,
+      status: this.reserva.status,
+      client_id: this.reserva.client_id,
+      room_id: this.reserva.room_id
+    }
+    this.homeService.PutReservation(POSTReserva).then((response) => {
+      if (response != null) {
+        console.log(response);
+        this.isDisplay = false;
       }
     })
   }
