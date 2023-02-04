@@ -11,11 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
+import { NewReservtationComponent } from './pages/components/new-reservtation/new-reservtation.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    CalendarComponent
+    CalendarComponent,
+    NewReservtationComponent
   ],
   imports: [
     CommonModule,

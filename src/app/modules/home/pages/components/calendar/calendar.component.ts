@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
@@ -7,13 +7,14 @@ import esLocale from '@fullcalendar/core/locales/es';
 
 // @fullcalendar plugins
 import { NodeService } from 'src/app/shared/services/node.service';
-import { CalendarOptions, EventClickArg, EventApi   } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg, EventApi } from '@fullcalendar/core';
 //Dropdown
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
 import { POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
+import { NewReservtationComponent } from '../new-reservtation/new-reservtation.component';
 
 @Component({
   selector: 'app-calendar',
@@ -21,6 +22,11 @@ import { Client } from 'src/app/modules/administrator/pages/clients/interface/ic
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  
+  @ViewChild(NewReservtationComponent, { static: false })
+  newReservtationComponent: NewReservtationComponent =
+    new NewReservtationComponent(this.administratorService,
+      this.homeService);
 
   events: any[] = [];
 
@@ -29,7 +35,7 @@ export class CalendarComponent implements OnInit {
     initialView: 'timeGridWeek', // dayGridWeek
     initialDate: '2023-01-30',
     locale: esLocale,
-     headerToolbar: {
+    headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: ''
@@ -65,25 +71,26 @@ export class CalendarComponent implements OnInit {
 
   ltsReservas: Reserva[] = [];
   reservaFiltro: labelCalendar = {
-      title: '',
-      start: '',
-      end: ''
+    title: '',
+    start: '',
+    end: ''
   };
   calendarEvents: any[] = [];
   header: any;
 
+  Reservation: Reserva = new Reserva();
   //Form Calendar
   reservaDialog: boolean = false;
   dateCheckin!: Date;
   dateCheckout!: Date;
   es: any;
   //dropdwon
-  ltsClientes: Client[] = [];
-  ltsRooms: Room[] = [];
+
+
   //defaultValues
   value1: number = 5;
   value2: number = 1200;
-  postReserva:POSTReserva = {
+  postReserva: POSTReserva = {
     checkin: '',
     checkout: '',
     adults: 0,
@@ -97,7 +104,7 @@ export class CalendarComponent implements OnInit {
   }
   constructor(private nodeService: NodeService,
     private homeService: HomeService,
-    private administratorService:AdministratorService,
+    private administratorService: AdministratorService,
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -108,21 +115,6 @@ export class CalendarComponent implements OnInit {
       this.updateCalendar();
     }, 2000);
 
-    this.administratorService.getClients().then((res)=>{
-      if(res!= null || res.length>0){
-
-        this.ltsClientes = res;
-        this.ltsClientes.forEach((element) =>{
-          element.nameComplete = element.firstname + ' '+element.lastname;
-        });
-      }
-    });
-
-    this.homeService.GetRoom().then((res)=>{
-      if(res!= null || res.length>0){
-        this.ltsRooms = res;
-      }
-    });
 
     /*this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -194,13 +186,13 @@ export class CalendarComponent implements OnInit {
   }
   currentEvents: EventApi[] = [];
 
-  updateCalendar(){
+  updateCalendar() {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
       initialDate: '2023-01-30',
       locale: esLocale,
-       headerToolbar: {
+      headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: ''
@@ -248,13 +240,35 @@ export class CalendarComponent implements OnInit {
     };
   }
 
+  //seleccionar reserva
   handleEventClick(clickInfo: EventClickArg) {
-    this.showReservaDialog();
+    this.coreNuevo();
+    let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
+    let Element: string = vTrae.outerHTML;
+    console.log(clickInfo.jsEvent.srcElement);
+    console.log(vTrae.outerHTML);
+    
+    let ArrayElement1: string[] = Element.split('>');
+    console.log(ArrayElement1);
+    
+    let ArrayElement2: string[] = ArrayElement1[1].split('<');
+    console.log(ArrayElement1);
+    //ID DE RESERVA
+    let id_Reservation: number = Number(ArrayElement2[0].toString());
+    this.homeService.GetReservationId(id_Reservation).then((reserva) => {
+      if (reserva != null) {
+
+        this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva);
+      }
+    });
+    console.log(id_Reservation);
+    
   }
 
+  //seleccionar cuadro de reserva
   handleDateClick(date: any) {
     console.log(date.dateStr);
-    this.showReservaDialog();
+    this.coreNuevo();
 
     this.calendarEvents = [ // put the array in the `events` property
       {
@@ -273,6 +287,7 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  //Asignar data
   handleEvents(events: EventApi[]) {
     console.log("handleEvents");
     this.events = [ // put the array in the `events` property
@@ -291,8 +306,8 @@ export class CalendarComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
   //Form Reserva
-  showReservaDialog() {
-    this.reservaDialog = true;
+  coreNuevo() {
+    this.newReservtationComponent.componentsInitials('NUEVA','RESERVA',null);
   }
 
   getReservas() {
@@ -305,99 +320,99 @@ export class CalendarComponent implements OnInit {
         this.calendarEvents = [];
         this.ltsReservas.forEach(element => {
           cliente = element.client.firstname + ' ' + element.client.lastname;
-          switch(element.room.name){
+          switch (element.room.name) {
             case 'H101':
               room_start = "00:00:00";
               room_end = "01:00:00";
               break;
-              case 'H102':
-                room_start = "01:00:00";
-                room_end = "02:00:00";
-                break;
-              case 'H104':
-                room_start = "02:00:00";
-                room_end = "03:00:00";
-                break;
-              case 'H105':
-                room_start = "03:00:00";
-                room_end = "04:00:00";
-                break;
-              case 'H106':
-                room_start = "04:00:00";
-                room_end = "05:00:00";
-                break;
-              case 'H107':
-                room_start = "05:00:00";
-                room_end = "06:00:00";
-                break;
-              case 'H108':
-                room_start = "06:00:00";
-                room_end = "07:00:00";
-                break;
-              case 'H109':
-                room_start = "07:00:00";
-                room_end = "08:00:00";
-                break;
-              case 'H109':
-                room_start = "08:00:00";
-                room_end = "09:00:00";
-                break;
-              case 'H110':
-                room_start = "09:00:00";
-                room_end = "10:00:00";
-                break;
-              case 'H111':
-                room_start = "09:00:00";
-                room_end = "10:00:00";
-                break;
-              case 'H112':
-                room_start = "10:00:00";
-                room_end = "11:00:00";
-                break;
-              case 'H113':
-                room_start = "11:00:00";
-                room_end = "12:00:00";
-                break;
-              case 'H114':
-                room_start = "12:00:00";
-                room_end = "13:00:00";
-                break;
-              case 'H115':
-                room_start = "13:00:00";
-                room_end = "14:00:00";
-                break;
-              case 'H116':
-                room_start = "14:00:00";
-                room_end = "15:00:00";
-                break;
-              case 'H117':
-                room_start = "15:00:00";
-                room_end = "16:00:00";
-                break;
-              case 'H118':
-                room_start = "16:00:00";
-                room_end = "17:00:00";
-                break;
-              case 'H119':
-                room_start = "17:00:00";
-                room_end = "18:00:00";
-                break;
-              case 'H120':
-                room_start = "18:00:00";
-                room_end = "19:00:00";
-                break;
-              case 'H121':
-                room_start = "19:00:00";
-                room_end = "20:00:00";
-                break;
-              case 'H122':
-                room_start = "20:00:00";
-                room_end = "21:00:00";
-                break;
+            case 'H102':
+              room_start = "01:00:00";
+              room_end = "02:00:00";
+              break;
+            case 'H104':
+              room_start = "02:00:00";
+              room_end = "03:00:00";
+              break;
+            case 'H105':
+              room_start = "03:00:00";
+              room_end = "04:00:00";
+              break;
+            case 'H106':
+              room_start = "04:00:00";
+              room_end = "05:00:00";
+              break;
+            case 'H107':
+              room_start = "05:00:00";
+              room_end = "06:00:00";
+              break;
+            case 'H108':
+              room_start = "06:00:00";
+              room_end = "07:00:00";
+              break;
+            case 'H109':
+              room_start = "07:00:00";
+              room_end = "08:00:00";
+              break;
+            case 'H109':
+              room_start = "08:00:00";
+              room_end = "09:00:00";
+              break;
+            case 'H110':
+              room_start = "09:00:00";
+              room_end = "10:00:00";
+              break;
+            case 'H111':
+              room_start = "09:00:00";
+              room_end = "10:00:00";
+              break;
+            case 'H112':
+              room_start = "10:00:00";
+              room_end = "11:00:00";
+              break;
+            case 'H113':
+              room_start = "11:00:00";
+              room_end = "12:00:00";
+              break;
+            case 'H114':
+              room_start = "12:00:00";
+              room_end = "13:00:00";
+              break;
+            case 'H115':
+              room_start = "13:00:00";
+              room_end = "14:00:00";
+              break;
+            case 'H116':
+              room_start = "14:00:00";
+              room_end = "15:00:00";
+              break;
+            case 'H117':
+              room_start = "15:00:00";
+              room_end = "16:00:00";
+              break;
+            case 'H118':
+              room_start = "16:00:00";
+              room_end = "17:00:00";
+              break;
+            case 'H119':
+              room_start = "17:00:00";
+              room_end = "18:00:00";
+              break;
+            case 'H120':
+              room_start = "18:00:00";
+              room_end = "19:00:00";
+              break;
+            case 'H121':
+              room_start = "19:00:00";
+              room_end = "20:00:00";
+              break;
+            case 'H122':
+              room_start = "20:00:00";
+              room_end = "21:00:00";
+              break;
           }
 
           let reservaFiltro = {
-            title: `<span>${cliente}</span> <br> ${element.client.phone} <br>
+            title: `<span class="id" style="display:none;">${element.id}</span> <span>${cliente}</span> <br> ${element.client.phone} <br>
             ${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
             start: `${element.checkin}T${room_start}`,
             end: `${element.checkout}T${room_end}`
@@ -409,56 +424,9 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  getReservas2() {
-    this.homeService.GetReservation(null, null).then((reservas) => {
-      if (reservas != null || reservas.length > 0) {
-        this.ltsReservas = reservas;
-        console.log(this.ltsReservas)
-        let cliente: string;
-        this.ltsReservas.forEach((element) => {
-          cliente = element.client.firstname.split(' ')[0] + ' ' + element.client.lastname.split(' ')[0];
-          this.reservaFiltro = {
-            title: `<span>${cliente}</span>'+
-            ' <br>  ${element.client.phone} <br>' +
-            '${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
-            start: `${element.checkin}T02:00:00`,
-            end: `${element.checkout}T03:00:00`
-          }
-          console.log(this.reservaFiltro);
-
-        });
-
-
-      }
-    });
-  }
-
-  posReserva() {
-    this.postReserva.room_id= this.postReserva.room_id.id;
-    this.postReserva.client_id =this.postReserva.client_id.id;
-    this.postReserva.status =1;
-    let checkin:string = `${this.postReserva.checkin.getFullYear()}-${this.postReserva.checkin.getMonth()+1}-${this.postReserva.checkin.getDate()}`;
-    this.postReserva.checkin = checkin;
-
-    let checkout:string = `${this.postReserva.checkout.getFullYear()}-${this.postReserva.checkout.getMonth()+1}-${this.postReserva.checkout.getDate()}`;
-    this.postReserva.checkout = checkout;
-
-    this.homeService.PostReservation(this.postReserva).then((response) =>{
-      if(response != null){
-        console.log(response);
-        this.reservaDialog=false;
-        setTimeout(() => {
-          this.getReservas();
-        }, 1000);
-        setTimeout(() => {
-          this.updateCalendar();
-        }, 2000);
-      }
-    })
-  }
 }
 
-export interface labelCalendar{
+export interface labelCalendar {
   title: string,
   start: string,
   end: string,

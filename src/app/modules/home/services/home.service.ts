@@ -30,6 +30,15 @@ export class HomeService {
 
   }
 
+  GetReservationId(idReservation:number) {
+    //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'
+
+      return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}`)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error);
+
+  }
   GetRoom() {
 
       return this.http.get(API_ROUTES.ROOM.GET_ROOM)

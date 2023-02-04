@@ -1,0 +1,102 @@
+    <p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [maximizable]="true" [draggable]="false"
+        [resizable]="false" [style]="{ width: '50%' }">
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="checkin">Checkin</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkin" 
+                            dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="checkout">Checkout</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkout" 
+                            dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="cliente">Cliente</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes"
+                            [(ngModel)]="reserva.client_id" placeholder="Selecciona el cliente"
+                             [showClear]="true" [filter]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="habitacion">Habitación</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="reserva.room_id"
+                            placeholder="Selecciona la habitación"  [showClear]="true"
+                            [filter]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="adultos">Adultos</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" suffix=" adulto(s)"
+                            [showButtons]="true" [min]="0" [max]="100">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="niños">Niños</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" suffix=" niño(s)"
+                            [showButtons]="true" [min]="0" [max]="100">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="total">Total</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="total" mode="currency"
+                            currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="totalPagar">Total por pagar</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagar" mode="currency"
+                            currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="formLabel" for="totalPagado">Total pagado</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="currency"
+                            currency="PEN" locale="es-PE">
+                        </p-inputNumber>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button (click)="isDisplay=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-save" (click)="posReserva()" label="Guardar" styleClass="p-button-info"></p-button>
+        </ng-template>
+    </p-dialog>
