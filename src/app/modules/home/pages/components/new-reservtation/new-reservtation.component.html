@@ -1,101 +1,198 @@
-    <p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [maximizable]="true" [draggable]="false"
-        [resizable]="false" [style]="{ width: '50%' }">
-        <ng-template pTemplate="content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="checkin">Checkin</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkin" 
-                            dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
-                    </div>
-                </div> 
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="checkout">Checkout</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkout" 
-                            dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="cliente">Cliente</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes"
-                            [(ngModel)]="reserva.client_id" placeholder="Selecciona el cliente"
-                             [showClear]="true" [filter]="true">
-                        </p-dropdown>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="habitacion">Habitación</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="reserva.room_id"
-                            placeholder="Selecciona la habitación"  [showClear]="true"
-                            [filter]="true">
-                        </p-dropdown>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="adultos">Adultos</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" suffix=" adulto(s)"
-                            [showButtons]="true" [min]="0" [max]="100">
-                        </p-inputNumber>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="niños">Niños</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" suffix=" niño(s)"
-                            [showButtons]="true" [min]="0" [max]="100">
-                        </p-inputNumber>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="total">Total</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="total" mode="currency"
-                            currency="PEN" locale="es-PE">
-                        </p-inputNumber>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="totalPagar">Total por pagar</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagar" mode="currency"
-                            currency="PEN" locale="es-PE">
-                        </p-inputNumber>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="formLabel" for="totalPagado">Total pagado</label>
-                    </div>
-                    <div class="col-sm-8">
-                        <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="currency"
-                            currency="PEN" locale="es-PE">
-                        </p-inputNumber>
-                    </div>
-                </div>
-            </div>
-        </ng-template>
+    <p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '50%' }"
+        [maximizable]="true" [draggable]="false" [resizable]="false">
+        <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar1">
+            <ng-template pTemplate="content">
+                <p-tabView>
+                    <p-tabPanel header="Reserva" leftIcon="pi pi-calendar">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="checkin">Checkin</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkin" 
+                                        dateFormat="dd/mm/yy" inputId="checkin"></p-calendar>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="checkout">Checkout</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkout" 
+                                        dateFormat="dd/mm/yy" inputId="checkout"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="cliente">Cliente</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes"
+                                        [(ngModel)]="reserva.client_id" placeholder="Selecciona el cliente"
+                                        [showClear]="true" [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="habitacion">Habitación</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="reserva.room_id"
+                                        placeholder="Selecciona la habitación"  [showClear]="true"
+                                        [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="adultos">Adultos</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" suffix=" adulto(s)"
+                                        [showButtons]="true" [min]="0" [max]="100">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="niños">Niños</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" suffix=" niño(s)"
+                                        [showButtons]="true" [min]="0" [max]="100">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="total">Total</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="total" mode="currency"
+                                        currency="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="totalPagar">Total por pagar</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagar" mode="currency"
+                                        currency="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="totalPagado">Total pagado</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="currency"
+                                        currency="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Pago" leftIcon="pi pi-money-bill">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">Tipo de Documento</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" pInputText />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">Número</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" pInputText />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">RUC / DNI</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber inputId="" [useGrouping]="false"></p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">Razón Social / Nombre</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" pInputText />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">Dirección</label>
+                                </div> 
+                                <div class="col-sm-8">
+                                    <input type="text" pInputText />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="emision">Fecha de Emisión</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- <p-calendar [style]="{'width':'100%'}" dateFormat="dd/mm/yy" inputId="emision">                                    
+                                    </p-calendar> -->
+                                    <p-inputMask [style]="{'width':'50%'}" mask="99/99/9999" placeholder="99/99/9999" slotChar="mm/dd/yyyy">
+                                    </p-inputMask>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="">Tipo de Moneda</label>
+                                </div> 
+                                <div class="col-sm-8">
+                                    <input type="text" pInputText />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="totalValorVenta">Total Valor de Venta</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber inputId="totalValorVenta" mode="currency" currenncy="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="igv">IGV</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber inputId="igv" mode="currency" currenncy="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="formLabel" for="importeTotal">ImporteTotal</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p-inputNumber inputId="importeTotal" mode="currency" currenncy="PEN" locale="es-PE">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </ng-template>
+        </p-scrollPanel>
 
         <ng-template pTemplate="footer">
+            <p-button label="Enviar email" styleClass="p-button-secondary"></p-button>
             <p-button (click)="isDisplay=false" label="Cancelar" styleClass="p-button-danger"></p-button>
             <p-button icon="pi pi-save" (click)="coreGuardar()" label="Guardar" styleClass="p-button-info"></p-button>
         </ng-template>
