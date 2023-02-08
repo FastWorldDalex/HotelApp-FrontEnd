@@ -3,7 +3,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { HomeService } from '../../../services/home.service';
-import { Reserva, Room, POSTReserva } from '../../interfaces/ireserva';
+import { Reserva, Room, POSTReserva, Accounting_Document } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-new-reservtation',
@@ -22,13 +22,25 @@ export class NewReservtationComponent implements OnInit {
   Estados?: SelectItem;
   ltsClientes: SelectItem[] = [];
   ltsRooms: SelectItem[] = [];
-  //[{
-  //  label: 'ACTIVO',
-  //  value: 1,
-  //},{
-  //  label: 'INACTIVO',
-  //  value: 0,
-  //}];
+  
+  accounting_document?: Accounting_Document;
+  ltsCurrency: SelectItem[] = [{
+      label: 'SOL',
+      value: 1,
+    },{
+      label: 'DOLAR',
+      value: 2,
+    }
+  ];
+  ltsType: SelectItem [] = [{
+      label: 'FACTURA',
+      value: 0,
+    },{
+      label: 'BOLETA',
+      value: 1,
+    }
+  ];
+  
   constructor(
     private administratorService: AdministratorService,
     private homeService: HomeService
@@ -168,4 +180,7 @@ export class NewReservtationComponent implements OnInit {
       }
     })
   }
+
+  //Pagos
+  
 }

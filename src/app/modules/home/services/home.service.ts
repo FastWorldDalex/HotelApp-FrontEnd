@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { POSTReserva } from '../pages/interfaces/ireserva';
+import { Accounting_Document, POSTReserva } from '../pages/interfaces/ireserva';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +54,20 @@ export class HomeService {
       .then(response => response as any[])
       .catch(error => error);
 
+  }
+  
+  GetAccounting_Document() {
+
+    return this.http.get(API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error =>error);
+  }
+  PostAccounting_Document(accounting_document: Accounting_Document) {
+
+      return this.http.post(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}`, accounting_document)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
   }
 }

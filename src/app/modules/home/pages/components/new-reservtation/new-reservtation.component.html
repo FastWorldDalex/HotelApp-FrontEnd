@@ -104,7 +104,15 @@
                                     <label class="formLabel" for="">Tipo de Documento</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" pInputText />
+                                    <p-dropdown [options]="ltsType" placeholder="Selecciona el tipo de documento" 
+                                            [showClear]="true">
+                                    </p-dropdown>
+                                    <!-- RadioButtons 
+                                    <div *ngFor="let type of ltsType" style="width: 100%;">
+                                        <p-radioButton [inputId]="type.value" name="type.label" [value]="type.value"
+                                                [disabled]="isNew"></p-radioButton>
+                                        <label style="margin-left: 0.5rem" [for]="type.value">{{type.label}}</label>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -144,10 +152,8 @@
                                     <label class="formLabel" for="emision">Fecha de Emisión</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- <p-calendar [style]="{'width':'100%'}" dateFormat="dd/mm/yy" inputId="emision">                                    
-                                    </p-calendar> -->
-                                    <p-inputMask [style]="{'width':'50%'}" mask="99/99/9999" placeholder="99/99/9999" slotChar="mm/dd/yyyy">
-                                    </p-inputMask>
+                                    <p-calendar [style]="{'width':'100%'}" dateFormat="dd/mm/yy" inputId="emision">                                    
+                                    </p-calendar>
                                 </div>
                             </div>
                             <div class="row">
@@ -155,7 +161,15 @@
                                     <label class="formLabel" for="">Tipo de Moneda</label>
                                 </div> 
                                 <div class="col-sm-8">
-                                    <input type="text" pInputText />
+                                    <p-dropdown [options]="ltsCurrency" placeholder="Selecciona el tipo de moneda" 
+                                            [showClear]="true">
+                                    </p-dropdown>
+                                    <!-- RadioButtons 
+                                    <div *ngFor="let currency of ltsCurrency" style="width: 100%;">
+                                        <p-radioButton [inputId]="currency.value" name="currency.label" [value]="currency.value"
+                                                [disabled]="isNew"></p-radioButton>
+                                        <label style="margin-left: 0.5rem" [for]="currency.value">{{currency.label}}</label>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -163,7 +177,7 @@
                                     <label class="formLabel" for="totalValorVenta">Total Valor de Venta</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <p-inputNumber inputId="totalValorVenta" mode="currency" currenncy="PEN" locale="es-PE">
+                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5">
                                     </p-inputNumber>
                                 </div>
                             </div>
@@ -172,16 +186,16 @@
                                     <label class="formLabel" for="igv">IGV</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <p-inputNumber inputId="igv" mode="currency" currenncy="PEN" locale="es-PE">
+                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5">
                                     </p-inputNumber>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label class="formLabel" for="importeTotal">ImporteTotal</label>
+                                    <label class="formLabel" for="importeTotal">Importe Total</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <p-inputNumber inputId="importeTotal" mode="currency" currenncy="PEN" locale="es-PE">
+                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5">
                                     </p-inputNumber>
                                 </div>
                             </div>
