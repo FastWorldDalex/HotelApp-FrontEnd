@@ -9,7 +9,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 import { NodeService } from 'src/app/shared/services/node.service';
 import { CalendarOptions, EventClickArg, EventApi } from '@fullcalendar/core';
 //Dropdown
-import { MessageService, SelectItem } from 'primeng/api';
+import { Message, MessageService, SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
 import { POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
@@ -19,16 +19,18 @@ import { NewReservtationComponent } from '../new-reservtation/new-reservtation.c
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
+  providers: [MessageService]
 })
 export class CalendarComponent implements OnInit {
   
   @ViewChild(NewReservtationComponent, { static: false })
   newReservtationComponent: NewReservtationComponent =
     new NewReservtationComponent(this.administratorService,
-      this.homeService);
+      this.homeService, this.messageService);
 
   events: any[] = [];
+  msgs: Message[] = [];
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -105,7 +107,9 @@ export class CalendarComponent implements OnInit {
   constructor(private nodeService: NodeService,
     private homeService: HomeService,
     private administratorService: AdministratorService,
-    private changeDetector: ChangeDetectorRef) { }
+    private messageService: MessageService,
+    private changeDetector: ChangeDetectorRef
+    ) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -420,10 +424,19 @@ export class CalendarComponent implements OnInit {
 
           this.calendarEvents.push(reservaFiltro);
         });
+        this.message('success', 'exitoso', 'Busqueda realizada.')
+      }else{
+        this.message('error', 'error', 'Busqueda fallida.')
       }
     });
   }
 
+  showSuccess(type:string,title:string,msg:string) {
+    this.messageService.add({severity:type, summary: title, detail: msg});
+  }
+  message(type:string, titulo:string, msg:string){
+    this.showSuccess(type,titulo, msg)
+  }
 }
 
 export interface labelCalendar {

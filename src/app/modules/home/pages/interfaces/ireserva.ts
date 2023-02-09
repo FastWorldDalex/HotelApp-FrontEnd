@@ -49,18 +49,18 @@ export class Accounting_Document {
     constructor(){
 
     }
-    id:             number = 0;
+    id?:             number = 0;
     number:         string = ''; 
     client_number:  string = ''; //RUC_DNI
     client_name:    string = ''; //RazonSocial
     client_address: string = '';
-    issue_date:     any; //emision
+    issue_date?:     Date; //emision
     type:           number = 0;
     currency_type:  number = 0;
     total_sale:     number = 0;
     tax:            number = 0;
     total:          number = 0;
     status:         number = 0;
-    reservation_id: number = 0;
-    reservation: Reserva = new Reserva();
+    reservation_id?: number = 0;
+    reservation?: Reserva;
 }

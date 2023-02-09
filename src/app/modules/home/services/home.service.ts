@@ -55,7 +55,8 @@ export class HomeService {
       .catch(error => error);
 
   }
-  
+
+  //Pagos
   GetAccounting_Document() {
 
     return this.http.get(API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT)
@@ -69,5 +70,12 @@ export class HomeService {
       .toPromise()
       .then(response => response)
       .catch(error => error);
+  }
+  PutAccounting_Document(accounting_document: Accounting_Document){
+
+      return this.http.put(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}${accounting_document.id}`, accounting_document)
+        .toPromise()
+        .then(response => response)
+        .catch(error => error);
   }
 }
