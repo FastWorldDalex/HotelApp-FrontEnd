@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// PrimeNg Components
+import { ToolbarModule } from 'primeng/toolbar';
+import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
 import { SidebarComponent } from './pages/admin/component/sidebar/sidebar.component';
@@ -23,7 +29,11 @@ import { RoomsComponent } from './pages/admin/component/main-content/component/r
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ToolbarModule,
+    ButtonModule,
+    TableModule,
+    TagModule
   ]
 })
 export class AdminModule { }
