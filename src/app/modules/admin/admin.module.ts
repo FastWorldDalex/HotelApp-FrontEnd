@@ -15,6 +15,7 @@ import { HeaderComponent } from './pages/admin/component/main-content/component/
 import { PageContentComponent } from './pages/admin/component/main-content/component/page-content/page-content.component';
 import { FooterComponent } from './pages/admin/component/main-content/component/footer/footer.component';
 import { RoomsComponent } from './pages/admin/component/main-content/component/rooms/rooms.component';
+import { ClientsComponent } from './pages/admin/component/main-content/component/clients/clients.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RoomsComponent } from './pages/admin/component/main-content/component/r
     HeaderComponent,
     PageContentComponent,
     FooterComponent,
-    RoomsComponent
+    RoomsComponent,
+    ClientsComponent
   ],
   imports: [
     CommonModule,
