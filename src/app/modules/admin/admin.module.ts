@@ -8,6 +8,7 @@ import { MainContentComponent } from './pages/admin/component/main-content/main-
 import { HeaderComponent } from './pages/admin/component/main-content/component/header/header.component';
 import { PageContentComponent } from './pages/admin/component/main-content/component/page-content/page-content.component';
 import { FooterComponent } from './pages/admin/component/main-content/component/footer/footer.component';
+import { RoomsComponent } from './pages/admin/component/main-content/component/rooms/rooms.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FooterComponent } from './pages/admin/component/main-content/component/
     MainContentComponent,
     HeaderComponent,
     PageContentComponent,
-    FooterComponent
+    FooterComponent,
+    RoomsComponent
   ],
   imports: [
     CommonModule,

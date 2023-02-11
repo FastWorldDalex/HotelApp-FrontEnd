@@ -1,0 +1,46 @@
+.main-content{
+  padding-top: 10px;
+}
+::ng-deep h3{
+  margin-top: 1rem;
+  color: #6C757D;
+  margin-bottom: 0px;
+}
+::ng-deep p{
+  color: #6C757D;
+}
+::ng-deep .content{
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+// table
+:host ::ng-deep {
+  .textSizeTable{
+      font-size: 85%;
+  }
+  .buttonTable{
+      margin-right: 0.5rem;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+  }
+}
+
+//Form Nuevo y Editar cliente
+.sizes {
+  .p-inputtext {
+      display: block;
+      margin-bottom: .5rem;
+
+      &:last-child {
+          margin-bottom: 0;
+      }
+  }
+}
+.p-field * {
+  display: block;
+}
+::ng-deep .row{
+  padding-bottom: 1rem;
+}
