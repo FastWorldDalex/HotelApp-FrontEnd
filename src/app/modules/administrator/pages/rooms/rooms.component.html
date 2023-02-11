@@ -24,38 +24,29 @@
                       <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
                   </tr>
               </ng-template>
-              <ng-template  pTemplate="body" let-cliente>
+              <ng-template  pTemplate="body" let-room>
                   <tr class="textSizeTable">
                       <td>
-                          {{ room.id | number }}
+                        {{ room.id | number }}
                       </td>
                       <td>
-                          {{ room.name }}
+                        {{ room.name }}
                       </td>
                       <td>
-                          {{ room.description }}
+                        {{ room.description }}
                       </td>
                       <td>
-
+                        {{ room.price | number }}
                       </td>
                       <td>
-
+                        {{ room.capacity | number }}
                       </td>
                       <td>
-
-                      </td>
-                      <td style="width: 7rem;">
-
-                      </td>
-                      <td class="text-md-end" style="width: 7rem;">
-
-                      </td>
-                      <td class="text-md-end" style="width: 7,1rem;">
-
+                        {{ room.room_type.name }}
                       </td>
                       <td class="text-md-end" style="width: 6rem;">
-
-                      </td>
+                        {{ room.created_date | date: 'dd/MM/yyyy' }}
+                    </td>
                       <td style="width: 6rem;">
                           <p-tag *ngIf="room.status == 1"
                               styleClass="textSizeTable mr-2"
@@ -69,6 +60,14 @@
                           ></p-tag>
                       </td>
                       <td style="width: 12rem;">
+                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', room)"
+                        class="buttonTable p-button-secondary" title="Ver detalle"></button>
+                          <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', room)"
+                              class="buttonTable" title="Editar habitación"></button>
+                          <button pButton pRipple icon="pi pi-trash" (click)="deleteRoom(room)"
+                              class="buttonTable p-button-danger" title="Eliminar habitación"></button>
+                          <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRoom(room)"
+                              class="buttonTable p-button-warning" title="Desactivar habitación"></button>
                       </td>
                   </tr>
               </ng-template>

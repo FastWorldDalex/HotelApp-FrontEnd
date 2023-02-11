@@ -40,4 +40,12 @@ export class AdministratorService {
       .then(response => response)
       .catch(error => error)
   }
+
+  getRooms() {
+
+    return this.http.get(API_ROUTES.ROOM.GET_ROOM)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
 }
