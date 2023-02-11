@@ -20,6 +20,6 @@ export const API_ROUTES ={
         GET_ROOM:`${ENV.url}rooms/`
     },
     ACCOUNTING_DOCUMENT: {
-        GET_ACCOUNT_DOCUMENT: `${ENV.url}accounting-document/`
+        GET_ACCOUNT_DOCUMENT: `${ENV.url}accounting-documents/`
     }
 };

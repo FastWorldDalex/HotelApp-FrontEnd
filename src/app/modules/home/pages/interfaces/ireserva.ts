@@ -54,7 +54,7 @@ export class Accounting_Document {
     client_number:  string = ''; //RUC_DNI
     client_name:    string = ''; //RazonSocial
     client_address: string = '';
-    issue_date?:     Date; //emision
+    issue_date?:     any; //emision
     type:           number = 0;
     currency_type:  number = 0;
     total_sale:     number = 0;

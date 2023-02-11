@@ -11,7 +11,7 @@ import { CalendarOptions, EventClickArg, EventApi } from '@fullcalendar/core';
 //Dropdown
 import { Message, MessageService, SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
-import { POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
+import { Accounting_Document, POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 import { NewReservtationComponent } from '../new-reservtation/new-reservtation.component';
@@ -245,27 +245,39 @@ export class CalendarComponent implements OnInit {
   }
 
   //seleccionar reserva
-  handleEventClick(clickInfo: EventClickArg) {
+  async handleEventClick(clickInfo: EventClickArg) {
     this.coreNuevo();
     let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
     let Element: string = vTrae.outerHTML;
     console.log(clickInfo.jsEvent.srcElement);
     console.log(vTrae.outerHTML);
     
-    let ArrayElement1: string[] = Element.split('>');
+    let ArrayElement1: any[] = Element.split('>');
     console.log(ArrayElement1);
     
     let ArrayElement2: string[] = ArrayElement1[1].split('<');
     console.log(ArrayElement1);
+
+    let ArrayElement3: Accounting_Document[] = ArrayElement1[1].split('<');
+    console.log(ArrayElement1);
+
     //ID DE RESERVA
     let id_Reservation: number = Number(ArrayElement2[0].toString());
-    this.homeService.GetReservationId(id_Reservation).then((reserva) => {
+    let acc: Accounting_Document = ArrayElement3[0];
+    let reserva:Reserva = await this.homeService.GetReservationId(id_Reservation);
       if (reserva != null) {
-
+        let pago:Accounting_Document = await this.homeService.GetReservationAcc(reserva.id);
         this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva);
       }
-    });
+    
+    // this.homeService.GetReservationAcc(id_Reservation, acc).then((acco) => {
+    //   if (acco != null) {
+
+    //     this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',null,acco);
+    //   }
+    //});
     console.log(id_Reservation);
+    
     
   }
 
@@ -311,7 +323,7 @@ export class CalendarComponent implements OnInit {
   }
   //Form Reserva
   coreNuevo() {
-    this.newReservtationComponent.componentsInitials('NUEVA','RESERVA',null);
+    this.newReservtationComponent.componentsInitials('NUEVA','RESERVA', null, null);
   }
 
   getReservas() {
@@ -421,7 +433,7 @@ export class CalendarComponent implements OnInit {
             start: `${element.checkin}T${room_start}`,
             end: `${element.checkout}T${room_end}`
           }
-
+          
           this.calendarEvents.push(reservaFiltro);
         });
         this.message('success', 'exitoso', 'Busqueda realizada.')

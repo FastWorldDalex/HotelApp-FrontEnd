@@ -22,25 +22,25 @@ export class NewReservtationComponent implements OnInit {
   Estados?: SelectItem;
   ltsClientes: SelectItem[] = [];
   ltsRooms: SelectItem[] = [];
-  
+
   accounting_document: Accounting_Document;
   ltsCurrency: SelectItem[] = [{
-      label: 'SOL',
-      value: 1,
-    },{
-      label: 'DOLAR',
-      value: 2,
-    }
+    label: 'SOL',
+    value: 1,
+  }, {
+    label: 'DOLAR',
+    value: 2,
+  }
   ];
-  ltsType: SelectItem [] = [{
-      label: 'FACTURA',
-      value: 1,
-    },{
-      label: 'BOLETA',
-      value: 2,
-    }
+  ltsType: SelectItem[] = [{
+    label: 'FACTURA',
+    value: 1,
+  }, {
+    label: 'BOLETA',
+    value: 2,
+  }
   ];
-  
+
   constructor(
     private administratorService: AdministratorService,
     private homeService: HomeService,
@@ -59,7 +59,7 @@ export class NewReservtationComponent implements OnInit {
     });
 
   }
-  componentsInitials(_accion: string, _titulo: string, _data?: any): void {
+  componentsInitials(_accion: string, _titulo: string, _data?: any, _data2?: any): void {
     this.accion = _accion;
     this.titulo = `${_accion} ${_titulo}`;
     this.isDisplay = true;
@@ -68,17 +68,19 @@ export class NewReservtationComponent implements OnInit {
 
 
 
-    switch(_accion){
+    switch (_accion) {
       case 'NUEVA':
         this.client = new Client();
         this.reserva = new Reserva();
+        this.accounting_document = new Accounting_Document();
         break;
       case 'EDITAR':
         console.log(_data);
-        
-        this.reserva =_data;
+
+        this.reserva = _data;
         this.reserva.checkout = new Date(_data.checkout);
         this.reserva.checkin = new Date(_data.checkin);
+        this.accounting_document = _data2;
         break;
     }
   }
@@ -107,10 +109,11 @@ export class NewReservtationComponent implements OnInit {
     });
   }
 
-  coreGuardar(){
-    switch(this.accion){
+  coreGuardar() {
+    switch (this.accion) {
       case 'NUEVA':
         this.posReserva();
+        this.postAccounting_Document();
         break;
       case 'EDITAR':
         this.putReserva();
@@ -118,15 +121,13 @@ export class NewReservtationComponent implements OnInit {
     }
   }
 
-  posReserva() {
+  async posReserva() {
     this.reserva.status = 1;
     let checkin: string = `${this.reserva.checkin.getFullYear()}-${this.reserva.checkin.getMonth() + 1}-${this.reserva.checkin.getDate()}`;
     this.reserva.checkin = checkin;
-
     let checkout: string = `${this.reserva.checkout.getFullYear()}-${this.reserva.checkout.getMonth() + 1}-${this.reserva.checkout.getDate()}`;
     this.reserva.checkout = checkout;
     console.log(this.reserva);
-
     let POSTReserva: POSTReserva = {
       checkin: checkin,
       checkout: checkout,
@@ -139,19 +140,27 @@ export class NewReservtationComponent implements OnInit {
       client_id: this.reserva.client_id,
       room_id: this.reserva.room_id
     }
-    this.homeService.PostReservation(POSTReserva).then((response) => {
-      if (response != null) {
-        console.log(response);
+    const resp_Reserva: POSTReserva = await this.homeService.PostReservation(POSTReserva);
+    if (resp_Reserva != null) {
+      this.isDisplay = false;
+      console.log("ISIIS", resp_Reserva);
+
+      this.accounting_document.reservation_id = await resp_Reserva.id;
+      this.accounting_document.status = await 1;
+
+      let emision: string =await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
+      this.accounting_document.issue_date =await  emision;
+
+      const resp_account_document: any = await this.homeService.PostAccounting_Document(this.accounting_document);
+      if (resp_account_document != null) {
+        console.log("RESPUESTA", resp_account_document);
         this.isDisplay = false;
-        /*setTimeout(() => {
-          this.getReservas();
-        }, 1000);
-        setTimeout(() => {
-          this.updateCalendar();
-        }, 2000);*/
+        this.showSuccess('success', 'success', `Se registro al informacion de ${this.accounting_document.number}.`)
+      } else {
+        console.log("FALLO INSERTAR INFO_PAGO");
+        this.showSuccess('Error', 'Error', 'No se pudo registrar la información de pago.');
       }
-    });
-    this.postAccounting_Document(POSTReserva);
+    }
   }
 
   putReserva() {
@@ -176,7 +185,6 @@ export class NewReservtationComponent implements OnInit {
       client_id: this.reserva.client_id,
       room_id: this.reserva.room_id
     };
-    this.putAccounting_Document(POSTReserva);
     this.homeService.PutReservation(POSTReserva).then((response) => {
       if (response != null) {
         console.log(response);
@@ -186,57 +194,49 @@ export class NewReservtationComponent implements OnInit {
   }
 
   //Pagos
-  postAccounting_Document(reservation: POSTReserva){
-    this.accounting_document.reservation_id = reservation.id;
-    this.accounting_document.status = 1;
-    if(this.accounting_document.client_number.length > 11 || this.accounting_document.client_name != ''){
-      this.homeService.PostAccounting_Document(this.accounting_document).then((response) => {
-        if(response != null || response.length >0){
-          console.log("RESPUESTA", response);
-          this.isDisplay = false;
-          this.showSuccess('success','success',`Se registro al informacion de ${this.accounting_document.number}.`)
-        }else{
-          console.log("FALLO INSERTAR INFO_PAGO");
-          this.showSuccess('Error','Error', 'No se pudo registrar la información de pago.');
-        }
-      });}else{
-        this.showSuccess('error','error', 'Datos incorrectos.');
-  
-      }
+  postAccounting_Document() {
+
+
+    if (this.accounting_document.client_number.length > 11 || this.accounting_document.client_name != '') {
+    } else {
+      this.showSuccess('error', 'error', 'Datos incorrectos.');
+
+    }
   }
-  putAccounting_Document(reservation: POSTReserva){
-    this.accounting_document.reservation_id = reservation.id;
-    if(this.accounting_document.client_number == null){
-      this.showSuccess('error','error', 'Datos incorrectos.');
+  putAccounting_Document() {
+    this.accounting_document.reservation_id = this.reserva.id;
+    if (this.accounting_document.client_number == null) {
+      this.showSuccess('error', 'error', 'Datos incorrectos.');
       return;
     }
-    if(this.accounting_document.client_number.length > 11 || this.accounting_document.client_name != ''){
+    if (this.accounting_document.client_number.length > 11 || this.accounting_document.client_name != '') {
       this.homeService.PutAccounting_Document(this.accounting_document).then((response) => {
-        if(response!=null || response.length >0){
-        
-        console.log("RESPUESTA", response);
-        this.isDisplay = false;
-        this.showSuccess('success','success',`Se actualizó al informacion de ${this.accounting_document.number}.`)
-        }else{
+        if (response != null || response.length > 0) {
+
+          console.log("RESPUESTA", response);
+          this.isDisplay = false;
+          this.showSuccess('success', 'success', `Se actualizó al informacion de ${this.accounting_document.number}.`)
+        } else {
           console.log("FALLO INSERTAR CLIENTE");
-          this.showSuccess('Error','Error', 'No se pudo actualizar la información de pago.')
+          this.showSuccess('Error', 'Error', 'No se pudo actualizar la información de pago.')
         }
-      });}else{
-        this.showSuccess('error','error', 'Datos incorrectos.')
-  
-      }
+      });
+    } else {
+      this.showSuccess('error', 'error', 'Datos incorrectos.')
+
+    }
   }
 
 
 
 
-  showSuccess(type:string, title:string, msg:string) {
-    this.messageService.add({severity:type, summary: title, detail: msg});
+  showSuccess(type: string, title: string, msg: string) {
+    this.messageService.add({ severity: type, summary: title, detail: msg });
   }
-  message(type:string, titulo:string, msg:string){
-    this.showSuccess(type,titulo, msg)
+  message(type: string, titulo: string, msg: string) {
+    this.showSuccess(type, titulo, msg)
   }
-  eventhttp(event:boolean){
+  eventhttp(event: boolean) {
     this.eventHtpp = event;
   }
 }

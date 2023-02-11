@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { Accounting_Document, POSTReserva } from '../pages/interfaces/ireserva';
+import { Accounting_Document, POSTReserva, Reserva } from '../pages/interfaces/ireserva';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class HomeService {
 
   }
 
-  GetReservationId(idReservation:number) {
+  GetReservationId(idReservation:number):Promise<Reserva> {
     //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'
 
       return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}`)
@@ -53,8 +53,15 @@ export class HomeService {
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
-
   }
+  GetReservationAcc(idReservation: number):Promise<Accounting_Document> {
+    //http://127.0.0.1:8000/reservations/15/accounting-document/
+    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/accounting-document`)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
 
   //Pagos
   GetAccounting_Document() {
@@ -64,16 +71,16 @@ export class HomeService {
       .then(response => response as any[])
       .catch(error =>error);
   }
-  PostAccounting_Document(accounting_document: Accounting_Document) {
+  PostAccounting_Document(acc: Accounting_Document) {
 
-      return this.http.post(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}`, accounting_document)
+      return this.http.post(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}`, acc)
       .toPromise()
       .then(response => response)
       .catch(error => error);
   }
-  PutAccounting_Document(accounting_document: Accounting_Document){
+  PutAccounting_Document(acc: Accounting_Document){
 
-      return this.http.put(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}${accounting_document.id}`, accounting_document)
+      return this.http.put(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}${acc.id}`, acc)
         .toPromise()
         .then(response => response)
         .catch(error => error);
