@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { Accounting_Document, POSTReserva, Reserva } from '../pages/interfaces/ireserva';
+import { Accounting_Document, Email, POSTReserva, Reserva } from '../pages/interfaces/ireserva';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +62,13 @@ export class HomeService {
       .catch(error => error);
   }
 
+  sendEmail(id:Email):Promise<string>{
+    // /send-email/
+    return this.http.post(`${API_ROUTES.RESERVATION.GET_RESERVATION}send-email/`,id)
+    .toPromise()
+    .then(response => response as any)
+    .catch(error => error);
+  }
 
   //Pagos
   GetAccounting_Document() {

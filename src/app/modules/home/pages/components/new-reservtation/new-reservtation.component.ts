@@ -3,7 +3,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { HomeService } from '../../../services/home.service';
-import { Reserva, Room, POSTReserva, Accounting_Document } from '../../interfaces/ireserva';
+import { Reserva, Room, POSTReserva, Accounting_Document, Email } from '../../interfaces/ireserva';
 
 @Component({
   selector: 'app-new-reservtation',
@@ -22,8 +22,8 @@ export class NewReservtationComponent implements OnInit {
   Estados?: SelectItem;
   ltsClientes: SelectItem[] = [];
   ltsRooms: SelectItem[] = [];
-
   accounting_document: Accounting_Document;
+
   ltsCurrency: SelectItem[] = [{
     label: 'SOL',
     value: 1,
@@ -40,6 +40,7 @@ export class NewReservtationComponent implements OnInit {
     value: 2,
   }
   ];
+
 
   constructor(
     private administratorService: AdministratorService,
@@ -59,7 +60,7 @@ export class NewReservtationComponent implements OnInit {
     });
 
   }
-  componentsInitials(_accion: string, _titulo: string, _data?: any, _data2?: any): void {
+  componentsInitials(_accion: string, _titulo: string, _reserva?: any, _pago?: any): void {
     this.accion = _accion;
     this.titulo = `${_accion} ${_titulo}`;
     this.isDisplay = true;
@@ -73,15 +74,26 @@ export class NewReservtationComponent implements OnInit {
         this.client = new Client();
         this.reserva = new Reserva();
         this.accounting_document = new Accounting_Document();
+        this.accounting_document.tax = 8;
+        this.accounting_document.issue_date = new Date();
         break;
       case 'EDITAR':
-        console.log(_data);
+        console.log(_reserva);
+        this.reserva = _reserva;
+        this.reserva.checkout = new Date(_reserva.checkout);
+        this.reserva.checkin = new Date(_reserva.checkin);
 
-        this.reserva = _data;
-        this.reserva.checkout = new Date(_data.checkout);
-        this.reserva.checkin = new Date(_data.checkin);
-        this.accounting_document = _data2;
+        
+        if (_pago.id != null) {
+          this.accounting_document = _pago;
+          this.accounting_document.issue_date = new Date(this.accounting_document.issue_date);
+        } else
+          if (_pago.detail != null) {
+            this.message('warn', 'Advertencia', _pago.detail)
+          }
         break;
+      default:
+        return;
     }
   }
 
@@ -113,7 +125,6 @@ export class NewReservtationComponent implements OnInit {
     switch (this.accion) {
       case 'NUEVA':
         this.posReserva();
-        this.postAccounting_Document();
         break;
       case 'EDITAR':
         this.putReserva();
@@ -148,13 +159,14 @@ export class NewReservtationComponent implements OnInit {
       this.accounting_document.reservation_id = await resp_Reserva.id;
       this.accounting_document.status = await 1;
 
-      let emision: string =await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
-      this.accounting_document.issue_date =await  emision;
+      let emision: string = await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
+      this.accounting_document.issue_date = await emision;
 
       const resp_account_document: any = await this.homeService.PostAccounting_Document(this.accounting_document);
       if (resp_account_document != null) {
         console.log("RESPUESTA", resp_account_document);
         this.isDisplay = false;
+        this.sendEmail();
         this.showSuccess('success', 'success', `Se registro al informacion de ${this.accounting_document.number}.`)
       } else {
         console.log("FALLO INSERTAR INFO_PAGO");
@@ -163,7 +175,7 @@ export class NewReservtationComponent implements OnInit {
     }
   }
 
-  putReserva() {
+  async putReserva() {
     this.reserva.status = 1;
     let checkin: string = `${this.reserva.checkin.getFullYear()}-${this.reserva.checkin.getMonth() + 1}-${this.reserva.checkin.getDate()}`;
     this.reserva.checkin = checkin;
@@ -185,24 +197,38 @@ export class NewReservtationComponent implements OnInit {
       client_id: this.reserva.client_id,
       room_id: this.reserva.room_id
     };
-    this.homeService.PutReservation(POSTReserva).then((response) => {
-      if (response != null) {
-        console.log(response);
-        this.isDisplay = false;
-      }
-    });
-  }
-
-  //Pagos
-  postAccounting_Document() {
-
-
-    if (this.accounting_document.client_number.length > 11 || this.accounting_document.client_name != '') {
-    } else {
-      this.showSuccess('error', 'error', 'Datos incorrectos.');
-
+    const resp_Reserva:any = await this.homeService.PutReservation(POSTReserva);
+    if (resp_Reserva != null) {
+      this.isDisplay = false;
+        console.log("ISIIS", resp_Reserva);
+        this.accounting_document.reservation_id = await resp_Reserva.id;
+        this.accounting_document.status = await 1;
+        let emision: string = await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
+        this.accounting_document.issue_date = await emision;
+        const resp_account_document: any = await this.homeService.PutAccounting_Document(this.accounting_document);
+        console.log("entrooo");
+        
+        if (resp_account_document != null) {
+          console.log("RESPUESTA", resp_account_document);
+          this.isDisplay = false;
+          this.sendEmail();
+          this.showSuccess('success', 'success', `Se actualizó al informacion de ${this.accounting_document.number}.`);
+        } else {
+          console.log("FALLO INSERTAR INFO_PAGO");
+          this.showSuccess('Error', 'Error', 'No se pudo actualizar la información de pago.');
+        }
     }
   }
+
+  async sendEmail(){
+    let email:Email = new Email();
+    email.id = this.reserva.id;
+    const resp_Email:any =await this.homeService.sendEmail(email);
+    console.log("EMAIL",resp_Email);
+    
+    this.showSuccess('success', 'success', `${resp_Email.detail}`);
+  }
+  //Pagos
   putAccounting_Document() {
     this.accounting_document.reservation_id = this.reserva.id;
     if (this.accounting_document.client_number == null) {
@@ -227,6 +253,13 @@ export class NewReservtationComponent implements OnInit {
     }
   }
 
+  automaticReserva() {
+    this.accounting_document.total_sale = this.reserva.total;
+    this.accounting_document.total = ((this.accounting_document.tax / 100) * this.accounting_document.total_sale) + this.accounting_document.total_sale;
+  }
+  automaticPago() {
+    this.accounting_document.total = ((this.accounting_document.tax / 100) * this.accounting_document.total_sale) + this.accounting_document.total_sale;
+  }
 
 
 

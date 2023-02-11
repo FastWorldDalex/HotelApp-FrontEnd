@@ -249,6 +249,7 @@ export class CalendarComponent implements OnInit {
     this.coreNuevo();
     let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
     let Element: string = vTrae.outerHTML;
+    console.log("ELEMENT", Element)
     console.log(clickInfo.jsEvent.srcElement);
     console.log(vTrae.outerHTML);
     
@@ -267,7 +268,7 @@ export class CalendarComponent implements OnInit {
     let reserva:Reserva = await this.homeService.GetReservationId(id_Reservation);
       if (reserva != null) {
         let pago:Accounting_Document = await this.homeService.GetReservationAcc(reserva.id);
-        this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva);
+        this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva,pago);
       }
     
     // this.homeService.GetReservationAcc(id_Reservation, acc).then((acco) => {

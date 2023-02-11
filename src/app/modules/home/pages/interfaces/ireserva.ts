@@ -64,3 +64,8 @@ export class Accounting_Document {
     reservation_id?: number = 0;
     reservation?: Reserva;
 }
+
+export class Email{
+    constructor(){}
+    id: number = 0;
+}
