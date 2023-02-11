@@ -30,12 +30,16 @@ import { MessagesModule } from 'primeng/messages';
 import { NewClientsComponent } from './pages/clients/components/new-clients/new-clients.component';
 
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { RoomsComponent } from './pages/rooms/rooms.component';
+import { NewRoomsComponentComponent } from './pages/rooms/components/new-rooms.component/new-rooms.component.component';
 
 @NgModule({
   declarations: [
     AdministratorComponent,
     ClientsComponent,
-    NewClientsComponent
+    NewClientsComponent,
+    RoomsComponent,
+    NewRoomsComponentComponent
   ],
   imports: [
     CommonModule,
