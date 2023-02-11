@@ -23,7 +23,7 @@ import { NewReservtationComponent } from '../new-reservtation/new-reservtation.c
   providers: [MessageService]
 })
 export class CalendarComponent implements OnInit {
-  
+
   @ViewChild(NewReservtationComponent, { static: false })
   newReservtationComponent: NewReservtationComponent =
     new NewReservtationComponent(this.administratorService,
@@ -246,16 +246,16 @@ export class CalendarComponent implements OnInit {
 
   //seleccionar reserva
   async handleEventClick(clickInfo: EventClickArg) {
-    this.coreNuevo();
+
     let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
     let Element: string = vTrae.outerHTML;
     console.log("ELEMENT", Element)
     console.log(clickInfo.jsEvent.srcElement);
     console.log(vTrae.outerHTML);
-    
+
     let ArrayElement1: any[] = Element.split('>');
     console.log(ArrayElement1);
-    
+
     let ArrayElement2: string[] = ArrayElement1[1].split('<');
     console.log(ArrayElement1);
 
@@ -265,21 +265,20 @@ export class CalendarComponent implements OnInit {
     //ID DE RESERVA
     let id_Reservation: number = Number(ArrayElement2[0].toString());
     let acc: Accounting_Document = ArrayElement3[0];
-    let reserva:Reserva = await this.homeService.GetReservationId(id_Reservation);
+
+    if(id_Reservation != 0){
+      this.coreNuevo();
+      let reserva:Reserva = await this.homeService.GetReservationId(id_Reservation);
       if (reserva != null) {
         let pago:Accounting_Document = await this.homeService.GetReservationAcc(reserva.id);
         this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva,pago);
       }
-    
-    // this.homeService.GetReservationAcc(id_Reservation, acc).then((acco) => {
-    //   if (acco != null) {
 
-    //     this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',null,acco);
-    //   }
-    //});
-    console.log(id_Reservation);
-    
-    
+      console.log(id_Reservation);
+    }else {
+      console.log("Date blocked");
+    }
+
   }
 
   //seleccionar cuadro de reserva
@@ -434,14 +433,29 @@ export class CalendarComponent implements OnInit {
             start: `${element.checkin}T${room_start}`,
             end: `${element.checkout}T${room_end}`
           }
-          
+
           this.calendarEvents.push(reservaFiltro);
         });
+
+        this.getClosedHours();
+
         this.message('success', 'exitoso', 'Busqueda realizada.')
       }else{
         this.message('error', 'error', 'Busqueda fallida.')
       }
     });
+  }
+
+  getClosedHours(){
+    let reservaFiltro = {
+      title: `<span class="id" style="display:none;">0</span> <span></span> <br>  <br> <br> `,
+      start: `2023-02-15T00:00:00`,
+      end: `2023-02-15T04:00:00`,
+      backgroundColor: '#6b6b6b',
+      borderColor: '#6b6b6b',
+    }
+
+    this.calendarEvents.push(reservaFiltro);
   }
 
   showSuccess(type:string,title:string,msg:string) {
