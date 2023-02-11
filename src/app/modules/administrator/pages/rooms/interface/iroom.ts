@@ -9,4 +9,5 @@ export class Room {
   capacity:         number=0;
   room_type_id:         number=0;
   status:         number=0;
+  created_date?:      Date;
 }

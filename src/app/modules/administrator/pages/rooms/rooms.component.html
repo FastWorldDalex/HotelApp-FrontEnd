@@ -4,6 +4,22 @@
         <p>Aquí podrás ver la información de todas las habitaciones del hotel</p>
     </div>
     <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable" (click)="coreNuevo('NUEVO')"></p-button>
+            <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
+                    style="padding-left: 1rem">
+            </p-button>
+        </div>
+
+        <div class="p-toolbar-group-right">
+            <span class="p-float-label p-input-icon-right">
+                <i class="pi pi-search"></i>
+                <input type="text" id="Busqueda" pInputText />
+                <label for="inputtext-right">Buscar:</label>
+            </span>
+        </div>
+    </p-toolbar>
       <!--Start of DataTable-->
       <p-table
         [(selection)]="room"
