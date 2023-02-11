@@ -67,5 +67,5 @@ export class Accounting_Document {
 
 export class Email{
     constructor(){}
-    id: number = 0;
+    id?: number = 0;
 }

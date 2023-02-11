@@ -230,7 +230,7 @@
         </p-scrollPanel>
 
         <ng-template pTemplate="footer">
-            <p-button label="Enviar email" (click)="sendEmail()" styleClass="p-button-secondary"></p-button>
+            <p-button label="Enviar email" (click)="sendEmail(reserva.id)" styleClass="p-button-secondary"></p-button>
             <p-button (click)="isDisplay=false" label="Cancelar" styleClass="p-button-danger"></p-button>
             <p-button icon="pi pi-save" (click)="coreGuardar()" label="Guardar" styleClass="p-button-info"></p-button>
         </ng-template>

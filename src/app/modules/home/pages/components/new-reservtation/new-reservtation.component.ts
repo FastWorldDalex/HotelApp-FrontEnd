@@ -166,7 +166,7 @@ export class NewReservtationComponent implements OnInit {
       if (resp_account_document != null) {
         console.log("RESPUESTA", resp_account_document);
         this.isDisplay = false;
-        this.sendEmail();
+        this.sendEmail(resp_Reserva.id);
         this.showSuccess('success', 'success', `Se registro al informacion de ${this.accounting_document.number}.`)
       } else {
         console.log("FALLO INSERTAR INFO_PAGO");
@@ -211,7 +211,7 @@ export class NewReservtationComponent implements OnInit {
         if (resp_account_document != null) {
           console.log("RESPUESTA", resp_account_document);
           this.isDisplay = false;
-          this.sendEmail();
+          this.sendEmail(this.reserva.id);
           this.showSuccess('success', 'success', `Se actualizó al informacion de ${this.accounting_document.number}.`);
         } else {
           console.log("FALLO INSERTAR INFO_PAGO");
@@ -220,9 +220,9 @@ export class NewReservtationComponent implements OnInit {
     }
   }
 
-  async sendEmail(){
+  async sendEmail(id?:number){
     let email:Email = new Email();
-    email.id = this.reserva.id;
+    email.id = id;
     const resp_Email:any =await this.homeService.sendEmail(email);
     console.log("EMAIL",resp_Email);
     
