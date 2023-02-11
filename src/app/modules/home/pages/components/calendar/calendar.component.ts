@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridWeek', // dayGridWeek
-    initialDate: '2023-01-30',
+    initialDate: '2023-02-06',
     locale: esLocale,
     headerToolbar: {
       left: 'prev,next today',
@@ -119,62 +119,6 @@ export class CalendarComponent implements OnInit {
       this.updateCalendar();
     }, 2000);
 
-
-    /*this.options = {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-01-18',
-      locale: esLocale,
-      dateClick: this.handleDateClick.bind(this),
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: ''
-      },
-      eventSources: [
-
-        // your event source
-        {
-          events: this.calendarEvents,
-
-          backgroundColor: '#2962FF',
-          //color: 'blue',     // an option!
-          textColor: 'white' // an option!
-        }
-      ],
-      eventClick: this.handleEventClick.bind(this),
-      eventsSet: this.handleEvents.bind(this),
-      eventContent: function (info) {
-        return { html: '<div class="event-content">' + info.event.title + '</div>' };
-      },
-      //eventShortHeight: 60,
-      //slotEventOverlap: true,
-      slotLabelContent: function (slot) {
-        var rooms = ["H101", "H102", "H104", "H105", "H106", "H107", "H108", "H109",
-          "H110", "H111", "H112", "H113", "H114", "H115", "H116", "H117", "H118", "H119",
-          "H120", "H121", "H122", "", "", ""];
-        var room_title = "";
-        if (slot.date.getMinutes() == 0) {
-          room_title = '<b>' + rooms[slot.date.getHours()] + '<b>';
-        } else if (slot.date.getMinutes() == 15) {
-          room_title = "Habitación Básica";
-        } else if (slot.date.getMinutes() == 30) {
-          room_title = "2 camas simples";
-        } else {
-          room_title = "1er piso";
-        }
-        return { html: '<span style="font-size:11px">' + room_title + '</span>' };
-      },
-      slotLabelInterval: "00:15",
-      slotDuration: '00:15:00',
-      nowIndicator: true,
-      allDaySlot: false,
-      editable: true,
-      selectable: true,
-      selectMirror: true,
-      dayMaxEvents: true
-    };*/
-
     //Form Calendar
     this.es = {
       firstDayOfWeek: 1,
@@ -194,7 +138,7 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-01-30',
+      initialDate: '2023-02-06',
       locale: esLocale,
       headerToolbar: {
         left: 'prev,next today',
