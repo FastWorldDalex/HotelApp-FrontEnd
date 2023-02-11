@@ -4,5 +4,75 @@
         <p>Aquí podrás ver la información de todas las habitaciones del hotel</p>
     </div>
     <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+      <!--Start of DataTable-->
+      <p-table
+        [(selection)]="room"
+        dataKey="id"
+        [value]="ltsRooms"
 
+        [tableStyle]="{ 'min-width': '50rem' }"
+
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} habitaciones"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [rows]="10"
+        [rowHover]="true"
+      >
+              <ng-template pTemplate="header">
+                  <tr class="textSizeTable">
+                      <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
+                  </tr>
+              </ng-template>
+              <ng-template  pTemplate="body" let-cliente>
+                  <tr class="textSizeTable">
+                      <td>
+                          {{ room.id | number }}
+                      </td>
+                      <td>
+                          {{ room.name }}
+                      </td>
+                      <td>
+                          {{ room.description }}
+                      </td>
+                      <td>
+
+                      </td>
+                      <td>
+
+                      </td>
+                      <td>
+
+                      </td>
+                      <td style="width: 7rem;">
+
+                      </td>
+                      <td class="text-md-end" style="width: 7rem;">
+
+                      </td>
+                      <td class="text-md-end" style="width: 7,1rem;">
+
+                      </td>
+                      <td class="text-md-end" style="width: 6rem;">
+
+                      </td>
+                      <td style="width: 6rem;">
+                          <p-tag *ngIf="room.status == 1"
+                              styleClass="textSizeTable mr-2"
+                              severity="success"
+                              value="ACTIVO"
+                          ></p-tag>
+                          <p-tag *ngIf="room.status == 0"
+                              styleClass="textSizeTable mr-2"
+                              severity="danger"
+                              value="INACTIVO"
+                          ></p-tag>
+                      </td>
+                      <td style="width: 12rem;">
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+          <!--End of DataTable-->
+    </div>
 </div>
