@@ -154,7 +154,7 @@ export class NewReservtationComponent implements OnInit {
     const resp_Reserva: POSTReserva = await this.homeService.PostReservation(POSTReserva);
     if (resp_Reserva != null  && resp_Reserva.status != 400) {
       this.isDisplay = false;
-      console.log("ISIIS", resp_Reserva);
+      console.log("Reservaaa", resp_Reserva);
 
       this.accounting_document.reservation_id = await resp_Reserva.id;
       this.accounting_document.status = await 1;
@@ -164,7 +164,7 @@ export class NewReservtationComponent implements OnInit {
 
       const resp_account_document: any = await this.homeService.PostAccounting_Document(this.accounting_document);
       if (resp_account_document != null) {
-        console.log("RESPUESTA", resp_account_document);
+        console.log("Pagooo", resp_account_document);
         this.isDisplay = false;
         this.sendEmail(resp_Reserva.id);
         this.showSuccess('success', 'success', `Se registro al informacion de ${this.accounting_document.number}.`)
@@ -202,7 +202,7 @@ export class NewReservtationComponent implements OnInit {
     const resp_Reserva:any = await this.homeService.PutReservation(POSTReserva);
     if (resp_Reserva != null  && resp_Reserva.status != 400) {
       this.isDisplay = false;
-        console.log("ISIIS", resp_Reserva);
+        console.log("Reservaaa", resp_Reserva);
         this.accounting_document.reservation_id = await resp_Reserva.id;
         this.accounting_document.status = await 1;
         let emision: string = await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
@@ -211,7 +211,7 @@ export class NewReservtationComponent implements OnInit {
         console.log("entrooo");
 
         if (resp_account_document != null) {
-          console.log("RESPUESTA", resp_account_document);
+          console.log("Pagooo", resp_account_document);
           this.isDisplay = false;
           this.sendEmail(this.reserva.id);
           this.showSuccess('success', 'success', `Se actualizó al informacion de ${this.accounting_document.number}.`);
