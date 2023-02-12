@@ -50,7 +50,7 @@ export class Accounting_Document {
 
     }
     id?:             number = 0;
-    number:         string = ''; 
+    number:         string = '';
     client_number:  string = ''; //RUC_DNI
     client_name:    string = ''; //RazonSocial
     client_address: string = '';
@@ -68,4 +68,17 @@ export class Accounting_Document {
 export class Email{
     constructor(){}
     id?: number = 0;
+}
+
+export class ClosedSchedule {
+  constructor(){
+
+  }
+  id:              number=0;
+  start_date:      any;
+  end_date:        any;
+  description:     string= '';
+  status:          number= 0;
+  room_id:         number= 0;
+  room:            Room = new Room();
 }

@@ -92,4 +92,13 @@ export class HomeService {
         .then(response => response)
         .catch(error => error);
   }
+
+  // Closed Schedules
+  GetClosedSchedule() {
+      return this.http.get(API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error);
+
+  }
 }

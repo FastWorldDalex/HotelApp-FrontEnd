@@ -11,7 +11,7 @@ import { CalendarOptions, EventClickArg, EventApi } from '@fullcalendar/core';
 //Dropdown
 import { Message, MessageService, SelectItem } from 'primeng/api';
 import { HomeService } from '../../../services/home.service';
-import { Accounting_Document, POSTReserva, Reserva, Room } from '../../interfaces/ireserva';
+import { Accounting_Document, POSTReserva, Reserva, Room, ClosedSchedule } from '../../interfaces/ireserva';
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 import { NewReservtationComponent } from '../new-reservtation/new-reservtation.component';
@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridWeek', // dayGridWeek
-    initialDate: '2023-02-06',
+    initialDate: '2023-02-13',
     locale: esLocale,
     headerToolbar: {
       left: 'prev,next today',
@@ -72,6 +72,7 @@ export class CalendarComponent implements OnInit {
   };
 
   ltsReservas: Reserva[] = [];
+  ltsClosedSchedules: ClosedSchedule[] = [];
   reservaFiltro: labelCalendar = {
     title: '',
     start: '',
@@ -138,7 +139,7 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-02-06',
+      initialDate: '2023-02-13',
       locale: esLocale,
       headerToolbar: {
         left: 'prev,next today',
@@ -313,13 +314,9 @@ export class CalendarComponent implements OnInit {
               room_start = "07:00:00";
               room_end = "08:00:00";
               break;
-            case 'H109':
+            case 'H110':
               room_start = "08:00:00";
               room_end = "09:00:00";
-              break;
-            case 'H110':
-              room_start = "09:00:00";
-              room_end = "10:00:00";
               break;
             case 'H111':
               room_start = "09:00:00";
@@ -369,8 +366,11 @@ export class CalendarComponent implements OnInit {
               room_start = "20:00:00";
               room_end = "21:00:00";
               break;
+            case 'H123':
+              room_start = "21:00:00";
+              room_end = "22:00:00";
+              break;
           }
-
           let reservaFiltro = {
             title: `<span class="id" style="display:none;">${element.id}</span> <span>${cliente}</span> <br> ${element.client.phone} <br>
             ${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
@@ -391,15 +391,117 @@ export class CalendarComponent implements OnInit {
   }
 
   getClosedHours(){
-    let reservaFiltro = {
-      title: `<span class="id" style="display:none;">0</span> <span></span> <br>  <br> <br> `,
-      start: `2023-02-15T00:00:00`,
-      end: `2023-02-15T04:00:00`,
-      backgroundColor: '#6b6b6b',
-      borderColor: '#6b6b6b',
-    }
+    this.homeService.GetClosedSchedule().then((closed_schedules) => {
+      if (closed_schedules != null || closed_schedules.length > 0) {
+        this.ltsClosedSchedules = closed_schedules;
+        let room_start: string;
+        let room_end: string;
+        this.ltsClosedSchedules.forEach(element => {
+          switch (element.room.name) {
+            case 'H101':
+              room_start = "00:00:00";
+              room_end = "01:00:00";
+              break;
+            case 'H102':
+              room_start = "01:00:00";
+              room_end = "02:00:00";
+              break;
+            case 'H104':
+              room_start = "02:00:00";
+              room_end = "03:00:00";
+              break;
+            case 'H105':
+              room_start = "03:00:00";
+              room_end = "04:00:00";
+              break;
+            case 'H106':
+              room_start = "04:00:00";
+              room_end = "05:00:00";
+              break;
+            case 'H107':
+              room_start = "05:00:00";
+              room_end = "06:00:00";
+              break;
+            case 'H108':
+              room_start = "06:00:00";
+              room_end = "07:00:00";
+              break;
+            case 'H109':
+              room_start = "07:00:00";
+              room_end = "08:00:00";
+              break;
+            case 'H110':
+              room_start = "08:00:00";
+              room_end = "09:00:00";
+              break;
+            case 'H111':
+              room_start = "09:00:00";
+              room_end = "10:00:00";
+              break;
+            case 'H112':
+              room_start = "10:00:00";
+              room_end = "11:00:00";
+              break;
+            case 'H113':
+              room_start = "11:00:00";
+              room_end = "12:00:00";
+              break;
+            case 'H114':
+              room_start = "12:00:00";
+              room_end = "13:00:00";
+              break;
+            case 'H115':
+              room_start = "13:00:00";
+              room_end = "14:00:00";
+              break;
+            case 'H116':
+              room_start = "14:00:00";
+              room_end = "15:00:00";
+              break;
+            case 'H117':
+              room_start = "15:00:00";
+              room_end = "16:00:00";
+              break;
+            case 'H118':
+              room_start = "16:00:00";
+              room_end = "17:00:00";
+              break;
+            case 'H119':
+              room_start = "17:00:00";
+              room_end = "18:00:00";
+              break;
+            case 'H120':
+              room_start = "18:00:00";
+              room_end = "19:00:00";
+              break;
+            case 'H121':
+              room_start = "19:00:00";
+              room_end = "20:00:00";
+              break;
+            case 'H122':
+              room_start = "20:00:00";
+              room_end = "21:00:00";
+              break;
+            case 'H123':
+              room_start = "21:00:00";
+              room_end = "22:00:00";
+              break;
+          }
 
-    this.calendarEvents.push(reservaFiltro);
+          let ClosedScheduleFiltro = {
+            title: `<span class="id" style="display:none;">0</span> <span>${element.description}</span> `,
+            start: `${element.start_date}T${room_start}`,
+            end: `${element.end_date}T${room_end}`,
+            backgroundColor: '#6b6b6b',
+            borderColor: '#6b6b6b',
+          }
+
+          this.calendarEvents.push(ClosedScheduleFiltro);
+
+        });
+      }
+    });
+
   }
 
   showSuccess(type:string,title:string,msg:string) {

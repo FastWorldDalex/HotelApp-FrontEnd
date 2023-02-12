@@ -21,5 +21,8 @@ export const API_ROUTES ={
     },
     ACCOUNTING_DOCUMENT: {
         GET_ACCOUNT_DOCUMENT: `${ENV.url}accounting-documents/`
+    },
+    CLOSED_SCHEDULE: {
+      GET_CLOSED_SCHEDULE: `${ENV.url}closed-schedules/`
     }
 };
