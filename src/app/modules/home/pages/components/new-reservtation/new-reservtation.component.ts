@@ -83,7 +83,7 @@ export class NewReservtationComponent implements OnInit {
         this.reserva.checkout = new Date(_reserva.checkout);
         this.reserva.checkin = new Date(_reserva.checkin);
 
-        
+
         if (_pago.id != null) {
           this.accounting_document = _pago;
           this.accounting_document.issue_date = new Date(this.accounting_document.issue_date);
@@ -152,7 +152,7 @@ export class NewReservtationComponent implements OnInit {
       room_id: this.reserva.room_id
     }
     const resp_Reserva: POSTReserva = await this.homeService.PostReservation(POSTReserva);
-    if (resp_Reserva != null) {
+    if (resp_Reserva != null  && resp_Reserva.status != 400) {
       this.isDisplay = false;
       console.log("ISIIS", resp_Reserva);
 
@@ -172,6 +172,8 @@ export class NewReservtationComponent implements OnInit {
         console.log("FALLO INSERTAR INFO_PAGO");
         this.showSuccess('Error', 'Error', 'No se pudo registrar la información de pago.');
       }
+    }else {
+      this.showSuccess('Error', 'Error', 'No se puede registrar la reserva en el horario y habitación elegida');
     }
   }
 
@@ -198,7 +200,7 @@ export class NewReservtationComponent implements OnInit {
       room_id: this.reserva.room_id
     };
     const resp_Reserva:any = await this.homeService.PutReservation(POSTReserva);
-    if (resp_Reserva != null) {
+    if (resp_Reserva != null  && resp_Reserva.status != 400) {
       this.isDisplay = false;
         console.log("ISIIS", resp_Reserva);
         this.accounting_document.reservation_id = await resp_Reserva.id;
@@ -207,7 +209,7 @@ export class NewReservtationComponent implements OnInit {
         this.accounting_document.issue_date = await emision;
         const resp_account_document: any = await this.homeService.PutAccounting_Document(this.accounting_document);
         console.log("entrooo");
-        
+
         if (resp_account_document != null) {
           console.log("RESPUESTA", resp_account_document);
           this.isDisplay = false;
@@ -217,6 +219,8 @@ export class NewReservtationComponent implements OnInit {
           console.log("FALLO INSERTAR INFO_PAGO");
           this.showSuccess('Error', 'Error', 'No se pudo actualizar la información de pago.');
         }
+    } else {
+      this.showSuccess('Error', 'Error', 'No se puede registrar la reserva en el horario y habitación elegida');
     }
   }
 
@@ -225,7 +229,7 @@ export class NewReservtationComponent implements OnInit {
     email.id = id;
     const resp_Email:any =await this.homeService.sendEmail(email);
     console.log("EMAIL",resp_Email);
-    
+
     this.showSuccess('success', 'success', `${resp_Email.detail}`);
   }
   //Pagos
