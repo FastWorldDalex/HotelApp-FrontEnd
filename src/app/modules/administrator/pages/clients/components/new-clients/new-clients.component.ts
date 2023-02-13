@@ -77,7 +77,7 @@ export class NewClientsComponent implements OnInit{
         break;
       case 'EDITAR':
         window.location.reload();
-        this.putClient(); 
+        this.putClient();
     }
   }
   posClient(){
@@ -86,7 +86,7 @@ export class NewClientsComponent implements OnInit{
     {
     this.administratorService.postClients(this.client).then((response) => {
       if(response!=null || response.length >0){
-      
+
       console.log("RESPUESTA", response);
       this.isDisplay = false;
       this.showSuccess('success','success', 'Se registro al nuevo cliente.');
@@ -109,7 +109,7 @@ export class NewClientsComponent implements OnInit{
     {
     this.administratorService.putClients(this.client).then((response) => {
       if(response!=null || response.length >0){
-      
+
       console.log("RESPUESTA", response);
       this.isDisplay = false;
       this.showSuccess('success','success',`Se Actualizo al cliente ${this.client.lastname}.`)

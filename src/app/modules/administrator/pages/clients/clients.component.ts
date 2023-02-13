@@ -57,12 +57,12 @@ export class ClientsComponent implements OnInit{
     const carga_1 = this.getClient();
     const carga_2 = this.getCountry();
     const carga_3 = this.componentsInitials();
-    
+
     Promise.all([carga_1,carga_2,carga_3]).then((resp)=>{
 
     });
   }
-  
+
   getClient(){
     this.administratorService.getClients().then((clientes) => {
       if(clientes!=null || clientes.length >0){
@@ -98,7 +98,7 @@ export class ClientsComponent implements OnInit{
   abrirModal(operacion:string){
     switch(operacion){
       case "NUEVO":
-        
+
         this.titleModal = operacion + ' CLIENTE';
         this.clientDialog = true;
         break;
@@ -123,7 +123,7 @@ export class ClientsComponent implements OnInit{
       accept: () => {
         this.administratorService.deleteClients(client.id).then((response) => {
           if(response!=null || response.length >0){
-          
+
           console.log("RESPUESTA", response);
           this.getClient();
           this.clientDialog = false;
@@ -144,12 +144,13 @@ export class ClientsComponent implements OnInit{
         accept: () => {
           client.status = 0;
           this.administratorService.putClients(client).then((response) => {
-            if(response!=null || response.length >0){
-            
+            if((response!=null && response.status != 400) || response.length >0){
+
             console.log("RESPUESTA", response);
             this.getClient();
             this.showSuccess('success','success',`Se desactivo al cliente ${client.lastname}.`)
             }else{
+              client.status = 1;
               console.log("FALLO INSERTAR CLIENTE");
               this.showSuccess('Error','Error', 'No se pudo desactivar al cliente.')
             }
@@ -164,7 +165,7 @@ export class ClientsComponent implements OnInit{
           client.status = 1;
           this.administratorService.putClients(client).then((response) => {
             if(response!=null || response.length >0){
-            
+
             console.log("RESPUESTA", response);
             this.showSuccess('success','success',`Se activo al cliente ${client.lastname}.`)
             }else{
@@ -176,7 +177,7 @@ export class ClientsComponent implements OnInit{
       });
     }
   }
-  
+
   showSuccess(type:string,title:string,msg:string) {
           this.messageService.add({severity:type, summary: title, detail: msg});
       }
