@@ -16,12 +16,16 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ClosedDateComponent } from './pages/components/closed-date/closed-date.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
     HomeComponent,
     CalendarComponent,
-    NewReservtationComponent
+    NewReservtationComponent,
+    ClosedDateComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,9 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     TabViewModule,
     InputTextModule,
     InputMaskModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    InputTextareaModule,
+    MultiSelectModule
   ]
 })
 export class HomeModule { }

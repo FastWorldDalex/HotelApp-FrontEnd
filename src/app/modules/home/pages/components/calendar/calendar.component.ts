@@ -15,6 +15,7 @@ import { Accounting_Document, POSTReserva, Reserva, Room, ClosedSchedule } from 
 import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { Client } from 'src/app/modules/administrator/pages/clients/interface/iclient';
 import { NewReservtationComponent } from '../new-reservtation/new-reservtation.component';
+import { ClosedDateComponent } from '../closed-date/closed-date.component';
 
 @Component({
   selector: 'app-calendar',
@@ -27,6 +28,11 @@ export class CalendarComponent implements OnInit {
   @ViewChild(NewReservtationComponent, { static: false })
   newReservtationComponent: NewReservtationComponent =
     new NewReservtationComponent(this.administratorService,
+      this.homeService, this.messageService);
+
+  @ViewChild(ClosedDateComponent, { static: false })
+  closedDateComponent: ClosedDateComponent = 
+    new ClosedDateComponent(this.administratorService,
       this.homeService, this.messageService);
 
   events: any[] = [];
@@ -269,6 +275,11 @@ export class CalendarComponent implements OnInit {
   //Form Reserva
   coreNuevo() {
     this.newReservtationComponent.componentsInitials('NUEVA','RESERVA', null, null);
+  }
+
+  //Form Cerrar Cupos
+  openCerrarCupos() {
+    this.closedDateComponent.componentsInitials();
   }
 
   getReservas() {
