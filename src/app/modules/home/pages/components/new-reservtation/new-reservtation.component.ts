@@ -160,7 +160,7 @@ export class NewReservtationComponent implements OnInit {
       if (this.accounting_document.client_name!="" && this.accounting_document.client_address!=""){
         this.accounting_document.reservation_id = await resp_Reserva.id;
         this.accounting_document.status = await 1;
-        
+
         let emision: string = await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
         this.accounting_document.issue_date = await emision;
 
@@ -179,7 +179,7 @@ export class NewReservtationComponent implements OnInit {
         this.showSuccess('info', 'info', 'Se registro la reserva sin pago.');
       }
 
-      
+
     }else {
       this.showSuccess('Error', 'Error', 'No se puede registrar la reserva en el horario y habitación elegida');
     }
@@ -215,9 +215,13 @@ export class NewReservtationComponent implements OnInit {
         this.accounting_document.status = await 1;
         let emision: string = await `${this.accounting_document.issue_date.getFullYear()}-${this.accounting_document.issue_date.getMonth() + 1}-${this.accounting_document.issue_date.getDate()}`;
         this.accounting_document.issue_date = await emision;
-        const resp_account_document: any = await this.homeService.PutAccounting_Document(this.accounting_document);
+        let resp_account_document: any;
+        if(this.accounting_document != null && this.accounting_document.id != 0){
+          resp_account_document = await this.homeService.PutAccounting_Document(this.accounting_document);
+        }else {
+          resp_account_document = await this.homeService.PostAccounting_Document(this.accounting_document);
+        }
         console.log("entrooo");
-
         if (resp_account_document != null) {
           console.log("Pagooo", resp_account_document);
           this.isDisplay = false;
@@ -228,7 +232,7 @@ export class NewReservtationComponent implements OnInit {
           this.showSuccess('Error', 'Error', 'No se pudo actualizar la información de pago.');
         }/*
         const resp_reservarAcc: any = await this.homeService.GetReservationAcc(resp_Reserva.id);
-        
+
         if(resp_reservarAcc.detail!=null){
           const resp_account_document: any = await this.homeService.PutAccounting_Document(this.accounting_document);
           if (resp_account_document != null) {
@@ -254,7 +258,7 @@ export class NewReservtationComponent implements OnInit {
           }
         }*/
 
-        
+
     } else {
       this.showSuccess('Error', 'Error', 'No se puede registrar la reserva en el horario y habitación elegida');
     }

@@ -31,7 +31,7 @@ export class CalendarComponent implements OnInit {
       this.homeService, this.messageService);
 
   @ViewChild(ClosedDateComponent, { static: false })
-  closedDateComponent: ClosedDateComponent = 
+  closedDateComponent: ClosedDateComponent =
     new ClosedDateComponent(this.administratorService,
       this.homeService, this.messageService);
 
@@ -222,6 +222,8 @@ export class CalendarComponent implements OnInit {
       let reserva:Reserva = await this.homeService.GetReservationId(id_Reservation);
       if (reserva != null) {
         let pago:Accounting_Document = await this.homeService.GetReservationAcc(reserva.id);
+        console.log("pago");
+        console.log(pago);
         this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva,pago);
       }
 
