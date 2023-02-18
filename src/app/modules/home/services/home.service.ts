@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from 'src/app/data/constants/routes';
-import { Accounting_Document, Email, POSTReserva, Reserva } from '../pages/interfaces/ireserva';
+import { Accounting_Document, ClosedSchedule, Email, POSTReserva, Reserva } from '../pages/interfaces/ireserva';
 
 @Injectable({
   providedIn: 'root'
@@ -96,9 +96,15 @@ export class HomeService {
   // Closed Schedules
   GetClosedSchedule() {
       return this.http.get(API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE)
+        .toPromise()
+        .then(response => response as any[])
+        .catch(error => error);
+  }
+
+  PostClosedSchedule(closed_sched: ClosedSchedule) {
+    return this.http.post(`${API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE}`, closed_sched)
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
-
   }
 }

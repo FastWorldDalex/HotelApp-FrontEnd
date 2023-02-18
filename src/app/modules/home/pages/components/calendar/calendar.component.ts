@@ -32,8 +32,7 @@ export class CalendarComponent implements OnInit {
 
   @ViewChild(ClosedDateComponent, { static: false })
   closedDateComponent: ClosedDateComponent =
-    new ClosedDateComponent(this.administratorService,
-      this.homeService, this.messageService);
+    new ClosedDateComponent(this.homeService, this.messageService);
 
   events: any[] = [];
   msgs: Message[] = [];
