@@ -11,7 +11,7 @@
                                 <label class="formLabel">Fecha de inicio</label>
                             </div>
                             <!--input-->
-                            <p-calendar styleClass="ui-calendar" [style]="{'width':'100%'}" dateFormat="dd/mm/yy" 
+                            <p-calendar styleClass="ui-calendar" [style]="{'width':'100%'}" dateFormat="dd/mm/yy"
                                 [(ngModel)]="closed_schedule.start_date">
                             </p-calendar>
                         </div>
@@ -19,7 +19,7 @@
 
                     <div class="col-sm-12">
                         <div class="row">
-                            <!--label-->                            
+                            <!--label-->
                             <div class="col-sm-12">
                                 <label class="formLabel">Fecha de fin</label>
                             </div>
@@ -53,7 +53,7 @@
                             </div>
                             <!--input-->
                             <p-multiSelect [options]="ltsRooms" display="chip" defaultLabel="Selecciona la(s) habitación(es)"
-                                [(ngModel)]="closed_schedule.room_id">
+                                [(ngModel)]="closed_schedule.rooms">
                             </p-multiSelect>
                         </div>
                     </div>

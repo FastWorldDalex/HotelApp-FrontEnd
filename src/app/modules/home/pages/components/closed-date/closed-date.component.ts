@@ -17,9 +17,9 @@ export class ClosedDateComponent implements OnInit{
 
   constructor(
     private homeService: HomeService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {
-    this.closed_schedule = new ClosedSchedule(); 
+    this.closed_schedule = new ClosedSchedule();
   }
 
   ngOnInit() {
@@ -62,6 +62,7 @@ export class ClosedDateComponent implements OnInit{
       console.log("Closed Schedule Inserted", this.closed_schedule);
       this.isDisplay = false;
       this.showSuccess('success', 'success', `Se bloqueo la fecha por ${this.closed_schedule.description}.`);
+      location.reload();
     }else {
       console.log("FALLO INSERTAR Closed Schedule");
       this.showSuccess('Error', 'Error', 'No se pudo bloquear la fecha.');

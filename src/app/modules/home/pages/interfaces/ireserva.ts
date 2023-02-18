@@ -81,4 +81,5 @@ export class ClosedSchedule {
   status:          number= 0;
   room_id:         number= 0;
   room:            Room = new Room();
+  rooms?:          any;
 }
