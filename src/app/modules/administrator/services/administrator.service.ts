@@ -4,6 +4,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { ERRORS_CONST } from 'src/app/data/constants';
 import { API_ROUTES } from 'src/app/data/constants/routes';
 import { Client } from '../pages/clients/interface/iclient';
+import { Room } from '../pages/rooms/interface/iroom';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,17 @@ export class AdministratorService {
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
+  }
+  postRoom(room: Room) {
+    return this.http.post(`${API_ROUTES.ROOM.GET_ROOM}`, room)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  putRoom(room:Room){
+    return this.http.put(`${API_ROUTES.ROOM.GET_ROOM}${room.id}`, room)
+        .toPromise()
+        .then(response => response)
+        .catch(error => error)
   }
 }

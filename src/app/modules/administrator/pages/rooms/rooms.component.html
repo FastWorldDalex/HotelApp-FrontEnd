@@ -1,93 +1,78 @@
+<p-toast></p-toast>
 <div class="row main-content">
-    <div class="col-sm-12 col-md-12 content">
-        <h3>Habitaciones</h3>
-        <p>Aquí podrás ver la información de todas las habitaciones del hotel</p>
-    </div>
-    <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
-      <p-toolbar>
-        <div class="p-toolbar-group-left">
-            <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable" (click)="coreNuevo('NUEVO')"></p-button>
-            <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
-                    style="padding-left: 1rem">
-            </p-button>
-        </div>
+  <div class="col-sm-12 col-md-12 content">
+    <h3>Habitaciones</h3>
+    <p>Aquí podrás ver la información de todas las habitaciones del hotel</p>
+  </div>
+  <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable"
+          (click)="coreNuevo('NUEVO')"></p-button>
+        <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
+          style="padding-left: 1rem">
+        </p-button>
+      </div>
 
-        <div class="p-toolbar-group-right">
-            <span class="p-float-label p-input-icon-right">
-                <i class="pi pi-search"></i>
-                <input type="text" id="Busqueda" pInputText />
-                <label for="inputtext-right">Buscar:</label>
-            </span>
-        </div>
+      <div class="p-toolbar-group-right">
+        <span class="p-float-label p-input-icon-right">
+          <i class="pi pi-search"></i>
+          <input type="text" id="Busqueda" pInputText />
+          <label for="inputtext-right">Buscar:</label>
+        </span>
+      </div>
     </p-toolbar>
-      <!--Start of DataTable-->
-      <p-table
-        [(selection)]="room"
-        dataKey="id"
-        [value]="ltsRooms"
-
-        [tableStyle]="{ 'min-width': '50rem' }"
-
-        [paginator]="true"
-        [showCurrentPageReport]="true"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} habitaciones"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [rows]="10"
-        [rowHover]="true"
-      >
-              <ng-template pTemplate="header">
-                  <tr class="textSizeTable">
-                      <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
-                  </tr>
-              </ng-template>
-              <ng-template  pTemplate="body" let-room>
-                  <tr class="textSizeTable">
-                      <td>
-                        {{ room.id | number }}
-                      </td>
-                      <td>
-                        {{ room.name }}
-                      </td>
-                      <td>
-                        {{ room.description }}
-                      </td>
-                      <td>
-                        {{ room.price | number }}
-                      </td>
-                      <td>
-                        {{ room.capacity | number }}
-                      </td>
-                      <td>
-                        {{ room.room_type.name }}
-                      </td>
-                      <td class="text-md-end" style="width: 6rem;">
-                        {{ room.created_date | date: 'dd/MM/yyyy' }}
-                    </td>
-                      <td style="width: 6rem;">
-                          <p-tag *ngIf="room.status == 1"
-                              styleClass="textSizeTable mr-2"
-                              severity="success"
-                              value="ACTIVO"
-                          ></p-tag>
-                          <p-tag *ngIf="room.status == 0"
-                              styleClass="textSizeTable mr-2"
-                              severity="danger"
-                              value="INACTIVO"
-                          ></p-tag>
-                      </td>
-                      <td style="width: 12rem;">
-                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', room)"
-                        class="buttonTable p-button-secondary" title="Ver detalle"></button>
-                          <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', room)"
-                              class="buttonTable" title="Editar habitación"></button>
-                          <button pButton pRipple icon="pi pi-trash" (click)="deleteRoom(room)"
-                              class="buttonTable p-button-danger" title="Eliminar habitación"></button>
-                          <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRoom(room)"
-                              class="buttonTable p-button-warning" title="Desactivar habitación"></button>
-                      </td>
-                  </tr>
-              </ng-template>
-          </p-table>
-          <!--End of DataTable-->
-    </div>
+    <!--Start of DataTable-->
+    <p-table [(selection)]="room" dataKey="id" [value]="ltsRooms" [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} habitaciones"
+      [rowsPerPageOptions]="[10, 25, 50]" [rows]="10" [rowHover]="true">
+      <ng-template pTemplate="header">
+        <tr class="textSizeTable">
+          <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-room>
+        <tr class="textSizeTable">
+          <td>
+            {{ room.id | number }}
+          </td>
+          <td>
+            {{ room.name }}
+          </td>
+          <td>
+            {{ room.description }}
+          </td>
+          <td>
+            {{ room.price | number }}
+          </td>
+          <td>
+            {{ room.capacity | number }}
+          </td>
+          <td>
+            {{ room.room_type.name }}
+          </td>
+          <td class="text-md-end" style="width: 6rem;">
+            {{ room.created_date | date: 'dd/MM/yyyy' }}
+          </td>
+          <td style="width: 6rem;">
+            <p-tag *ngIf="room.status == 1" styleClass="textSizeTable mr-2" severity="success" value="ACTIVO"></p-tag>
+            <p-tag *ngIf="room.status == 0" styleClass="textSizeTable mr-2" severity="danger" value="INACTIVO"></p-tag>
+          </td>
+          <td style="width: 12rem;">
+            <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', room)"
+              class="buttonTable p-button-secondary" title="Ver detalle"></button>
+            <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', room)" class="buttonTable"
+              title="Editar habitación"></button>
+            <button pButton pRipple icon="pi pi-trash" (click)="deleteRoom(room)" class="buttonTable p-button-danger"
+              title="Eliminar habitación"></button>
+            <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRoom(room)"
+              class="buttonTable p-button-warning" title="Desactivar habitación"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!--End of DataTable-->
+  </div>
 </div>
+<app-new-rooms></app-new-rooms>

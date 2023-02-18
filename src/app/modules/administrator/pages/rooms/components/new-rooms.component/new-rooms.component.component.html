@@ -1,1 +1,84 @@
-<p>new-rooms.component works!</p>
+<p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '35%',height: '760px'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar1">
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 p-0">
+                                <label for="name" class="mb-2">Nombre:</label>
+                            </div>
+                            <input type="text" pInputText id="name" [disabled]="isEdit"
+                                [(ngModel)]="room.name" required autofocus />
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 p-0">
+                                <label for="description" class="mb-2">Descripción:</label>
+                            </div>
+                            <input type="text" pInputText id="description" [disabled]="isEdit"
+                                [(ngModel)]="room.description" required autofocus />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6 p-0">
+                                <div class="col-sm-12">
+                                    <label class="formLabel" for="price">Precio</label>
+                                </div>
+                                <p-inputNumber [(ngModel)]="room.price" inputId="price" mode="decimal" 
+                                    [minFractionDigits]="2" [maxFractionDigits]="5"  [disabled]="isEdit"
+                                    [min]="0" [max]="10000"> 
+                                </p-inputNumber>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                    <label class="formLabel" for="capacity">Capacidad</label>
+                                </div>
+                                <p-inputNumber [(ngModel)]="room.capacity" inputId="capacity" mode="decimal" 
+                                    [minFractionDigits]="2" [maxFractionDigits]="5"  [disabled]="isEdit"
+                                    [min]="0" [max]="10000">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="habitacion">Tipo de Habitación</label>
+                            </div>
+                            <p-dropdown [style]="{'width':'100%'}" [options]="lstTpHabitaciones" [(ngModel)]="room.room_type_id"
+                                placeholder="Selecciona la un tipo"  [showClear]="true" [disabled]="isEdit"
+                                [filter]="true">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 p-0">
+                                <label class="mb-2">Estado:</label>
+                            </div>
+                            <div class="col" *ngFor="let estado of Estados" style="width: 100%;">
+                                <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value" 
+                                        [(ngModel)]="room.status" [disabled]="isNew"></p-radioButton>
+                                <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-scrollPanel>
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="isDisplay=false" label="Cancelar"
+            styleClass="p-button-danger"></p-button>
+        <p-button [disabled]="isEdit" icon="pi pi-save" (click)="coreGuardar()" label="Guardar"
+            styleClass="p-button-info"></p-button>
+    </ng-template>
+</p-dialog>

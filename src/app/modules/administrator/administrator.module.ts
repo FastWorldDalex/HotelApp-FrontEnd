@@ -33,6 +33,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { NewRoomsComponentComponent } from './pages/rooms/components/new-rooms.component/new-rooms.component.component';
 
+
 @NgModule({
   declarations: [
     AdministratorComponent,

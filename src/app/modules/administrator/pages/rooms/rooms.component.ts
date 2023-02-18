@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AdministratorService } from '../../services/administrator.service';
 import { Titles } from 'src/app/shared/interface/interfaces';
 import { Room } from './interface/iroom';
+import { NewRoomsComponentComponent } from './components/new-rooms.component/new-rooms.component.component';
 
 @Component({
   selector: 'app-rooms',
@@ -12,6 +13,9 @@ import { Room } from './interface/iroom';
 })
 
 export class RoomsComponent implements OnInit{
+  @ViewChild(NewRoomsComponentComponent, { static: false })
+  newRoomsComponentComponent: NewRoomsComponentComponent = new NewRoomsComponentComponent();
+
   titulos: Titles[] = [];
   ltsRooms: Room[] = [];
   room: Room;
@@ -48,13 +52,13 @@ export class RoomsComponent implements OnInit{
   }
 
   coreNuevo(accion:string){
+    this.newRoomsComponentComponent.componentsInitials(accion,"CLIENTE");
   }
-
-  coreEditar(accion:string, client: Room){
+  coreEditar(accion:string, room: Room){
+    this.newRoomsComponentComponent.componentsInitials(accion,"CLIENTE", room);
   }
-
-  coreVer(accion:string, client: Room){
-
+  coreVer(accion:string, room: Room){
+    this.newRoomsComponentComponent.componentsInitials(accion,"CLIENTE",room);
   }
 
   deleteRoom(room: Room){
