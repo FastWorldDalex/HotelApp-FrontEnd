@@ -5,6 +5,7 @@
     }
     .p-dropdown {
         width: 100%;
+        overflow: visible;
     }
     // temporal styles to calendar
     .p-tabview-panels {
@@ -37,5 +38,11 @@
       font-size: 12px !important;
       padding-left: 10px !important;
     }
+}
 
+::ng-deep{
+  .custombar1{
+    width: 100%;
+    height: auto;
+  }
 }

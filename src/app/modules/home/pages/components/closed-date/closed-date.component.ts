@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Node } from '@angular/compiler';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { AdministratorComponent } from 'src/app/modules/administrator/pages/administrator.component';
 import { SelectItem } from 'src/app/shared/interface/interfaces';
+import { NodeService } from 'src/app/shared/services/node.service';
 import { HomeService } from '../../../services/home.service';
 import { ClosedSchedule } from '../../interfaces/ireserva';
+import { CalendarComponent } from '../calendar/calendar.component';
+
 
 @Component({
   selector: 'app-closed-date',
@@ -10,6 +15,9 @@ import { ClosedSchedule } from '../../interfaces/ireserva';
   styleUrls: ['./closed-date.component.scss']
 })
 export class ClosedDateComponent implements OnInit{
+  @ViewChild(CalendarComponent, { static: false })
+  calendarComponent!: CalendarComponent;
+
   isDisplay: boolean = false;
   eventHtpp: boolean = false;
   ltsRooms: SelectItem[] = [];
@@ -32,11 +40,12 @@ export class ClosedDateComponent implements OnInit{
   componentsInitials(_closed_schedule?: any): void{
     this.isDisplay = true;
     this.closed_schedule = new ClosedSchedule();
-    console.log("?", this.closed_schedule)
+    console.log("?", this.closed_schedule);
   }
 
   coreGuardar(){
     this.postClosedSchedule();
+    this.calendarComponent.updateCalendar();
   }
 
   getRooms() {
