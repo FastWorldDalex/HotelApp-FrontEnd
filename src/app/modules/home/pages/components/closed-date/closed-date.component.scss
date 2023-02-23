@@ -1,7 +1,7 @@
 :host ::ng-deep {
-    /*.p-inputtextarea {
-        width: 100%;
-    }*/
+    .p-inputtextarea {
+        height: 100% !important;
+    }
     .p-multiselect {
         width: 100%;
     }
@@ -38,9 +38,8 @@
       }
 }
 
-::ng-deep{
-  .custombar1{
-    width: 100%;
-    height: auto;
+/*::ng-deep{
+  .p-dropdown-panel{
+    overflow: visible !important;
   }
-}
+}*/

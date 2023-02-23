@@ -58,14 +58,14 @@
                                         <div class="col-sm-12">
                                             <label class="formLabel" for="adultos">Adultos</label>
                                         </div>
-                                        <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" [min]="0" [max]="100">
+                                        <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="col-sm-12">
                                             <label class="formLabel" for="niños">Niños</label>
                                         </div>
-                                        <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" [min]="0" [max]="100">
+                                        <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                             <label class="formLabel" for="total">Total</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="totalPagado" mode="decimal"
-                                            [minFractionDigits]="2" [maxFractionDigits]="5" [min]="0" [max]="10000">
+                                            [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6">
@@ -86,7 +86,7 @@
                                             <label class="formLabel" for="totalPagar">Total por pagar</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagado" mode="decimal"
-                                            [minFractionDigits]="2" [maxFractionDigits]="5" [min]="0" [max]="10000">
+                                            [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                 </div>
@@ -99,8 +99,7 @@
                                             <label class="formLabel" for="totalPagado">Total pagado</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="decimal"
-                                            [minFractionDigits]="2" (onBlur)="automaticReserva()" [maxFractionDigits]="5"
-                                            [min]="0" [max]="10000">
+                                            [maxFractionDigits]="2" [min]="0" (onBlur)="automaticReserva()">
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6"></div>
@@ -196,8 +195,7 @@
                                             <label class="formLabel" for="totalValorVenta">Total Valor de Venta</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="accounting_document.total_sale" mode="decimal"
-                                            [minFractionDigits]="2" (onBlur)="automaticPago()" [maxFractionDigits]="5"
-                                            [min]="0" [max]="10000">
+                                            [maxFractionDigits]="2" [min]="0" (onBlur)="automaticPago()">
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6">
@@ -205,7 +203,7 @@
                                             <label class="formLabel" for="igv">IGV</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="accounting_document.tax" mode="decimal" [disabled]="false"
-                                            [minFractionDigits]="0" [maxFractionDigits]="0" [min]="0" [max]="2">
+                                            [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                 </div>
@@ -218,7 +216,7 @@
                                             <label class="formLabel" for="importeTotal">Importe Total</label>
                                         </div>
                                         <p-inputNumber [(ngModel)]="accounting_document.total" mode="decimal" [disabled]="true"
-                                            [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="10000">
+                                            [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6"></div>
