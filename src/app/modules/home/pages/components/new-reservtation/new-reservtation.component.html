@@ -72,6 +72,43 @@
                             </div>
 
                             <div class="col-sm-12">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <div class="col-sm-12">
+                                          <label class="formLabel" for="subtotal">Subtotal</label>
+                                      </div>
+                                      <p-inputNumber [(ngModel)]="reserva.subtotal" inputId="subtotal" mode="decimal"
+                                          [maxFractionDigits]="2" [min]="0">
+                                      </p-inputNumber>
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <div class="col-sm-12">
+                                          <label class="formLabel" for="additionalAmount">Cargo adicional</label>
+                                      </div>
+                                      <p-inputNumber [(ngModel)]="reserva.additional_amount" inputId="additionalAmount" mode="decimal"
+                                          [maxFractionDigits]="2" [min]="0">
+                                      </p-inputNumber>
+                                  </div>
+                              </div>
+                          </div>
+
+
+                          <div class="col-sm-12">
+                            <div class="row">
+                                <!--label-->
+                                <div class="col-sm-12">
+                                    <label class="formLabel">Observaciones</label>
+                                </div>
+                                <!--input-->
+                                <div class="col-sm-12">
+                                    <textarea rows="2" cols="30" pInputTextarea [autoResize]="false" [style]="{'overflow':'visible'}"
+                                        [(ngModel)]="reserva.observations">
+                                    </textarea>
+                                </div>
+                            </div>
+                          </div>
+
+                            <div class="col-sm-12">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="col-sm-12">

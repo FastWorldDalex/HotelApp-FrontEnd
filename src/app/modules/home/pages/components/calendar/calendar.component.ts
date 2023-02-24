@@ -40,7 +40,7 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridWeek', // dayGridWeek
-    initialDate: '2023-02-13',
+    initialDate: '2023-02-20',
     locale: esLocale,
     headerToolbar: {
       left: 'prev,next today',
@@ -103,6 +103,9 @@ export class CalendarComponent implements OnInit {
     checkout: '',
     adults: 0,
     children: 0,
+    subtotal: 0,
+    additional_amount: 0,
+    observations: '',
     total: 0,
     done_payment: 0,
     pending_payment: 0,
@@ -144,7 +147,7 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-02-13',
+      initialDate: '2023-02-20',
       locale: esLocale,
       headerToolbar: {
         left: 'prev,next today',

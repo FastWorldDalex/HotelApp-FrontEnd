@@ -8,6 +8,9 @@ export class Reserva {
     checkout:        any;
     adults:          number=0;
     children:        number=0;
+    subtotal:        number=0;
+    additional_amount: number=0;
+    observations:   string='';
     total:           number= 0;
     done_payment:    number= 0;
     pending_payment: number= 0;
@@ -37,6 +40,9 @@ export interface POSTReserva {
     checkout:        any;
     adults:          number;
     children:        number;
+    subtotal:        number;
+    additional_amount: number;
+    observations:   string;
     total:           number;
     done_payment:    number; //pagado
     pending_payment: number; // por pagar
