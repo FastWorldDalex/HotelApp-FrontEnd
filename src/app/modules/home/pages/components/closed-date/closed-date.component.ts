@@ -2,6 +2,7 @@ import { Node } from '@angular/compiler';
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AdministratorComponent } from 'src/app/modules/administrator/pages/administrator.component';
+import { AdministratorService } from 'src/app/modules/administrator/services/administrator.service';
 import { SelectItem } from 'src/app/shared/interface/interfaces';
 import { NodeService } from 'src/app/shared/services/node.service';
 import { HomeService } from '../../../services/home.service';
@@ -45,7 +46,6 @@ export class ClosedDateComponent implements OnInit{
 
   coreGuardar(){
     this.postClosedSchedule();
-    this.calendarComponent.updateCalendar();
   }
 
   getRooms() {
@@ -72,9 +72,10 @@ export class ClosedDateComponent implements OnInit{
       this.isDisplay = false;
       this.showSuccess('success', 'success', `Se bloqueo la fecha por ${this.closed_schedule.description}.`);
       location.reload();
+      //this.calendarComponent.updateCalendar();
     }else {
-      console.log("FALLO INSERTAR Closed Schedule");
-      this.showSuccess('Error', 'Error', 'No se pudo bloquear la fecha.');
+      console.log("Fallo response", resp_closed_schedule);
+      this.showSuccess('Error', 'Error', `${resp_closed_schedule.error.detail}.`);
     }
   }
 
