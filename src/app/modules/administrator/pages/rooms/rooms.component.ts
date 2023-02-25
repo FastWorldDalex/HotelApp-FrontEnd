@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AdministratorService } from '../../services/administrator.service';
 import { Titles } from 'src/app/shared/interface/interfaces';
 import { Room } from './interface/iroom';
@@ -23,6 +23,7 @@ export class RoomsComponent implements OnInit{
   constructor(
     private administratorService:AdministratorService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.room = new Room();
   }
@@ -61,14 +62,44 @@ export class RoomsComponent implements OnInit{
     this.newRoomsComponentComponent.componentsInitials(accion,"CLIENTE",room);
   }
 
-  deleteRoom(room: Room){
-  }
-  changeStatusRoom(room: Room){
+  async deleteRoom(room: Room){
     if(room.status == 1){
-    }else{
+      this.confirmationService.confirm({
+        header: 'Eliminar Habitación',
+        message: `¿Está seguro de eliminar la habitación ${room.name}?`,
+        accept: async () => {
+          const resp_Room = await this.administratorService?.deleteRoom(room.id);
+            if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
 
+            console.log("RESPUESTA", resp_Room);
+            this.getRooms();
+            this.showSuccess('success','success',`Se eliminó la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo eliminar la habitación.')
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar Habitación',
+        message: `¿Está seguro de activar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 1;
+          const resp_Room = await this.administratorService?.putRoom(room);
+            if(resp_Room!=null || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.showSuccess('success','success',`Se activo la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR ROOM");
+              this.showSuccess('Error','Error', 'No se pudo activar la habitación.')
+            }
+        }
+      });
     }
   }
+
   componentsInitials(){
     this.titulos = [
       {title: '#', width: 2},
@@ -86,4 +117,57 @@ export class RoomsComponent implements OnInit{
   message(type:string, titulo:string, msg:string){
     this.showSuccess(type, titulo, msg)
   }
+
+  async putRoom(_room: Room){
+    _room.status = 0;
+    const resp_Room = await this.administratorService?.putRoom(_room);
+    if (resp_Room != null  && resp_Room.status != 400) {
+      this.showSuccess('success','Exitoso', 'Se Inactivo una habitación.');
+      window.location.reload();
+    }else{
+      this.showSuccess('error','Error', 'No se Inactivar.');
+    }
+  }
+
+
+  async changeStatusRoom(room: Room){
+    if(room.status == 1){
+      this.confirmationService.confirm({
+        header: 'Desactivar Habitación',
+        message: `¿Está seguro de desactivar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 0;
+          const resp_Room = await this.administratorService?.putRoom(room);
+            if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.getRooms();
+            this.showSuccess('success','success',`Se desactivo la habitación ${room.name}.`)
+            }else{
+              room.status = 1;
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo desactivar la habitación.')
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar Habitación',
+        message: `¿Está seguro de activar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 1;
+          const resp_Room = await this.administratorService?.putRoom(room);
+            if(resp_Room!=null || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.showSuccess('success','success',`Se activo la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR ROOM");
+              this.showSuccess('Error','Error', 'No se pudo activar la habitación.')
+            }
+        }
+      });
+    }
+  }
+
 }

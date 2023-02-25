@@ -61,4 +61,10 @@ export class AdministratorService {
         .then(response => response)
         .catch(error => error)
   }
+  deleteRoom(IdRoom?:number){
+    return this.http.delete(`${API_ROUTES.ROOM.GET_ROOM}${IdRoom}`)
+        .toPromise()
+        .then(response => response)
+        .catch(error => error)
+  }
 }

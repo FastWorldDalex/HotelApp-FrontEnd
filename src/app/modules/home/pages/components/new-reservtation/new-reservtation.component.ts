@@ -75,7 +75,7 @@ export class NewReservtationComponent implements OnInit {
         this.client = new Client();
         this.reserva = new Reserva();
         this.accounting_document = new Accounting_Document();
-        this.accounting_document.tax = 18;
+
         this.accounting_document.issue_date = new Date();
         break;
       case 'EDITAR':
@@ -304,11 +304,13 @@ export class NewReservtationComponent implements OnInit {
   }
 
   automaticReserva() {
+    this.accounting_document.tax = ((18 / 100) * this.accounting_document.total_sale);
     this.accounting_document.total_sale = this.reserva.total;
-    this.accounting_document.total = ((this.accounting_document.tax / 100) * this.accounting_document.total_sale) + this.accounting_document.total_sale;
+    this.accounting_document.total = this.accounting_document.tax  + this.accounting_document.total_sale;
   }
   automaticPago() {
-    this.accounting_document.total = ((this.accounting_document.tax / 100) * this.accounting_document.total_sale) + this.accounting_document.total_sale;
+    this.accounting_document.tax = ((18 / 100) * this.accounting_document.total_sale);
+    this.accounting_document.total = this.accounting_document.tax + this.accounting_document.total_sale;
   }
 
 

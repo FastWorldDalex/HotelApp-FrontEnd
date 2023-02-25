@@ -17,10 +17,10 @@ export class NewRoomsComponentComponent {
   eventHtpp: boolean = false;
   room: Room = new Room();
   Estados: SelectItem[] = [{
-    label: 'ACTIVO',
+    label: 'INACTIVO',
     value: 0,
   }, {
-    label: 'INACTIVO',
+    label: 'ACTIVO',
     value: 1,
   }];
 
@@ -60,6 +60,7 @@ export class NewRoomsComponentComponent {
     this.isEdit = false;
     switch (_accion) {
       case 'NUEVO':
+        this.room.status = 1;
         break;
       case 'EDITAR':
         this.room = _data;
@@ -94,6 +95,7 @@ export class NewRoomsComponentComponent {
     }
   }
   async putRoom(){
+    
     const resp_Room = await this.administratorService?.putRoom(this.room);
     if (resp_Room != null  && resp_Room.status != 400) {
       this.isDisplay = false;
