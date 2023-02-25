@@ -47,6 +47,7 @@
                                     </div>
                                     <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="reserva.room_id"
                                         placeholder="Selecciona la habitación"  [showClear]="true"
+                                        (onChange)="automaticTotal()"
                                         [filter]="true">
                                     </p-dropdown>
                                 </div>
@@ -77,7 +78,7 @@
                                       <div class="col-sm-12">
                                           <label class="formLabel" for="subtotal">Subtotal</label>
                                       </div>
-                                      <p-inputNumber [(ngModel)]="reserva.subtotal" inputId="subtotal" mode="decimal"
+                                      <p-inputNumber [(ngModel)]="reserva.subtotal" inputId="subtotal" mode="decimal" class="readonly"
                                           [maxFractionDigits]="2" [min]="0">
                                       </p-inputNumber>
                                   </div>
@@ -86,7 +87,7 @@
                                           <label class="formLabel" for="additionalAmount">Cargo adicional</label>
                                       </div>
                                       <p-inputNumber [(ngModel)]="reserva.additional_amount" inputId="additionalAmount" mode="decimal"
-                                          [maxFractionDigits]="2" [min]="0">
+                                          [maxFractionDigits]="2" [min]="0" (ngModelChange)="changeAdditionalAmount()">
                                       </p-inputNumber>
                                   </div>
                               </div>
@@ -114,7 +115,7 @@
                                         <div class="col-sm-12">
                                             <label class="formLabel" for="total">Total</label>
                                         </div>
-                                        <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="totalPagado" mode="decimal"
+                                        <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="decimal" class="readonly"
                                             [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
@@ -122,7 +123,7 @@
                                         <div class="col-sm-12">
                                             <label class="formLabel" for="totalPagar">Total por pagar</label>
                                         </div>
-                                        <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagado" mode="decimal"
+                                        <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="totalPagado" mode="decimal"
                                             [maxFractionDigits]="2" [min]="0">
                                         </p-inputNumber>
                                     </div>
@@ -135,8 +136,8 @@
                                         <div class="col-sm-12">
                                             <label class="formLabel" for="totalPagado">Total pagado</label>
                                         </div>
-                                        <p-inputNumber [(ngModel)]="reserva.total" inputId="totalPagado" mode="decimal"
-                                            [maxFractionDigits]="2" [min]="0" (onBlur)="automaticReserva()">
+                                        <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagado" mode="decimal"
+                                            [maxFractionDigits]="2" [min]="0" >
                                         </p-inputNumber>
                                     </div>
                                     <div class="col-sm-6"></div>

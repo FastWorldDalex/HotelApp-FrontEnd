@@ -23,6 +23,7 @@ export class NewReservtationComponent implements OnInit {
   Estados?: SelectItem;
   ltsClientes: SelectItem[] = [];
   ltsRooms: SelectItem[] = [];
+  rooms: any[] = [];
   accounting_document: Accounting_Document;
 
   ltsCurrency: SelectItem[] = [{
@@ -116,6 +117,7 @@ export class NewReservtationComponent implements OnInit {
 
         res.forEach(room => {
           this.ltsRooms.push({ label: room.name, value: room.id });
+          this.rooms.push({ id: room.id, name: room.name, price: room.price });
         });
 
       }
@@ -307,6 +309,21 @@ export class NewReservtationComponent implements OnInit {
     this.accounting_document.tax = ((18 / 100) * this.accounting_document.total_sale);
     this.accounting_document.total_sale = this.reserva.total;
     this.accounting_document.total = this.accounting_document.tax  + this.accounting_document.total_sale;
+  }
+  calculateAmounts() {
+    this.reserva.total = this.reserva.subtotal + this.reserva.additional_amount;
+  }
+  changeAdditionalAmount() {
+    this.calculateAmounts();
+  }
+  automaticTotal() {
+    this.rooms.map((room) => {
+      if(room.id == this.reserva.room_id){
+        this.reserva.subtotal = room.price;
+        this.calculateAmounts();
+      }
+    });
+
   }
   automaticPago() {
     this.accounting_document.tax = ((18 / 100) * this.accounting_document.total_sale);
