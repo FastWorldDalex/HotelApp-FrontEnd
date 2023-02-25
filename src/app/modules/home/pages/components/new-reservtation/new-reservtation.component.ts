@@ -312,6 +312,7 @@ export class NewReservtationComponent implements OnInit {
   }
   calculateAmounts() {
     this.reserva.total = this.reserva.subtotal + this.reserva.additional_amount;
+    this.reserva.pending_payment = this.reserva.total - this.reserva.done_payment;
   }
   changeAdditionalAmount() {
     this.calculateAmounts();
