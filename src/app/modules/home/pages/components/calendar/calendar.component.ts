@@ -230,6 +230,7 @@ export class CalendarComponent implements OnInit {
         let pago:Accounting_Document = await this.homeService.GetReservationAcc(reserva.id);
         console.log("pago");
         console.log(pago);
+        console.log("reserva.checkin - "+ reserva.checkin);
         this.newReservtationComponent.componentsInitials('EDITAR','RESERVA',reserva,pago);
       }
 

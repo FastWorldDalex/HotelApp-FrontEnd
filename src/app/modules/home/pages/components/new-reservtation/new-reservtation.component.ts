@@ -85,7 +85,6 @@ export class NewReservtationComponent implements OnInit {
         this.reserva.checkout = new Date(_reserva.checkout);
         this.reserva.checkin = new Date(_reserva.checkin);
 
-
         if (_pago.id != null) {
           this.accounting_document = _pago;
           this.accounting_document.issue_date = new Date(this.accounting_document.issue_date);
