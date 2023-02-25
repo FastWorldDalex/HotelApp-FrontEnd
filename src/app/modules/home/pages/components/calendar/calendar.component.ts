@@ -199,7 +199,7 @@ export class CalendarComponent implements OnInit {
 
   //seleccionar reserva
   async handleEventClick(clickInfo: EventClickArg) {
-
+    /**
     let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
     let Element: string = vTrae.outerHTML;
     console.log("ELEMENT", Element)
@@ -217,7 +217,11 @@ export class CalendarComponent implements OnInit {
 
     //ID DE RESERVA
     let id_Reservation: number = Number(ArrayElement2[0].toString());
-    let acc: Accounting_Document = ArrayElement3[0];
+
+
+    //let acc: Accounting_Document = ArrayElement3[0];**/
+
+    let id_Reservation = parseInt(clickInfo.event.id);
 
     if(id_Reservation != 0){
       this.coreNuevo();
@@ -387,6 +391,7 @@ export class CalendarComponent implements OnInit {
               break;
           }
           let reservaFiltro = {
+            id: `${element.id}`,
             title: `<span class="id" style="display:none;">${element.id}</span> <span>${cliente}</span> <br> ${element.client.phone} <br>
             ${element.client.email} <br> ${element.adults} adulto(s) - ${element.children} niño(s)`,
             start: `${element.checkin}T${room_start}`,
@@ -504,6 +509,7 @@ export class CalendarComponent implements OnInit {
           }
 
           let ClosedScheduleFiltro = {
+            id: 0,
             title: `<span class="id" style="display:none;">0</span> <span>${element.description}</span> `,
             start: `${element.start_date}T${room_start}`,
             end: `${element.end_date}T${room_end}`,
