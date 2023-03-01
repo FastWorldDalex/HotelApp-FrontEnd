@@ -2,10 +2,29 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // PrimeNg Components
-import { ToolbarModule } from 'primeng/toolbar';
-import {ButtonModule} from 'primeng/button';
+import {FormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
+import {CalendarModule} from 'primeng/calendar';
+import {SliderModule} from 'primeng/slider';
+import {DialogModule} from 'primeng/dialog';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {ButtonModule} from 'primeng/button';
+import {ToastModule} from 'primeng/toast';
+import {InputTextModule} from 'primeng/inputtext';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {DropdownModule} from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import {InputMaskModule} from 'primeng/inputmask';
+import { MessagesModule } from 'primeng/messages';
+import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -16,6 +35,9 @@ import { PageContentComponent } from './pages/admin/component/main-content/compo
 import { FooterComponent } from './pages/admin/component/main-content/component/footer/footer.component';
 import { RoomsComponent } from './pages/admin/component/main-content/component/rooms/rooms.component';
 import { ClientsComponent } from './pages/admin/component/main-content/component/clients/clients.component';
+import { NewRoomsComponent } from './pages/admin/component/main-content/component/rooms/components/new-rooms/new-rooms.component';
+import { NewClientsComponent } from './pages/admin/component/main-content/component/clients/components/new-clients/new-clients.component';
+import { CalendarComponent } from './pages/admin/component/main-content/component/calendar/calendar.component';
 
 
 @NgModule({
@@ -27,15 +49,36 @@ import { ClientsComponent } from './pages/admin/component/main-content/component
     PageContentComponent,
     FooterComponent,
     RoomsComponent,
-    ClientsComponent
+    ClientsComponent,
+    NewRoomsComponent,
+    NewClientsComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    ScrollPanelModule,
     ToolbarModule,
-    ButtonModule,
+    SplitButtonModule,
     TableModule,
+    CalendarModule,
+		SliderModule,
+		DialogModule,
+		MultiSelectModule,
+		ContextMenuModule,
+		DropdownModule,
+		ButtonModule,
+		ToastModule,
+    InputTextModule,
+    ProgressBarModule,
+    FormsModule,
+    InputNumberModule,
+    InputMaskModule,
+    RadioButtonModule,
+    ConfirmDialogModule,
+    MessagesModule,
     TagModule
-  ]
+  ],
+  providers: [ConfirmationService]
 })
 export class AdminModule { }

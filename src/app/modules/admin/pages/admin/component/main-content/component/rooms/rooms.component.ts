@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { AdminService } from '../../../../../../services/admin.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AdminService } from 'src/app/modules/admin/services/admin.service';
 import { Titles } from 'src/app/shared/interface/interfaces';
-import { Room } from './imterface/iroom';
+import { Room } from './interface/iroom';
+import { NewRoomsComponent } from './components/new-rooms/new-rooms.component';
 
 @Component({
   selector: 'app-rooms',
@@ -10,7 +11,11 @@ import { Room } from './imterface/iroom';
   styleUrls: ['./rooms.component.scss'],
   providers: [MessageService]
 })
+
 export class RoomsComponent implements OnInit{
+  @ViewChild(NewRoomsComponent, { static: false })
+  newRoomsComponent: NewRoomsComponent = new NewRoomsComponent();
+
   titulos: Titles[] = [];
   ltsRooms: Room[] = [];
   room: Room;
@@ -18,6 +23,7 @@ export class RoomsComponent implements OnInit{
   constructor(
     private adminService:AdminService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.room = new Room();
   }
@@ -47,23 +53,53 @@ export class RoomsComponent implements OnInit{
   }
 
   coreNuevo(accion:string){
+    this.newRoomsComponent.componentsInitials(accion,"HABITACIÓN");
+  }
+  coreEditar(accion:string, room: Room){
+    this.newRoomsComponent.componentsInitials(accion,"HABITACIÓN", room);
+  }
+  coreVer(accion:string, room: Room){
+    this.newRoomsComponent.componentsInitials(accion,"HABITACIÓN",room);
   }
 
-  coreEditar(accion:string, client: Room){
-  }
-
-  coreVer(accion:string, client: Room){
-
-  }
-
-  deleteRoom(room: Room){
-  }
-  changeStatusRoom(room: Room){
+  async deleteRoom(room: Room){
     if(room.status == 1){
-    }else{
+      this.confirmationService.confirm({
+        header: 'Eliminar Habitación',
+        message: `¿Está seguro de eliminar la habitación ${room.name}?`,
+        accept: async () => {
+          const resp_Room = await this.adminService?.deleteRoom(room.id);
+            if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
 
+            console.log("RESPUESTA", resp_Room);
+            this.getRooms();
+            this.showSuccess('success','success',`Se eliminó la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo eliminar la habitación.')
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar Habitación',
+        message: `¿Está seguro de activar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 1;
+          const resp_Room = await this.adminService?.putRoom(room);
+            if(resp_Room!=null || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.showSuccess('success','success',`Se activo la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR ROOM");
+              this.showSuccess('Error','Error', 'No se pudo activar la habitación.')
+            }
+        }
+      });
     }
   }
+
   componentsInitials(){
     this.titulos = [
       {title: '#', width: 2},
@@ -80,5 +116,57 @@ export class RoomsComponent implements OnInit{
 
   message(type:string, titulo:string, msg:string){
     this.showSuccess(type, titulo, msg)
+  }
+
+  async putRoom(_room: Room){
+    _room.status = 0;
+    const resp_Room = await this.adminService?.putRoom(_room);
+    if (resp_Room != null  && resp_Room.status != 400) {
+      this.showSuccess('success','Exitoso', 'Se Inactivo una habitación.');
+      window.location.reload();
+    }else{
+      this.showSuccess('error','Error', 'No se Inactivar.');
+    }
+  }
+
+
+  async changeStatusRoom(room: Room){
+    if(room.status == 1){
+      this.confirmationService.confirm({
+        header: 'Desactivar Habitación',
+        message: `¿Está seguro de desactivar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 0;
+          const resp_Room = await this.adminService?.putRoom(room);
+            if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.getRooms();
+            this.showSuccess('success','success',`Se desactivo la habitación ${room.name}.`)
+            }else{
+              room.status = 1;
+              console.log("FALLO INSERTAR CLIENTE");
+              this.showSuccess('Error','Error', 'No se pudo desactivar la habitación.')
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar Habitación',
+        message: `¿Está seguro de activar la habitación ${room.name}?`,
+        accept: async () => {
+          room.status = 1;
+          const resp_Room = await this.adminService?.putRoom(room);
+            if(resp_Room!=null || resp_Room.length >0){
+
+            console.log("RESPUESTA", resp_Room);
+            this.showSuccess('success','success',`Se activo la habitación ${room.name}.`)
+            }else{
+              console.log("FALLO INSERTAR ROOM");
+              this.showSuccess('Error','Error', 'No se pudo activar la habitación.')
+            }
+        }
+      });
+    }
   }
 }

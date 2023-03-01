@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="row main-content">
   <div class="col-sm-12 col-md-12 content">
       <h3>Habitaciones</h3>
@@ -6,18 +7,23 @@
   <div class="col-sm-12 col-md-12 container" style="padding: 20px">
     <p-toolbar>
       <div class="p-toolbar-group-left">
-          <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable" (click)="coreNuevo('NUEVO')"></p-button>
-          <span style="padding-left: 1rem;"><p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"></p-button></span>
+        <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable"
+          (click)="coreNuevo('NUEVA')"></p-button>
+        <span style="padding-left: 1rem">
+          <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
+          >
+        </p-button>
+        </span>
       </div>
 
       <div class="p-toolbar-group-right">
-          <span class="p-float-label p-input-icon-right">
-              <i class="pi pi-search"></i>
-              <input type="text" id="Busqueda" pInputText />
-              <label for="inputtext-right">Buscar:</label>
-          </span>
+        <span class="p-float-label p-input-icon-right">
+          <i class="pi pi-search"></i>
+          <input type="text" id="Busqueda" pInputText />
+          <label for="inputtext-right">Buscar:</label>
+        </span>
       </div>
-  </p-toolbar>
+    </p-toolbar>
 
     <!--Start of DataTable-->
     <p-table [(selection)]="room" dataKey="id" [value]="ltsRooms" [tableStyle]="{ 'min-width': '50rem' }"
@@ -73,3 +79,4 @@
 
   </div>
 </div>
+<app-new-rooms></app-new-rooms>
