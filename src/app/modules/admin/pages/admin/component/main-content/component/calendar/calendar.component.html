@@ -1,1 +1,31 @@
-<p>calendar works!</p>
+<p-toast></p-toast>
+<div class="main-content">
+    <div class="content">
+        <h3>Calendario de Disponibilidad</h3>
+        <p>Aquí podrás ver la disponibilidad de las habitaciones a lo largo de los días del mes</p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="button-container">
+            <div class="row">
+                <div class="col-4">
+                    <!--Formulario de reservas-->
+                    <p-button label="Registrar reserva" styleClass="textSize" icon="pi pi-plus" (click)="coreNuevo()">
+                    </p-button>
+                </div>
+                <div class="col-4">
+                    <!--Formulario de fechas cerradas-->
+                    <p-button label="Cerrar cupos" styleClass="textSize p-button-success" (click)="openCerrarCupos()">
+                    </p-button>
+                </div>
+            </div>
+        </div>
+
+        <!--Calendario-->
+        <full-calendar  [options]="calendarOptions"></full-calendar>
+    </div>
+</div>
+
+<app-new-reservation></app-new-reservation>
+
+<app-closed-date></app-closed-date>

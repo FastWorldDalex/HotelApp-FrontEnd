@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
 // PrimeNg Components
 import {FormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
@@ -25,6 +26,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { TabViewModule } from 'primeng/tabview';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -38,7 +41,10 @@ import { ClientsComponent } from './pages/admin/component/main-content/component
 import { NewRoomsComponent } from './pages/admin/component/main-content/component/rooms/components/new-rooms/new-rooms.component';
 import { NewClientsComponent } from './pages/admin/component/main-content/component/clients/components/new-clients/new-clients.component';
 import { CalendarComponent } from './pages/admin/component/main-content/component/calendar/calendar.component';
+import { NewReservationComponent } from './pages/admin/component/main-content/component/calendar/components/new-reservation/new-reservation.component';
+import { ClosedDateComponent } from './pages/admin/component/main-content/component/calendar/components/closed-date/closed-date.component';
 
+import { NodeService } from './../../shared/services/node.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +58,9 @@ import { CalendarComponent } from './pages/admin/component/main-content/componen
     ClientsComponent,
     NewRoomsComponent,
     NewClientsComponent,
-    CalendarComponent
+    CalendarComponent,
+    NewReservationComponent,
+    ClosedDateComponent
   ],
   imports: [
     CommonModule,
@@ -77,8 +85,11 @@ import { CalendarComponent } from './pages/admin/component/main-content/componen
     RadioButtonModule,
     ConfirmDialogModule,
     MessagesModule,
-    TagModule
+    TagModule,
+    FullCalendarModule,
+    TabViewModule,
+    InputTextareaModule
   ],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, NodeService]
 })
 export class AdminModule { }

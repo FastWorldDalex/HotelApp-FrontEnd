@@ -1,0 +1,95 @@
+::ng-deep h3{
+  margin-top: 1rem;
+  color: #6C757D;
+  margin-bottom: 0px;
+}
+::ng-deep p{
+
+  color: #6C757D;
+
+}
+::ng-deep .content{
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+}
+.main-content{
+  padding-top: 10px;
+}
+::ng-deep h3{
+  margin-top: 1rem;
+  color: #6C757D;
+  margin-bottom: 0px;
+}
+::ng-deep p{
+
+  color: #6C757D;
+
+}
+::ng-deep .content{
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+::ng-deep .fc .fc-toolbar-title:first-letter {
+text-transform: capitalize!important;
+}
+
+::ng-deep .fc-timegrid-axis-frame{
+height: 3px;
+}
+
+::ng-deep .fc-timegrid-axis:after {
+content: 'Hab';
+}
+
+::ng-deep .fc-timegrid-event .fc-event-time{
+display: none;
+}
+
+::ng-deep .fc-v-event .fc-event-title-container{
+padding: 5px;
+}
+::ng-deep .event-content{
+color: #FFFFFF;
+padding: 5px;
+font-size: 11px;
+}
+::ng-deep .event-content span{
+font-size: 12px;
+font-weight: 500;
+}
+::ng-deep .fc-direction-ltr .fc-timegrid-slot-label-frame{
+text-align: left;
+}
+
+::ng-deep .fc .fc-timegrid-slot-label{
+background: #eff1f3;
+color: #CCCCCC;
+}
+::ng-deep tr:nth-child(4n) > td:nth-child(1){
+border-bottom: 2px solid #000000 !important;
+}
+::ng-deep .fc .fc-col-header-cell-cushion{
+text-decoration: none !important;
+text-transform: capitalize !important;
+}
+
+//Form Reserva
+:host ::ng-deep {
+.textSize{
+  font-size: 85%;
+}
+}
+
+::ng-deep {
+.button-container{
+  width: 50%;
+  padding-bottom: 1rem;
+}
+.row{
+  padding-bottom: 1rem;
+}
+.formLabel{
+  padding-top: 0.8rem;
+}
+}

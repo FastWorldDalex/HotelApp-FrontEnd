@@ -1,0 +1,69 @@
+<p-dialog header="Cerrar cupos" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '30%', height: '760px' }"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-scrollPanel styleClass="custombar1">
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel">Fecha de inicio</label>
+                            </div>
+                            <!--input-->
+                            <p-calendar styleClass="ui-calendar" [style]="{'width':'100%'}" dateFormat="dd/mm/yy"
+                                [(ngModel)]="closed_schedule.start_date">
+                            </p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel">Fecha de fin</label>
+                            </div>
+                            <!--input-->
+                            <p-calendar styleClass="ui-calendar" [style]="{'width':'100%'}" dateFormat="dd/mm/yy"
+                                [(ngModel)]="closed_schedule.end_date">
+                            </p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel">Descripción</label>
+                            </div>
+                            <!--input-->
+                            <div class="col-sm-12">
+                                <textarea rows="2" cols="30" pInputTextarea [autoResize]="true" [style]="{'overflow':'visible'}"
+                                    [(ngModel)]="closed_schedule.description">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel">Habitación(es)</label>
+                            </div>
+                            <!--input-->
+                            <p-multiSelect [options]="ltsRooms" display="chip" defaultLabel="Selecciona la(s) habitación(es)"
+                                [(ngModel)]="closed_schedule.rooms">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-scrollPanel>
+    <ng-template pTemplate="footer">
+        <p-button (click)="isDisplay=false" label="Cancelar" styleClass="p-button-danger"></p-button>
+        <p-button icon="pi pi-save" (click)="coreGuardar()" label="Guardar" styleClass="p-button-info"></p-button>
+    </ng-template>
+</p-dialog>
+

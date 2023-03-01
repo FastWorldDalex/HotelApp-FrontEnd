@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './pages/admin/admin.component';
 import { ClientsComponent } from './pages/admin/component/main-content/component/clients/clients.component';
 import { RoomsComponent } from './pages/admin/component/main-content/component/rooms/rooms.component';
+import { CalendarComponent } from './pages/admin/component/main-content/component/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,16 @@ const routes: Routes = [
       {
         path: '',
         component: RoomsComponent,
+      },
+    ],
+  },
+  {
+    path: 'calendar',
+    component: AdminComponent,
+    children: [
+      {
+        path: '',
+        component: CalendarComponent,
       },
     ],
   },

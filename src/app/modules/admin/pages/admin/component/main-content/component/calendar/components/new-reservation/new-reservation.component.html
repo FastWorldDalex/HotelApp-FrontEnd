@@ -1,0 +1,276 @@
+<p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '35%', height: '760px' }"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-scrollPanel styleClass="custombar1">
+        <ng-template pTemplate="content">
+            <p-tabView>
+                <p-button label="PDF" icon="pi pi-file-pdf" styleClass="textSize p-button-danger"  (onClick)="downloadPDF()"></p-button>
+                <p-tabPanel header="Reserva" leftIcon="pi pi-calendar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="checkin">Checkin</label>
+                                    </div>
+                                    <p-calendar styleClass="ui-calendar" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="reserva.checkin"
+                                        dateFormat="dd/mm/yy" inputId="checkin">
+                                    </p-calendar>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="checkout">Checkout</label>
+                                    </div>
+                                    <p-calendar [style]="{'width':'100%'}" [(ngModel)]="reserva.checkout"
+                                        dateFormat="dd/mm/yy" inputId="checkout">
+                                    </p-calendar>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="cliente">Cliente</label>
+                                    </div>
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="ltsClientes"
+                                        [(ngModel)]="reserva.client_id" placeholder="Selecciona el cliente"
+                                        [showClear]="true" [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="habitacion">Habitación</label>
+                                    </div>
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="ltsRooms" [(ngModel)]="reserva.room_id"
+                                        placeholder="Selecciona la habitación"  [showClear]="true"
+                                        (onChange)="automaticTotal()"
+                                        [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="adultos">Adultos</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="reserva.adults" inputId="adultos" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="niños">Niños</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="reserva.children" inputId="niños" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <div class="col-sm-12">
+                                          <label class="formLabel" for="subtotal">Subtotal</label>
+                                      </div>
+                                      <p-inputNumber [(ngModel)]="reserva.subtotal" inputId="subtotal" mode="decimal" class="readonly"
+                                          [maxFractionDigits]="2" [min]="0">
+                                      </p-inputNumber>
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <div class="col-sm-12">
+                                          <label class="formLabel" for="additionalAmount">Cargo adicional</label>
+                                      </div>
+                                      <p-inputNumber [(ngModel)]="reserva.additional_amount" inputId="additionalAmount" mode="decimal"
+                                          [maxFractionDigits]="2" [min]="0" (ngModelChange)="changeAdditionalAmount()">
+                                      </p-inputNumber>
+                                  </div>
+                              </div>
+                          </div>
+
+
+                          <div class="col-sm-12">
+                            <div class="row">
+                                <!--label-->
+                                <div class="col-sm-12">
+                                    <label class="formLabel">Observaciones</label>
+                                </div>
+                                <!--input-->
+                                <div class="col-sm-12">
+                                    <textarea rows="2" cols="30" pInputTextarea [autoResize]="false" [style]="{'overflow':'visible'}"
+                                        [(ngModel)]="reserva.observations">
+                                    </textarea>
+                                </div>
+                            </div>
+                          </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="total">Total</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="reserva.total" inputId="total" mode="decimal" class="readonly"
+                                            [maxFractionDigits]="2" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="totalPagar">Total por pagar</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="reserva.pending_payment" inputId="totalPagar" mode="decimal"
+                                            [maxFractionDigits]="2" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="totalPagado">Total pagado</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="reserva.done_payment" inputId="totalPagado" mode="decimal"
+                                            [maxFractionDigits]="2" [min]="0"  (ngModelChange)="changeAdditionalAmount()" >
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="col-sm-6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Pago" leftIcon="pi pi-money-bill">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">Tipo de Documento</label>
+                                    </div>
+                                    <p-dropdown [options]="ltsType" [(ngModel)]="accounting_document.type"
+                                        placeholder="Selecciona el tipo de documento" [showClear]="true" [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">Número</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input type="text" [(ngModel)]="accounting_document.number" pInputText/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">RUC / DNI</label>
+                                    </div>
+                                    <p-inputNumber inputId="" [style]="{'width':'100%'}"
+                                        [(ngModel)]="accounting_document.client_number" [useGrouping]="false">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">Razón Social / Nombre</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input type="text" [(ngModel)]="accounting_document.client_name" pInputText />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">Dirección</label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input type="text" [(ngModel)]="accounting_document.client_address" pInputText />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="emision">Fecha de Emisión</label>
+                                    </div>
+                                    <p-calendar [style]="{'width':'100%'}" dateFormat="dd/mm/yy" [disabled]="false"
+                                        [(ngModel)]="accounting_document.issue_date" inputId="emision">
+                                    </p-calendar>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="formLabel" for="">Tipo de Moneda</label>
+                                    </div>
+                                    <p-dropdown [options]="ltsCurrency" [(ngModel)]="accounting_document.currency_type"
+                                        placeholder="Selecciona el tipo de moneda" [showClear]="true" [filter]="true">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="totalValorVenta">Total Valor de Venta</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="accounting_document.total_sale" mode="decimal"
+                                            [maxFractionDigits]="2" [min]="0" (onBlur)="automaticPago()">
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="igv">IGV</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="accounting_document.tax" mode="decimal" [disabled]="false"
+                                            [maxFractionDigits]="2" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-12">
+                                            <label class="formLabel" for="importeTotal">Importe Total</label>
+                                        </div>
+                                        <p-inputNumber [(ngModel)]="accounting_document.total" mode="decimal" [disabled]="true"
+                                            [maxFractionDigits]="2" [min]="0">
+                                        </p-inputNumber>
+                                    </div>
+                                    <div class="col-sm-6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+        </ng-template>
+    </p-scrollPanel>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Enviar email" (click)="sendEmail(reserva.id)" styleClass="textSize p-button-secondary"></p-button>
+        <p-button (click)="isDisplay=false" label="Cancelar" styleClass="textSize p-button-danger"></p-button>
+        <p-button icon="pi pi-save" (click)="coreGuardar()" label="Guardar" styleClass="textSize p-button-info"></p-button>
+    </ng-template>
+</p-dialog>
