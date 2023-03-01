@@ -26,10 +26,17 @@
     </p-toolbar>
 
     <!--Start of DataTable-->
-    <p-table [(selection)]="room" dataKey="id" [value]="ltsRooms" [tableStyle]="{ 'min-width': '50rem' }"
-      [paginator]="true" [showCurrentPageReport]="true"
+    <p-table
+      [(selection)]="room"
+      dataKey="id"
+      [value]="ltsRooms"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
       currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} habitaciones"
-      [rowsPerPageOptions]="[10, 25, 50]" [rows]="10" [rowHover]="true">
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rows]="10"
+      [rowHover]="true">
       <ng-template pTemplate="header">
         <tr class="textSizeTable">
           <th *ngFor="let titulo of titulos">{{titulo.title}}</th>

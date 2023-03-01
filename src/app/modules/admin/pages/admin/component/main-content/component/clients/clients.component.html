@@ -1,9 +1,116 @@
+<p-toast></p-toast>
 <div class="row main-content">
-  <div class="col-sm-12 col-md-12 content">
-      <h3>Clientes</h3>
-      <p>Aquí podrás ver la información de todos los clientes del hotel</p>
-  </div>
-  <div class="col-sm-12 col-md-12 container" style="padding: 20px">
+    <div class="col-sm-12 col-md-12 content">
+        <h3>Clientes</h3>
+        <p>Aquí podrás ver la información de todos los clientes del hotel</p>
+    </div>
+    <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <p-button label="Crear cliente" icon="pi pi-plus" styleClass="textSizeTable" (click)="coreNuevo('NUEVO')"></p-button>
+                <span style="padding-left: 1rem">
+                  <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
+                  >
+                </p-button>
+                </span>
+            </div>
+            <div class="p-toolbar-group-right">
+                <span class="p-float-label p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input type="text" id="Busqueda" pInputText />
+                    <label for="inputtext-right">Buscar:</label>
+                </span>
+            </div>
+        </p-toolbar>
 
-  </div>
+        <!--Start of DataTable-->
+        <p-table
+            [(selection)]="client"
+            dataKey="id"
+            [value]="ltsClientes"
+
+            [tableStyle]="{ 'min-width': '50rem' }"
+
+            [paginator]="true"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} clientes"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [rows]="10"
+            [rowHover]="true"
+        >
+            <ng-template pTemplate="header">
+                <tr class="textSizeTable">
+                    <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
+                </tr>
+            </ng-template>
+            <ng-template  pTemplate="body" let-cliente>
+                <tr class="textSizeTable">
+                    <td>
+                        {{ cliente.id | number }}
+                    </td>
+                    <td>
+                        {{ cliente.firstname }}
+                    </td>
+                    <td>
+                        {{ cliente.lastname }}
+                    </td>
+                    <td>
+                        {{ cliente.document }}
+                    </td>
+                    <td>
+                        {{ cliente.phone }}
+                    </td>
+                    <td>
+                        {{ cliente.email }}
+                    </td>
+                    <td style="width: 7rem;">
+                        {{ cliente.country_name }}
+                    </td>
+                    <td class="text-md-end" style="width: 7rem;">
+                        {{ cliente.reservations_quantity | number }}
+                    </td>
+                    <td class="text-md-end" style="width: 7,1rem;">
+                        {{ cliente.last_reservation | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td class="text-md-end" style="width: 6rem;">
+                        {{ cliente.created_date | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td style="width: 6rem;">
+                        <p-tag *ngIf="cliente.status == 1"
+                            styleClass="textSizeTable mr-2"
+                            severity="success"
+                            value="ACTIVO"
+                        ></p-tag>
+                        <p-tag *ngIf="cliente.status == 0"
+                            styleClass="textSizeTable mr-2"
+                            severity="danger"
+                            value="INACTIVO"
+                        ></p-tag>
+                    </td>
+                    <td style="width: 12rem;">
+                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER',cliente)"
+                            class="buttonTable p-button-secondary" title="Ver detalle"></button>
+                        <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',cliente)"
+                            class="buttonTable" title="Editar cliente"></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteClient(cliente)"
+                            class="buttonTable p-button-danger" title="Eliminar cliente"></button>
+                        <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusClient(cliente)"
+                            class="buttonTable p-button-warning" title="Desactivar cliente"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!--End of DataTable-->
 </div>
+<app-new-clients></app-new-clients>
+<!--Start of Confirmation Modal-->
+<p-confirmDialog #cd icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="footer">
+        <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
+        </button>
+        <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
+        </button>
+    </ng-template>
+</p-confirmDialog>
+<!--End of Confirmation Modal-->
+
