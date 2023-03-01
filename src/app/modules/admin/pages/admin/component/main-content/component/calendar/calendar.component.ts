@@ -41,7 +41,7 @@ export class CalendarComponent implements OnInit{
     calendarOptions: CalendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-02-20',
+      initialDate: '2023-02-27',
       locale: esLocale,
       headerToolbar: {
         left: 'prev,next today',
@@ -148,7 +148,7 @@ export class CalendarComponent implements OnInit{
       this.calendarOptions = {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek', // dayGridWeek
-        initialDate: '2023-02-20',
+        initialDate: '2023-02-27',
         locale: esLocale,
         headerToolbar: {
           left: 'prev,next today',
@@ -200,27 +200,6 @@ export class CalendarComponent implements OnInit{
 
     //seleccionar reserva
     async handleEventClick(clickInfo: EventClickArg) {
-      /**
-      let vTrae: any = (clickInfo.jsEvent.srcElement as HTMLInputElement).getElementsByClassName('id').item(0);
-      let Element: string = vTrae.outerHTML;
-      console.log("ELEMENT", Element)
-      console.log(clickInfo.jsEvent.srcElement);
-      console.log(vTrae.outerHTML);
-
-      let ArrayElement1: any[] = Element.split('>');
-      console.log(ArrayElement1);
-
-      let ArrayElement2: string[] = ArrayElement1[1].split('<');
-      console.log(ArrayElement1);
-
-      let ArrayElement3: Accounting_Document[] = ArrayElement1[1].split('<');
-      console.log(ArrayElement1);
-
-      //ID DE RESERVA
-      let id_Reservation: number = Number(ArrayElement2[0].toString());
-
-
-      //let acc: Accounting_Document = ArrayElement3[0];**/
 
       let id_Reservation = parseInt(clickInfo.event.id);
 

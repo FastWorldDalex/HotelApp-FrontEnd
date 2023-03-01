@@ -1,0 +1,45 @@
+:host ::ng-deep {
+  .p-inputtextarea {
+      height: 100% !important;
+  }
+  .p-multiselect {
+      width: 100%;
+  }
+  // temporal styles to calendar
+  .p-tabview-panels {
+      padding: 10px !important;
+    }
+    .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+      font-size: 14px !important;
+      padding: 5px !important;
+    }
+    .p-datepicker .p-datepicker-header{
+      padding: 5px !important;
+      height: 40px;
+    }
+    .p-datepicker .p-datepicker-header .p-datepicker-prev, .p-datepicker .p-datepicker-header .p-datepicker-next{
+      width: 25px !important;
+      height: 25px !important;
+    }
+    .p-datepicker table td > span {
+      width: 25px !important;
+      height: 25px !important;
+      font-size: 12px !important;
+    }
+    .p-datepicker table th {
+      padding: 5px !important;
+    }
+    .p-datepicker table td{
+      padding: 5px !important;
+    }
+    .p-datepicker table th > span{
+      font-size: 12px !important;
+      padding-left: 10px !important;
+    }
+}
+
+/*::ng-deep{
+.p-dropdown-panel{
+  overflow: visible !important;
+}
+}*/

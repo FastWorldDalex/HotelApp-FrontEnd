@@ -8,15 +8,16 @@
     <div class="container-fluid">
         <div class="button-container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-12">
                     <!--Formulario de reservas-->
                     <p-button label="Registrar reserva" styleClass="textSize" icon="pi pi-plus" (click)="coreNuevo()">
                     </p-button>
-                </div>
-                <div class="col-4">
                     <!--Formulario de fechas cerradas-->
-                    <p-button label="Cerrar cupos" styleClass="textSize p-button-success" (click)="openCerrarCupos()">
-                    </p-button>
+                    <span style="margin-left: 1rem;">
+                      <p-button label="Cerrar cupos" styleClass="textSize p-button-success" (click)="openCerrarCupos()">
+                      </p-button>
+                    </span>
+
                 </div>
             </div>
         </div>
