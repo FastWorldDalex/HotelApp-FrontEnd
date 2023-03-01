@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   @Input() collapsed: boolean = false;
-  currentModule: string = 'rooms';
+  currentModule: string = 'calendar';
 
   constructor(private router: Router ) {
 
@@ -16,11 +16,17 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     switch(this.router.url){
+      case '/admin/calendar':
+        this.currentModule = 'calendar';
+        break;
       case '/admin/clients':
         this.currentModule = 'clients';
         break;
       case '/admin/rooms':
         this.currentModule = 'rooms';
+        break;
+      case '/admin/user-roles':
+        this.currentModule = 'usersroles';
         break;
     }
   }

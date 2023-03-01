@@ -42,7 +42,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/admin/rooms',
+    redirectTo: '/admin/calendar',
   },
 ];
 
