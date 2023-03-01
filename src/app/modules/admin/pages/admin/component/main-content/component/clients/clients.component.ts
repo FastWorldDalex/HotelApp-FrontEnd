@@ -184,13 +184,12 @@ export class ClientsComponent implements OnInit{
   componentsInitials(){
     this.titulos = [
       {title: '#', width: 2},
-      {title: 'Nombres', width: 2},
-      {title: 'Apellidos', width: 2},
+      {title: 'Cliente', width: 2},
       {title: 'Documento', width: 2},
       {title: 'Teléfono', width: 2},
       {title: 'Email', width: 2},
       {title: 'País', width: 2},
-      {title: 'Cantidad de Reservas', width: 2},
+      {title: 'N° de Reservas', width: 2},
       {title: 'Última Reserva', width: 2},
       {title: 'Fecha de Creación', width: 2},
       {title: 'Estado', width: 2},

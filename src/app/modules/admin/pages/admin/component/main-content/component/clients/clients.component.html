@@ -49,10 +49,7 @@
                         {{ cliente.id | number }}
                     </td>
                     <td>
-                        {{ cliente.firstname }}
-                    </td>
-                    <td>
-                        {{ cliente.lastname }}
+                        {{ cliente.firstname }} {{ cliente.lastname }}
                     </td>
                     <td>
                         {{ cliente.document }}
@@ -87,7 +84,7 @@
                             value="INACTIVO"
                         ></p-tag>
                     </td>
-                    <td style="width: 12rem;">
+                    <td style="width: 25rem;">
                         <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER',cliente)"
                             class="buttonTable p-button-secondary" title="Ver detalle"></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',cliente)"
