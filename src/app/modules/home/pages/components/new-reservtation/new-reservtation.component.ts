@@ -73,6 +73,7 @@ export class NewReservtationComponent implements OnInit {
 
     switch (_accion) {
       case 'NUEVA':
+        this.isEdit = true;
         this.client = new Client();
         this.reserva = new Reserva();
         this.accounting_document = new Accounting_Document();
@@ -279,6 +280,18 @@ export class NewReservtationComponent implements OnInit {
 
     this.showSuccess('success', 'success', `${resp_Email.detail}`);
   }
+
+  async getPdf(id:number){
+    const resp_pdf:any = await this.homeService.GetReservationPDF(id);
+    console.log("PDF", resp_pdf);
+    if(resp_pdf.status != 400){
+      window.open(resp_pdf.detail, "_blank");
+    } else{
+      this.showSuccess('error', 'error', `${resp_pdf.error.detail}.`);
+    }
+    
+  }
+
   //Pagos
   putAccounting_Document() {
     this.accounting_document.reservation_id = this.reserva.id;

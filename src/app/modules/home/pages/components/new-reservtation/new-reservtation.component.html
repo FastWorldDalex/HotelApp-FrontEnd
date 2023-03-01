@@ -2,8 +2,10 @@
     [maximizable]="true" [draggable]="false" [resizable]="false">
     <p-scrollPanel styleClass="custombar1">
         <ng-template pTemplate="content">
-            <p-tabView>
-                <p-button label="PDF" icon="pi pi-file-pdf" styleClass="textSize p-button-danger"></p-button>
+            <p-button label="PDF" icon="pi pi-file-pdf" styleClass="textSize p-button-danger"
+                (click)="getPdf(reserva.id)" [disabled]="isEdit">
+            </p-button>
+            <p-tabView>                
                 <p-tabPanel header="Reserva" leftIcon="pi pi-calendar">
                     <div class="container">
                         <div class="row">

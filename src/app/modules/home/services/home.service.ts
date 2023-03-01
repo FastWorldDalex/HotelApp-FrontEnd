@@ -70,6 +70,14 @@ export class HomeService {
     .catch(error => error);
   }
 
+  //Descargar PDF
+  GetReservationPDF(idReservation: number):Promise<any> {
+    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/download-pdf`)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
   //Pagos
   GetAccounting_Document() {
 
