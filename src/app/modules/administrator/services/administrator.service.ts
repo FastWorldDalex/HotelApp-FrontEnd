@@ -5,6 +5,7 @@ import { ERRORS_CONST } from 'src/app/data/constants';
 import { API_ROUTES } from 'src/app/data/constants/routes';
 import { Client } from '../pages/clients/interface/iclient';
 import { Room } from '../pages/rooms/interface/iroom';
+import { Role, User } from '../pages/users/interface/iuser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,13 @@ export class AdministratorService {
 
   constructor(private http: HttpClient) { }
 
-
+  //Clients
   getClients() {
-
     return this.http.get(API_ROUTES.CLIENTS.GET_CLIENTS)
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
-
   postClients(client: Client) {
     return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client)
       .toPromise()
@@ -34,7 +33,6 @@ export class AdministratorService {
       .then(response => response)
       .catch(error => error)
   }
-
   deleteClients(idClient?: number) {
     return this.http.delete(`${API_ROUTES.CLIENTS.GET_CLIENTS}${idClient}`)
       .toPromise()
@@ -42,8 +40,8 @@ export class AdministratorService {
       .catch(error => error)
   }
 
+  //Rooms
   getRooms() {
-
     return this.http.get(API_ROUTES.ROOM.GET_ROOM)
       .toPromise()
       .then(response => response as any[])
@@ -63,6 +61,57 @@ export class AdministratorService {
   }
   deleteRoom(IdRoom?:number){
     return this.http.delete(`${API_ROUTES.ROOM.GET_ROOM}${IdRoom}`)
+        .toPromise()
+        .then(response => response)
+        .catch(error => error)
+  }
+
+  //Users
+  getUsers() {
+    return this.http.get(API_ROUTES.USER.GET_USER)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
+  postUser(user: User) {
+    return this.http.post(`${API_ROUTES.USER.GET_USER}`, user)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  putUser(user: User) {
+    return this.http.put(`${API_ROUTES.USER.GET_USER}${user.id}`, user)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  deleteUser(idUser?: number) {
+    return this.http.delete(`${API_ROUTES.USER.GET_USER}${idUser}`)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  //Roles
+  getRoles() {
+    return this.http.get(API_ROUTES.ROLE.GET_ROLE)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
+  postRoles(role: Role) {
+    return this.http.post(`${API_ROUTES.ROLE.GET_ROLE}`, role)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error)
+  }
+  putRole(role:Role){
+    return this.http.put(`${API_ROUTES.ROLE.GET_ROLE}${role.id}`, role)
+        .toPromise()
+        .then(response => response)
+        .catch(error => error)
+  }
+  deleteRole(IdRole?:number){
+    return this.http.delete(`${API_ROUTES.ROLE.GET_ROLE}${IdRole}`)
         .toPromise()
         .then(response => response)
         .catch(error => error)

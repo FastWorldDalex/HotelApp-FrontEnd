@@ -32,6 +32,7 @@ import { NewClientsComponent } from './pages/clients/components/new-clients/new-
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { NewRoomsComponentComponent } from './pages/rooms/components/new-rooms.component/new-rooms.component.component';
+import { UsersComponent } from './pages/users/users.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { NewRoomsComponentComponent } from './pages/rooms/components/new-rooms.c
     ClientsComponent,
     NewClientsComponent,
     RoomsComponent,
-    NewRoomsComponentComponent
+    NewRoomsComponentComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

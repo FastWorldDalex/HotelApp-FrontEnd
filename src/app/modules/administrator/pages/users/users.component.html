@@ -1,15 +1,15 @@
 <p-toast></p-toast>
 <div class="row main-content">
     <div class="col-sm-12 col-md-12 content">
-        <h3>Clientes</h3>
-        <p>Aquí podrás ver la información de todos los clientes del hotel</p>
+        <h3>Usuarios y roles</h3>
+        <p>Aquí podrás ver la información de todos los usuarios y roles del hotel</p>
     </div>
     <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
         <p-toolbar>
             <div class="p-toolbar-group-left">
-                <p-button label="Crear cliente" icon="pi pi-plus" styleClass="textSizeTable" (click)="coreNuevo('NUEVO')"></p-button>
-                <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"
-                        style="padding-left: 1rem">
+                <p-button label="Crear cliente" icon="pi pi-plus" styleClass="textSizeTable" style="padding-right: 1rem;">
+                </p-button>
+                <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success">
                 </p-button>
             </div>
 
@@ -21,18 +21,18 @@
                 </span>
             </div>
         </p-toolbar>
-        
+
         <!--Start of DataTable-->
         <p-table
-            [(selection)]="client"
+            [(selection)]="user"
             dataKey="id"
-            [value]="ltsClientes"
+            [value]="ltsUsers"
         
             [tableStyle]="{ 'min-width': '50rem' }"
 
             [paginator]="true"
             [showCurrentPageReport]="true"
-            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} clientes"
+            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} usuarios"
             [rowsPerPageOptions]="[10, 25, 50]"
             [rows]="10"
             [rowHover]="true">
@@ -41,58 +41,43 @@
                     <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
                 </tr>
             </ng-template>
-            <ng-template  pTemplate="body" let-cliente>
+            <ng-template  pTemplate="body" let-user>
                 <tr class="textSizeTable">
                     <td>
-                        {{ cliente.id | number }}
+                        {{ user.id | number }}
                     </td>
                     <td>
-                        {{ cliente.firstname }}
+                        {{ user.firstname }}
                     </td>
                     <td>
-                        {{ cliente.lastname }}
-                    </td>
-                    <td>
-                        {{ cliente.document }}
-                    </td>
-                    <td>
-                        {{ cliente.phone }}
-                    </td>
-                    <td>
-                        {{ cliente.email }}
+                        {{ user.lastname }}
                     </td>
                     <td style="width: 7rem;">
-                        {{ cliente.country_name }}
-                    </td>
-                    <td class="text-md-end" style="width: 7rem;">
-                        {{ cliente.reservations_quantity | number }}
-                    </td>
-                    <td class="text-md-end" style="width: 7,1rem;">
-                        {{ cliente.last_reservation | date: 'dd/MM/yyyy' }}
+                        {{ user.role.name }}
                     </td>
                     <td class="text-md-end" style="width: 6rem;">
-                        {{ cliente.created_date | date: 'dd/MM/yyyy' }}
+                        {{ user.created_date | date: 'dd/MM/yyyy' }}
                     </td>
                     <td style="width: 6rem;">
-                        <p-tag *ngIf="cliente.status == 1"
+                        <p-tag *ngIf="user.status == 1"
                             styleClass="textSizeTable mr-2"
                             severity="success"
                             value="ACTIVO"
                         ></p-tag>
-                        <p-tag *ngIf="cliente.status == 0"
+                        <p-tag *ngIf="user.status == 0"
                             styleClass="textSizeTable mr-2"
                             severity="danger"
                             value="INACTIVO"
                         ></p-tag>
                     </td>
                     <td style="width: 12rem;">
-                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER',cliente)"
+                        <button pButton pRipple icon="pi pi-eye" 
                             class="buttonTable p-button-secondary" title="Ver detalle"></button>
-                        <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR',cliente)"
+                        <button pButton pRipple icon="pi pi-file-edit" 
                             class="buttonTable" title="Editar cliente"></button>
-                        <button pButton pRipple icon="pi pi-trash" (click)="deleteClient(cliente)"
+                        <button pButton pRipple icon="pi pi-trash" 
                             class="buttonTable p-button-danger" title="Eliminar cliente"></button>
-                        <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusClient(cliente)"
+                        <button pButton pRipple icon="pi pi-check-square" 
                             class="buttonTable p-button-warning" title="Desactivar cliente"></button>
                     </td>
                 </tr>
@@ -102,16 +87,13 @@
     </div>
 </div>
 
-<app-new-clients></app-new-clients>
-
 <!--Start of Confirmation Modal-->
-<p-confirmDialog #cd icon="pi pi-exclamation-triangle">
+<!-- <p-confirmDialog #cd icon="pi pi-exclamation-triangle">
     <ng-template pTemplate="footer">
         <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
         </button>
         <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
         </button>
     </ng-template>
-</p-confirmDialog>
+</p-confirmDialog> -->
 <!--End of Confirmation Modal-->
-

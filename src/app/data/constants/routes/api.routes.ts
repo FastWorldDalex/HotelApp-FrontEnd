@@ -23,6 +23,12 @@ export const API_ROUTES ={
         GET_ACCOUNT_DOCUMENT: `${ENV.url}accounting-documents/`
     },
     CLOSED_SCHEDULE: {
-      GET_CLOSED_SCHEDULE: `${ENV.url}closed-schedules/`
+        GET_CLOSED_SCHEDULE: `${ENV.url}closed-schedules/`
+    },
+    USER: {
+        GET_USER: `${ENV.url}users/`
+    },
+    ROLE: {
+        GET_ROLE: `${ENV.url}roles/`
     }
 };

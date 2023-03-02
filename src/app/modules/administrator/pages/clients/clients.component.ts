@@ -197,11 +197,11 @@ export class ClientsComponent implements OnInit{
       {title: 'Estado', width: 2},
       {title: 'Acciones', width: 2}
     ];
-}
+  }
 
-message(type:string, titulo:string, msg:string){
-  this.showSuccess(type,titulo, msg)
-}
+  message(type:string, titulo:string, msg:string){
+    this.showSuccess(type,titulo, msg)
+  }
 }
 
 

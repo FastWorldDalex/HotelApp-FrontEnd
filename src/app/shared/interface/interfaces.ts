@@ -20,4 +20,4 @@ export interface SelectItem<T = any> {
 export interface Titles{
     title: string;
     width: number
-  }
+}
