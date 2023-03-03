@@ -7,7 +7,8 @@
     <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
         <p-toolbar>
             <div class="p-toolbar-group-left">
-                <p-button label="Crear cliente" icon="pi pi-plus" styleClass="textSizeTable" style="padding-right: 1rem;">
+                <p-button label="Crear usuario" icon="pi pi-plus" styleClass="textSizeTable" style="padding-right: 1rem;"
+                    (click)="coreNuevo('NUEVO')">
                 </p-button>
                 <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success">
                 </p-button>
@@ -43,16 +44,16 @@
             </ng-template>
             <ng-template  pTemplate="body" let-user>
                 <tr class="textSizeTable">
-                    <td>
+                    <td style="width: 6rem;">
                         {{ user.id | number }}
                     </td>
-                    <td>
+                    <td style="width: 6rem;">
                         {{ user.firstname }}
                     </td>
-                    <td>
+                    <td style="width: 6rem;">
                         {{ user.lastname }}
                     </td>
-                    <td style="width: 7rem;">
+                    <td style="width: 6rem;">
                         {{ user.role.name }}
                     </td>
                     <td class="text-md-end" style="width: 6rem;">
@@ -71,9 +72,9 @@
                         ></p-tag>
                     </td>
                     <td style="width: 12rem;">
-                        <button pButton pRipple icon="pi pi-eye" 
-                            class="buttonTable p-button-secondary" title="Ver detalle"></button>
-                        <button pButton pRipple icon="pi pi-file-edit" 
+                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', user)"
+                            class="buttonTable p-button-secondary" title="Ver detalle" ></button>
+                        <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', user)"
                             class="buttonTable" title="Editar cliente"></button>
                         <button pButton pRipple icon="pi pi-trash" 
                             class="buttonTable p-button-danger" title="Eliminar cliente"></button>
@@ -86,6 +87,8 @@
         <!--End of DataTable-->
     </div>
 </div>
+
+<app-new-users></app-new-users>
 
 <!--Start of Confirmation Modal-->
 <!-- <p-confirmDialog #cd icon="pi pi-exclamation-triangle">

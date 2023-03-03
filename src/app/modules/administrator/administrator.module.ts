@@ -33,6 +33,8 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { NewRoomsComponentComponent } from './pages/rooms/components/new-rooms.component/new-rooms.component.component';
 import { UsersComponent } from './pages/users/users.component';
+import { NewUsersComponent } from './pages/users/components/new-users/new-users.component';
+import { PasswordModule } from 'primeng/password';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import { UsersComponent } from './pages/users/users.component';
     NewClientsComponent,
     RoomsComponent,
     NewRoomsComponentComponent,
-    UsersComponent
+    UsersComponent,
+    NewUsersComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +70,8 @@ import { UsersComponent } from './pages/users/users.component';
     InputMaskModule,
     RadioButtonModule,
     ConfirmDialogModule,
-    MessagesModule
+    MessagesModule,
+    PasswordModule
   ],
   providers: [ConfirmationService]
 })

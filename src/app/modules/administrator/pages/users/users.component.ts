@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Titles } from 'src/app/shared/interface/interfaces';
 import { AdministratorService } from '../../services/administrator.service';
 import { RoomsComponent } from '../rooms/rooms.component';
+import { NewUsersComponent } from './components/new-users/new-users.component';
 import { User } from './interface/iuser';
 
 @Component({
@@ -11,7 +12,11 @@ import { User } from './interface/iuser';
   styleUrls: ['./users.component.scss'],
   providers: [MessageService]
 })
-export class UsersComponent {
+
+export class UsersComponent implements OnInit{
+  @ViewChild(NewUsersComponent, { static: false })
+  newUsersComponent: NewUsersComponent = new NewUsersComponent();
+
   titulos: Titles[] = [];
   ltsUsers: User[] = [];
   user: User;
@@ -21,26 +26,6 @@ export class UsersComponent {
     private messageService: MessageService
   ){
     this.user = new User();
-  }
-
-  ngOnInit() {
-    const carga_1 = this.getUsers();
-    const carga_2 = this.componentsInitials();
-
-    Promise.all([carga_1, carga_2]).then((resp)=>{
-
-    });
-  }
-
-
-  async getUsers(){
-    this.administratorService.getUsers().then((users) => {
-      if(users != null || RoomsComponent.length > 0){
-        this.ltsUsers = users;
-      }else{
-        console.log("Error");
-      }
-    });
   }
 
   componentsInitials(){
@@ -54,6 +39,37 @@ export class UsersComponent {
       {title: 'Acciones', width: 2}
     ];
   }
+
+  ngOnInit() {
+    const carga_1 = this.getUsers();
+    const carga_2 = this.componentsInitials();
+
+    Promise.all([carga_1, carga_2]).then((resp)=>{
+
+    });
+  }
+
+
+  coreNuevo(accion:string){
+    this.newUsersComponent.componentsInitials(accion, "USUARIO");
+  }
+  coreEditar(accion:string, user: User){
+    this.newUsersComponent.componentsInitials(accion, "USUARIO", user);
+  }
+  coreVer(accion:string, user: User){
+    this.newUsersComponent.componentsInitials(accion, "USUARIO",user);
+  }
+
+  async getUsers(){
+    this.administratorService.getUsers().then((users) => {
+      if(users != null || RoomsComponent.length > 0){
+        this.ltsUsers = users;
+      }else{
+        console.log("Error");
+      }
+    });
+  }
+
 
   showSuccess(type:string, title:string, msg:string) {
     this.messageService.add({severity:type, summary: title, detail: msg});

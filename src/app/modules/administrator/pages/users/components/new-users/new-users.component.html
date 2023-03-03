@@ -1,0 +1,72 @@
+<p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '30%',height: '760px'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-scrollPanel styleClass="custombar1">
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Nombre de usuario (email)</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="email" [disabled]="isEdit" [(ngModel)]="user.username" pInputText/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Contraseña</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <p-password [disabled]="isEdit" [(ngModel)]="user.password"></p-password>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Rol</label>
+                            </div>
+                            <p-dropdown [options]="roles" [(ngModel)]="user.role_id" [disabled]="isEdit"
+                                placeholder="Selecciona el rol" [showClear]="true" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Nombres</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" [disabled]="isEdit" [(ngModel)]="user.firstname" pInputText/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Apellidos</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" [disabled]="isEdit" [(ngModel)]="user.lastname" pInputText/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-scrollPanel>
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="isDisplay=false" label="Cancelar"
+            styleClass="p-button-danger"></p-button>
+        <p-button [disabled]="isEdit" icon="pi pi-save" (click)="coreGuardar()" label="Guardar"
+            styleClass="p-button-info"></p-button>
+    </ng-template>
+</p-dialog>
