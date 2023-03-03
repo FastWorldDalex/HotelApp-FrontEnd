@@ -5,7 +5,7 @@ import { ERRORS_CONST } from 'src/app/data/constants';
 import { API_ROUTES } from 'src/app/data/constants/routes';
 import { Client } from '../pages/clients/interface/iclient';
 import { Room } from '../pages/rooms/interface/iroom';
-import { Role, User } from '../pages/users/interface/iuser';
+import { Role, User, UserDTO, UserInput } from '../pages/users/interface/iuser';
 
 @Injectable({
   providedIn: 'root'
@@ -73,14 +73,20 @@ export class AdministratorService {
       .then(response => response as any[])
       .catch(error => error)
   }
-  postUser(user: User) {
+  getUserById(idUser?: number) {
+    return this.http.get(`${API_ROUTES.USER.GET_USER}${idUser}`)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+  postUser(user: UserInput) {
     return this.http.post(`${API_ROUTES.USER.GET_USER}`, user)
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
-  putUser(user: User) {
-    return this.http.put(`${API_ROUTES.USER.GET_USER}${user.id}`, user)
+  putUser(user?: UserInput) {
+    return this.http.put(`${API_ROUTES.USER.GET_USER}${user?.id}`, user)
       .toPromise()
       .then(response => response)
       .catch(error => error)

@@ -4,7 +4,7 @@ import { Titles } from 'src/app/shared/interface/interfaces';
 import { AdministratorService } from '../../services/administrator.service';
 import { RoomsComponent } from '../rooms/rooms.component';
 import { NewUsersComponent } from './components/new-users/new-users.component';
-import { User } from './interface/iuser';
+import { User, UserDTO } from './interface/iuser';
 
 @Component({
   selector: 'app-users',
@@ -18,12 +18,13 @@ export class UsersComponent implements OnInit{
   newUsersComponent: NewUsersComponent = new NewUsersComponent();
 
   titulos: Titles[] = [];
-  ltsUsers: User[] = [];
-  user: User;
+  ltsUsers: UserDTO[] = [];
+  user: User;  
 
   constructor(
     private administratorService: AdministratorService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ){
     this.user = new User();
   }
@@ -31,6 +32,7 @@ export class UsersComponent implements OnInit{
   componentsInitials(){
     this.titulos = [
       {title: '#', width: 2},
+      {title: 'Nombre de usuario', width: 2},
       {title: 'Nombre', width: 2},
       {title: 'Apellido', width: 2},
       {title: 'Rol', width: 2},
@@ -61,13 +63,72 @@ export class UsersComponent implements OnInit{
   }
 
   async getUsers(){
-    this.administratorService.getUsers().then((users) => {
-      if(users != null || RoomsComponent.length > 0){
-        this.ltsUsers = users;
+    const resp_Users = await this.administratorService?.getUsers();
+      if((resp_Users != null && resp_Users.status != 400) || resp_Users.length > 0){
+        this.ltsUsers = resp_Users;
+        this.message('success', 'exitoso', 'Busqueda realizada.')
       }else{
-        console.log("Error");
+        this.showSuccess('Error', 'Error', `${resp_Users.error.detail}.`);
+      }
+  }
+
+  deleteUser(user: User){
+    this.confirmationService.confirm({
+      header: 'Eliminar usuario',
+      message: `¿Está seguro de eliminar al usuario ${user.username}?`,
+      accept: async () => {
+        const resp_User = await this.administratorService?.deleteUser(user.id);
+          if(resp_User != null || resp_User.status != 400){
+
+          console.log("RESPUESTA", resp_User);
+          this.getUsers();
+          this.showSuccess('success','success',`Se elimino al usuario ${user.username}.`)
+          }else{
+            console.log("FALLO INSERTAR USUARIO");
+            this.showSuccess('Error','Error', `${resp_User.error.detail}.`)
+          }
       }
     });
+  }
+
+  changeStatusUser(user: User){
+    if(user.status == 1){
+      this.confirmationService.confirm({
+        header: 'Desactivar usuario',
+        message: `¿Está seguro de desactivar al usuario ${user.username}?`,
+        accept: async () => {
+          user.status = 0;
+          const resp_User = await this.administratorService?.putUser(user);
+            if((resp_User != null && resp_User.status != 400) || resp_User.length >0){
+
+            console.log("RESPUESTA", resp_User);
+            this.getUsers();
+            this.showSuccess('success','success',`Se desactivo al usuario ${user.username}.`)
+            }else{
+              user.status = 1;
+              console.log("FALLO INSERTAR USUARIO");
+              this.showSuccess('Error','Error', `${resp_User.error.detail}.`)
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar usuario',
+        message: `¿Está seguro de activar al usuario ${user.username}?`,
+        accept: async () => {
+          user.status = 1;
+          const resp_User = await this.administratorService?.putUser(user);
+            if( (resp_User != null && resp_User.status != 400) || resp_User.length >0){
+
+            console.log("RESPUESTA", resp_User);
+            this.showSuccess('success','success',`Se activo al usuario ${user.username}.`)
+            }else{
+              console.log("FALLO INSERTAR USUARIO");
+              this.showSuccess('Error','Error', `${resp_User.error.detail}.`)
+            }
+        }
+      });
+    }
   }
 
 

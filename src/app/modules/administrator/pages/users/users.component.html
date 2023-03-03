@@ -44,8 +44,11 @@
             </ng-template>
             <ng-template  pTemplate="body" let-user>
                 <tr class="textSizeTable">
-                    <td style="width: 6rem;">
+                    <td style="width: 1rem;">
                         {{ user.id | number }}
+                    </td>
+                    <td style="width: 6rem;">
+                        {{ user.username }}
                     </td>
                     <td style="width: 6rem;">
                         {{ user.firstname }}
@@ -71,14 +74,14 @@
                             value="INACTIVO"
                         ></p-tag>
                     </td>
-                    <td style="width: 12rem;">
+                    <td style="width: 8rem;">
                         <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', user)"
                             class="buttonTable p-button-secondary" title="Ver detalle" ></button>
                         <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', user)"
                             class="buttonTable" title="Editar cliente"></button>
-                        <button pButton pRipple icon="pi pi-trash" 
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteUser(user)"
                             class="buttonTable p-button-danger" title="Eliminar cliente"></button>
-                        <button pButton pRipple icon="pi pi-check-square" 
+                        <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusUser(user)"
                             class="buttonTable p-button-warning" title="Desactivar cliente"></button>
                     </td>
                 </tr>
@@ -89,14 +92,3 @@
 </div>
 
 <app-new-users></app-new-users>
-
-<!--Start of Confirmation Modal-->
-<!-- <p-confirmDialog #cd icon="pi pi-exclamation-triangle">
-    <ng-template pTemplate="footer">
-        <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
-        </button>
-        <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
-        </button>
-    </ng-template>
-</p-confirmDialog> -->
-<!--End of Confirmation Modal-->
