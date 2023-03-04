@@ -61,7 +61,7 @@ export class NewClientsComponent implements OnInit{
   }
 
   getCountry(){
-    this.nodeService.getCountry().then((paises:Country[])=>{
+    this.adminService.getCountry().then((paises:Country[])=>{
       paises.forEach(e => {
         this.countries.push({ label: e.name, value: e.id });
       });

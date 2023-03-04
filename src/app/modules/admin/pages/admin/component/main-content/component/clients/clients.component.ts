@@ -108,7 +108,7 @@ export class ClientsComponent implements OnInit{
     this.statusList.push({ label: 'Activo', value: '1' });
   }
   getCountry(){
-    this.nodeService.getCountry().then((paises:Country[])=>{
+    this.adminService.getCountry().then((paises:Country[])=>{
       paises.forEach(e => {
         this.countries.push({ label: e.name, value: e.id });
       });

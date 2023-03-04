@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from 'src/app/data/constants/routes';
 import { Accounting_Document, ClosedSchedule, Email, POSTReserva, Reserva } from '../pages/admin/component/main-content/component/calendar/interface/ireserva';
@@ -8,12 +8,18 @@ import { Accounting_Document, ClosedSchedule, Email, POSTReserva, Reserva } from
 })
 export class CalendarService {
 
+  private auth_token = sessionStorage.getItem("access_token") != null ? sessionStorage.getItem("access_token")  : '';
+  private headers  = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.auth_token}`
+  });
+
   constructor(private http: HttpClient) { }
 
   GetReservation(FechaInicio: string | null, FechaFin: string | null) {
     //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'
 
-      return this.http.get(API_ROUTES.RESERVATION.GET_RESERVATION)
+      return this.http.get(API_ROUTES.RESERVATION.GET_RESERVATION,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
@@ -23,7 +29,7 @@ export class CalendarService {
   PostReservation(postReserva: POSTReserva) {
     //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-01-28'
 
-      return this.http.post(API_ROUTES.RESERVATION.GET_RESERVATION,postReserva)
+      return this.http.post(API_ROUTES.RESERVATION.GET_RESERVATION, postReserva, { headers: this.headers })
       .toPromise()
       .then(response => response as any)
       .catch(error => error);
@@ -31,7 +37,7 @@ export class CalendarService {
   }
   PutReservation(postReserva: POSTReserva) {
 
-      return this.http.put(`${API_ROUTES.RESERVATION.GET_RESERVATION}${postReserva.id}`,postReserva)
+      return this.http.put(`${API_ROUTES.RESERVATION.GET_RESERVATION}${postReserva.id}`, postReserva, { headers: this.headers })
       .toPromise()
       .then(response => response as any)
       .catch(error => error);
@@ -41,7 +47,7 @@ export class CalendarService {
   GetReservationId(idReservation:number):Promise<Reserva> {
     //'http://127.0.0.1:8000/reservations/?start_date=2023-01-01&end_date=2023-03-30'
 
-      return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}`)
+      return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}`,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
@@ -49,14 +55,14 @@ export class CalendarService {
   }
   GetRoom() {
 
-      return this.http.get(API_ROUTES.ROOM.GET_ROOM)
+      return this.http.get(API_ROUTES.ROOM.GET_ROOM,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);
   }
   GetReservationAcc(idReservation: number):Promise<Accounting_Document> {
     //http://127.0.0.1:8000/reservations/15/accounting-document/
-    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/accounting-document`)
+    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/accounting-document`,{ headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error);
@@ -64,7 +70,7 @@ export class CalendarService {
 
   sendEmail(id:Email):Promise<string>{
     // /send-email/
-    return this.http.post(`${API_ROUTES.RESERVATION.GET_RESERVATION}send-email/`,id)
+    return this.http.post(`${API_ROUTES.RESERVATION.GET_RESERVATION}send-email/`,id, { headers: this.headers })
     .toPromise()
     .then(response => response as any)
     .catch(error => error);
@@ -72,7 +78,7 @@ export class CalendarService {
 
   //Descargar PDF
   GetReservationPDF(idReservation: number):Promise<any> {
-    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/download-pdf`)
+    return this.http.get(`${API_ROUTES.RESERVATION.GET_RESERVATION}${idReservation}/download-pdf`,{ headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error);
@@ -81,21 +87,21 @@ export class CalendarService {
   //Pagos
   GetAccounting_Document() {
 
-    return this.http.get(API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT)
+    return this.http.get(API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error =>error);
   }
   PostAccounting_Document(acc: Accounting_Document) {
 
-      return this.http.post(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}`, acc)
+      return this.http.post(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}`, acc, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error);
   }
   PutAccounting_Document(acc: Accounting_Document){
 
-      return this.http.put(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}${acc.id}`, acc)
+      return this.http.put(`${API_ROUTES.ACCOUNTING_DOCUMENT.GET_ACCOUNT_DOCUMENT}${acc.id}`, acc, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error);
@@ -103,14 +109,14 @@ export class CalendarService {
 
   // Closed Schedules
   GetClosedSchedule() {
-      return this.http.get(API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE)
+      return this.http.get(API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE,{ headers: this.headers })
         .toPromise()
         .then(response => response as any[])
         .catch(error => error);
   }
 
   PostClosedSchedule(closed_sched: ClosedSchedule) {
-    return this.http.post(`${API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE}`, closed_sched)
+    return this.http.post(`${API_ROUTES.CLOSED_SCHEDULE.GET_CLOSED_SCHEDULE}`, closed_sched, { headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error);

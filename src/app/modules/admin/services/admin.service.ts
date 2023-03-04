@@ -12,6 +12,11 @@ import { Rol, RolDTO, RolInput } from '../pages/admin/component/main-content/com
   providedIn: 'root'
 })
 export class AdminService {
+  private auth_token = sessionStorage.getItem("access_token") != null ? sessionStorage.getItem("access_token")  : '';
+  private headers  = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.auth_token}`
+  });
 
   constructor(private http: HttpClient) { }
 
@@ -30,34 +35,27 @@ export class AdminService {
     params = '?' + params;
     url += params;
 
-    let auth_token = sessionStorage.getItem("access_token") != null ? sessionStorage.getItem("access_token")  : '';
-
-    var reqHeaders  = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-
-    return this.http.get(url,{ headers: reqHeaders })
+    return this.http.get(url,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
 
   postClients(client: Client) {
-    return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client)
+    return this.http.post(`${API_ROUTES.CLIENTS.GET_CLIENTS}`, client, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
   putClients(client: Client) {
-    return this.http.put(`${API_ROUTES.CLIENTS.GET_CLIENTS}${client.id}`, client)
+    return this.http.put(`${API_ROUTES.CLIENTS.GET_CLIENTS}${client.id}`, client, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
 
   deleteClients(idClient?: number) {
-    return this.http.delete(`${API_ROUTES.CLIENTS.GET_CLIENTS}${idClient}`)
+    return this.http.delete(`${API_ROUTES.CLIENTS.GET_CLIENTS}${idClient}`, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
@@ -85,63 +83,63 @@ export class AdminService {
 
   getRooms() {
 
-    return this.http.get(API_ROUTES.ROOM.GET_ROOM)
+    return this.http.get(API_ROUTES.ROOM.GET_ROOM,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
   postRoom(room: Room) {
-    return this.http.post(`${API_ROUTES.ROOM.GET_ROOM}`, room)
+    return this.http.post(`${API_ROUTES.ROOM.GET_ROOM}`, room, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
   putRoom(room:Room){
-    return this.http.put(`${API_ROUTES.ROOM.GET_ROOM}${room.id}`, room)
+    return this.http.put(`${API_ROUTES.ROOM.GET_ROOM}${room.id}`, room, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
   }
   deleteRoom(IdRoom?:number){
-    return this.http.delete(`${API_ROUTES.ROOM.GET_ROOM}${IdRoom}`)
+    return this.http.delete(`${API_ROUTES.ROOM.GET_ROOM}${IdRoom}`, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
   }
   downloadExcelRooms() {
     let url = API_ROUTES.ROOM.GET_ROOM + 'download-excel/';
-    return this.http.get(url)
+    return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
     //Users
     getUsers() {
-      return this.http.get(API_ROUTES.USER.GET_USER)
+      return this.http.get(API_ROUTES.USER.GET_USER,{ headers: this.headers })
         .toPromise()
         .then(response => response as any[])
         .catch(error => error)
     }
     getUserById(idUser?: number) {
-      return this.http.get(`${API_ROUTES.USER.GET_USER}${idUser}`)
+      return this.http.get(`${API_ROUTES.USER.GET_USER}${idUser}`, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error);
     }
     postUser(user: UserInput) {
-      return this.http.post(`${API_ROUTES.USER.GET_USER}`, user)
+      return this.http.post(`${API_ROUTES.USER.GET_USER}`, user, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
     }
     putUser(user?: UserInput) {
-      return this.http.put(`${API_ROUTES.USER.GET_USER}${user?.id}`, user)
+      return this.http.put(`${API_ROUTES.USER.GET_USER}${user?.id}`, user, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
     }
     deleteUser(idUser?: number) {
-      return this.http.delete(`${API_ROUTES.USER.GET_USER}${idUser}`)
+      return this.http.delete(`${API_ROUTES.USER.GET_USER}${idUser}`, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
@@ -149,39 +147,46 @@ export class AdminService {
 
   downloadExcelUsers() {
     let url = API_ROUTES.USER.GET_USER + 'download-excel/';
-    return this.http.get(url)
+    return this.http.get(url, { headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
   //Roles
   getRoles() {
-    return this.http.get(API_ROUTES.ROLE.GET_ROLE)
+    return this.http.get(API_ROUTES.ROLE.GET_ROLE,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
   }
   postRol(rol: Rol) {
-    return this.http.post(`${API_ROUTES.ROLE.GET_ROLE}`, rol)
+    return this.http.post(`${API_ROUTES.ROLE.GET_ROLE}`, rol, { headers: this.headers })
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
   putRol(rol: Rol){
-    return this.http.put(`${API_ROUTES.ROLE.GET_ROLE}${rol.id}`, rol)
+    return this.http.put(`${API_ROUTES.ROLE.GET_ROLE}${rol.id}`, rol, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
   }
   deleteRol(IdRole?:number){
-    return this.http.delete(`${API_ROUTES.ROLE.GET_ROLE}${IdRole}`)
+    return this.http.delete(`${API_ROUTES.ROLE.GET_ROLE}${IdRole}`, { headers: this.headers })
         .toPromise()
         .then(response => response)
         .catch(error => error)
   }
   downloadExcelRoles() {
     let url = API_ROUTES.ROLE.GET_ROLE + 'download-excel/';
-    return this.http.get(url)
+    return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
+
+  getCountry(){
+    return this.http.get(API_ROUTES.COUNTRY.GET_COUNTRY,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
