@@ -6,6 +6,7 @@ import { API_ROUTES } from 'src/app/data/constants/routes';
 import { Client } from '../../admin/pages/admin/component/main-content/component/clients/interface/iclient';
 import { Room } from '../../admin/pages/admin/component/main-content/component/rooms/interface/iroom';
 import { Role, User, UserDTO, UserInput } from '../pages/admin/component/main-content/component/users/interface/iuser';
+import { Rol, RolDTO, RolInput } from '../pages/admin/component/main-content/component/roles/interface/irole';
 
 @Injectable({
   providedIn: 'root'
@@ -118,19 +119,19 @@ export class AdminService {
       .then(response => response as any[])
       .catch(error => error)
   }
-  postRoles(role: Role) {
-    return this.http.post(`${API_ROUTES.ROLE.GET_ROLE}`, role)
+  postRol(rol: Rol) {
+    return this.http.post(`${API_ROUTES.ROLE.GET_ROLE}`, rol)
       .toPromise()
       .then(response => response)
       .catch(error => error)
   }
-  putRole(role:Role){
-    return this.http.put(`${API_ROUTES.ROLE.GET_ROLE}${role.id}`, role)
+  putRol(rol: Rol){
+    return this.http.put(`${API_ROUTES.ROLE.GET_ROLE}${rol.id}`, rol)
         .toPromise()
         .then(response => response)
         .catch(error => error)
   }
-  deleteRole(IdRole?:number){
+  deleteRol(IdRole?:number){
     return this.http.delete(`${API_ROUTES.ROLE.GET_ROLE}${IdRole}`)
         .toPromise()
         .then(response => response)

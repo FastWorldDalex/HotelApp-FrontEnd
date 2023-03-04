@@ -68,7 +68,64 @@ export class RolesComponent implements OnInit{
         this.showSuccess('Error', 'Error', `${resp_Roles.error.detail}.`);
       }
   }
+  deleteRol(rol: Rol){
+    this.confirmationService.confirm({
+      header: 'Eliminar rol',
+      message: `¿Está seguro de eliminar al rol ${rol.name}?`,
+      accept: async () => {
+        const resp_Rol = await this.adminService?.deleteRol(rol.id);
+          if(resp_Rol != null || resp_Rol.status != 400){
 
+          console.log("RESPUESTA", resp_Rol);
+          this.getRoles();
+          this.showSuccess('success','success',`Se elimino al usuario ${rol.name}.`)
+          }else{
+            console.log("FALLO INSERTAR ROL");
+            this.showSuccess('Error','Error', `${resp_Rol.error.detail}.`)
+          }
+      }
+    });
+  }
+
+  changeStatusRol(rol: Rol){
+    if(rol.status == 1){
+      this.confirmationService.confirm({
+        header: 'Desactivar rol',
+        message: `¿Está seguro de desactivar al rol ${rol.name}?`,
+        accept: async () => {
+          rol.status = 0;
+          const resp_Rol = await this.adminService?.putRol(rol);
+            if((resp_Rol != null && resp_Rol.status != 400) || resp_Rol.length >0){
+
+            console.log("RESPUESTA", resp_Rol);
+            this.getRoles();
+            this.showSuccess('success','success',`Se desactivo al usuario ${rol.name}.`)
+            }else{
+              rol.status = 1;
+              console.log("FALLO INSERTAR USUARIO");
+              this.showSuccess('Error','Error', `${resp_Rol.error.detail}.`)
+            }
+        }
+      });
+    }else{
+      this.confirmationService.confirm({
+        header: 'Activar rol',
+        message: `¿Está seguro de activar al rol ${rol.name}?`,
+        accept: async () => {
+          rol.status = 1;
+          const resp_Rol = await this.adminService?.putRol(rol);
+            if( (resp_Rol != null && resp_Rol.status != 400) || resp_Rol.length >0){
+
+            console.log("RESPUESTA", resp_Rol);
+            this.showSuccess('success','success',`Se activo al usuario ${rol.name}.`)
+            }else{
+              console.log("FALLO INSERTAR ROL");
+              this.showSuccess('Error','Error', `${resp_Rol.error.detail}.`)
+            }
+        }
+      });
+    }
+  }
   showSuccess(type:string, title:string, msg:string) {
     this.messageService.add({severity:type, summary: title, detail: msg});
   }

@@ -14,3 +14,11 @@ export interface RolDTO {
   modules:      string;
   status:         number;
 }
+
+export interface RolInput {
+  id?:            number;
+  name:       string;
+  modules:      string;
+  status:         number;
+}
+

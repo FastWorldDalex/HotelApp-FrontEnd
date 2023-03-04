@@ -71,7 +71,14 @@
                         ></p-tag>
                     </td>
                     <td style="width: 10rem;">
-
+                      <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', rol)"
+                      class="buttonTable p-button-secondary" title="Ver detalle" ></button>
+                      <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', rol)"
+                          class="buttonTable" title="Editar rol"></button>
+                      <button pButton pRipple icon="pi pi-trash" (click)="deleteRol(rol)"
+                          class="buttonTable p-button-danger" title="Eliminar rol"></button>
+                      <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRol(rol)"
+                          class="buttonTable p-button-warning" title="Desactivar rol"></button>
                     </td>
                 </tr>
             </ng-template>
