@@ -1,1 +1,83 @@
-<p>roles works!</p>
+<p-toast></p-toast>
+<div class="row main-content">
+    <div class="col-sm-12 col-md-12 content">
+        <h3>Roles</h3>
+        <p>Aquí podrás ver la información de todos los roles del hotel</p>
+    </div>
+    <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+              <span style="padding-right: 1rem;">
+                <p-button label="Crear rol" icon="pi pi-plus" styleClass="textSizeTable"
+                    (click)="coreNuevo('NUEVO')">
+                </p-button>
+              </span>
+              <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success">
+              </p-button>
+            </div>
+
+            <div class="p-toolbar-group-right">
+                <span class="p-float-label p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input type="text" pInputText  name="search"/>
+                    <label for="inputtext-right">Buscar:</label>
+                </span>
+            </div>
+        </p-toolbar>
+
+        <!--Start of DataTable-->
+        <p-table
+            [(selection)]="rol"
+            dataKey="id"
+            [value]="ltsRoles"
+
+            [tableStyle]="{ 'min-width': '50rem' }"
+
+            [paginator]="true"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} usuarios"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [rows]="10"
+            [rowHover]="true">
+            <ng-template pTemplate="header">
+                <tr class="textSizeTable">
+                    <th *ngFor="let titulo of titulos">{{titulo.title}}</th>
+                </tr>
+            </ng-template>
+            <ng-template  pTemplate="body" let-rol>
+                <tr class="textSizeTable">
+                    <td style="width: 1rem;">
+                        {{ rol.id | number }}
+                    </td>
+                    <td style="width: 6rem;">
+                        {{ rol.name }}
+                    </td>
+                    <td style="width: 6rem;">
+                        {{ rol.modules }}
+                    </td>
+                    <td class="text-md-end" style="width: 6rem;">
+                        {{ rol.created_date | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td style="width: 6rem;">
+                        <p-tag *ngIf="rol.status == 1"
+                            styleClass="textSizeTable mr-2"
+                            severity="success"
+                            value="ACTIVO"
+                        ></p-tag>
+                        <p-tag *ngIf="rol.status == 0"
+                            styleClass="textSizeTable mr-2"
+                            severity="danger"
+                            value="INACTIVO"
+                        ></p-tag>
+                    </td>
+                    <td style="width: 10rem;">
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!--End of DataTable-->
+    </div>
+</div>
+
+<app-new-roles></app-new-roles>
