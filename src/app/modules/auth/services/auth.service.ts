@@ -55,9 +55,9 @@ export class AuthService {
 
           if(!response.error){
             sessionStorage.setItem("access_token",JSON.stringify(r.access_token));
-            this.router.navigateByUrl(INTERNAL_ROUTES.HOME);
+            this.router.navigateByUrl(INTERNAL_ROUTES.CALENDAR);
             console.log("entro",r.access_token);
-            
+
           }
           return response;
         }),
@@ -143,7 +143,7 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
     sessionStorage.removeItem("access_token");
     sessionStorage.clear();
-    
+
   }
 
   private setUserToLocalStorage(user: iApiUserAuthenticated){
