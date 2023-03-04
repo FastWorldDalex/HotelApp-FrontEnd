@@ -48,6 +48,8 @@ import { ClosedDateComponent } from './pages/admin/component/main-content/compon
 import { NodeService } from './../../shared/services/node.service';
 import { UsersComponent } from './pages/admin/component/main-content/component/users/users.component';
 import { NewUsersComponent } from './pages/admin/component/main-content/component/users/components/new-users/new-users.component';
+import { RolesComponent } from './pages/admin/component/main-content/component/roles/roles.component';
+import { NewRolesComponent } from './pages/admin/component/main-content/component/roles/components/new-roles/new-roles.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { NewUsersComponent } from './pages/admin/component/main-content/componen
     NewReservationComponent,
     ClosedDateComponent,
     UsersComponent,
-    NewUsersComponent
+    NewUsersComponent,
+    RolesComponent,
+    NewRolesComponent
   ],
   imports: [
     CommonModule,

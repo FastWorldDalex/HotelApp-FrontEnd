@@ -5,6 +5,7 @@ import { ClientsComponent } from './pages/admin/component/main-content/component
 import { RoomsComponent } from './pages/admin/component/main-content/component/rooms/rooms.component';
 import { CalendarComponent } from './pages/admin/component/main-content/component/calendar/calendar.component';
 import { UsersComponent } from './pages/admin/component/main-content/component/users/users.component';
+import { RolesComponent } from './pages/admin/component/main-content/component/roles/roles.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,16 @@ const routes: Routes = [
       {
         path: '',
         component: UsersComponent,
+      },
+    ],
+  },
+  {
+    path: 'roles',
+    component: AdminComponent,
+    children: [
+      {
+        path: '',
+        component: RolesComponent,
       },
     ],
   },
