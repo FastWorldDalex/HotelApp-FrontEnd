@@ -94,7 +94,7 @@ export class ClientsComponent implements OnInit{
   }
 
   async downloadExcel(){
-    const resp_excel:any = await this.adminService.downloadExcelClients();
+    const resp_excel:any = await this.adminService.downloadExcelClients(this.country_id, this.status_id, this.search);
     console.log("EXCEL", resp_excel);
     if(resp_excel.status != 400){
       window.open(resp_excel.detail, "_blank");

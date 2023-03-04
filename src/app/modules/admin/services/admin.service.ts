@@ -55,8 +55,20 @@ export class AdminService {
       .catch(error => error)
   }
 
-  downloadExcelClients() {
+  downloadExcelClients(country_id: string | null, status_id: string | null, text: string | null) {
+    let params = '';
     let url = API_ROUTES.CLIENTS.GET_CLIENTS + 'download-excel/';
+    if(text != null && text != ''){
+      params += 'text=' + text + '&';
+    }
+    if(country_id != null && country_id != ''){
+      params += 'country_id=' + country_id + '&';
+    }
+    if(status_id != null && status_id != ''){
+      params += 'status=' + status_id + '&';
+    }
+    params = '?' + params;
+    url += params;
     return this.http.get(url)
       .toPromise()
       .then(response => response as any[])
