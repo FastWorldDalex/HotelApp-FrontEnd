@@ -28,6 +28,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from 'primeng/password';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -45,6 +46,8 @@ import { NewReservationComponent } from './pages/admin/component/main-content/co
 import { ClosedDateComponent } from './pages/admin/component/main-content/component/calendar/components/closed-date/closed-date.component';
 
 import { NodeService } from './../../shared/services/node.service';
+import { UsersComponent } from './pages/admin/component/main-content/component/users/users.component';
+import { NewUsersComponent } from './pages/admin/component/main-content/component/users/components/new-users/new-users.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,9 @@ import { NodeService } from './../../shared/services/node.service';
     NewClientsComponent,
     CalendarComponent,
     NewReservationComponent,
-    ClosedDateComponent
+    ClosedDateComponent,
+    UsersComponent,
+    NewUsersComponent
   ],
   imports: [
     CommonModule,
@@ -88,7 +93,8 @@ import { NodeService } from './../../shared/services/node.service';
     TagModule,
     FullCalendarModule,
     TabViewModule,
-    InputTextareaModule
+    InputTextareaModule,
+    PasswordModule
   ],
   providers: [ConfirmationService, NodeService]
 })

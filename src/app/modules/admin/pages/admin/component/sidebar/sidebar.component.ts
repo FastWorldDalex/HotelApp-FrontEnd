@@ -25,8 +25,8 @@ export class SidebarComponent implements OnInit {
       case '/admin/rooms':
         this.currentModule = 'rooms';
         break;
-      case '/admin/user-roles':
-        this.currentModule = 'usersroles';
+      case '/admin/users':
+        this.currentModule = 'users';
         break;
     }
   }

@@ -1,0 +1,29 @@
+:host ::ng-deep {
+  .p-inputtext {
+      width: 100%;
+  }
+  .p-password{
+      width: 100%;
+  }
+  .p-radiobutton {
+      margin-left: 0.2rem;
+      margin-bottom: 0.1rem;
+  }
+  .p-dropdown {
+      width: 100%;
+      overflow: visible;
+  }
+  .textSize{
+    font-size: 85%;
+  }
+}
+
+::ng-deep{
+.readonly{
+  .p-inputtext {
+    pointer-events: none;
+    background: #efecec;
+    opacity: 0.8;
+  }
+}
+}
