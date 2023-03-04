@@ -16,15 +16,16 @@ export class NewUsersComponent {
   isDisplay: boolean = false;
   isEdit: boolean = false;
   isNew: boolean = false;
-  showInput: boolean = false;
+  showPassword: boolean = false;
+  showStatus: boolean = false;
   eventHtpp: boolean = false;
   user: User = new User();
-  estados: SelectItem[] = [{
-    label: 'INACTIVO',
-    value: 0,
-  }, {
+  Estados: SelectItem[] = [{
     label: 'ACTIVO',
     value: 1,
+  },{
+    label: 'INACTIVO',
+    value: 0,
   }];
   roles: SelectItem[] = [];
 
@@ -43,17 +44,20 @@ export class NewUsersComponent {
     switch (_accion) {
       case 'NUEVO':
         this.user.status = 1;
-        this.showInput = false;
+        this.showPassword = false;
+        this.showStatus = true;
         break;
       case 'EDITAR':
         this.user = _data;
         this.isNew = false;
-        this.showInput = true;
+        this.showPassword = true;
+        this.showStatus = false;
         break;
       case 'VER':
         this.user = _data;
         this.isEdit = true;
-        this.showInput = true;
+        this.showPassword = true;
+        this.showStatus = false;
         break;
     }
   }

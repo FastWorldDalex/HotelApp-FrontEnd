@@ -15,7 +15,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div [hidden]="showPassword" class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-12">
                                 <label class="formLabel" for="">Contraseña</label>
@@ -57,6 +57,20 @@
                             </div>
                             <div class="col-sm-12">
                                 <input type="text" [disabled]="isEdit" [(ngModel)]="user.lastname" pInputText/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div [hidden]="showStatus" class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="mb-2">Estado:</label>
+                            </div>
+                            <div class="col" *ngFor="let estado of Estados" style="width: 100%;">
+                                <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value" 
+                                        [(ngModel)]="user.status">
+                                </p-radioButton>
+                                <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
                             </div>
                         </div>
                     </div>
