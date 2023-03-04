@@ -29,7 +29,15 @@ export class AdminService {
     }
     params = '?' + params;
     url += params;
-    return this.http.get(url)
+
+    let auth_token = sessionStorage.getItem("access_token") != null ? sessionStorage.getItem("access_token")  : '';
+
+    var reqHeaders  = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    });
+
+    return this.http.get(url,{ headers: reqHeaders })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
