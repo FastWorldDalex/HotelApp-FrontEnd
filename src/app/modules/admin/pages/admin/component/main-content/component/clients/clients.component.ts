@@ -92,6 +92,17 @@ export class ClientsComponent implements OnInit{
       }
     });
   }
+
+  async downloadExcel(){
+    const resp_excel:any = await this.adminService.downloadExcelClients();
+    console.log("EXCEL", resp_excel);
+    if(resp_excel.status != 400){
+      window.open(resp_excel.detail, "_blank");
+    } else{
+      this.showSuccess('error', 'error', `${resp_excel.error.detail}.`);
+    }
+
+  }
   getStatusList(){
     this.statusList.push({ label: 'Inactivo', value: '0' });
     this.statusList.push({ label: 'Activo', value: '1' });

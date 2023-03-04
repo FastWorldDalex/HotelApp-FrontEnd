@@ -48,6 +48,18 @@ export class RoomsComponent implements OnInit{
     });
   }
 
+
+  async downloadExcel(){
+    const resp_excel:any = await this.adminService.downloadExcelRooms();
+    console.log("EXCEL", resp_excel);
+    if(resp_excel.status != 400){
+      window.open(resp_excel.detail, "_blank");
+    } else{
+      this.showSuccess('error', 'error', `${resp_excel.error.detail}.`);
+    }
+
+  }
+
   showSuccess(type:string,title:string,msg:string) {
     this.messageService.add({severity:type, summary: title, detail: msg});
   }

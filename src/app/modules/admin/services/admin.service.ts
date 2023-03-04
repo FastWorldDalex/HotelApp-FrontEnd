@@ -55,6 +55,14 @@ export class AdminService {
       .catch(error => error)
   }
 
+  downloadExcelClients() {
+    let url = API_ROUTES.CLIENTS.GET_CLIENTS + 'download-excel/';
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
+
   getRooms() {
 
     return this.http.get(API_ROUTES.ROOM.GET_ROOM)
@@ -80,7 +88,13 @@ export class AdminService {
         .then(response => response)
         .catch(error => error)
   }
-
+  downloadExcelRooms() {
+    let url = API_ROUTES.ROOM.GET_ROOM + 'download-excel/';
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
     //Users
     getUsers() {
       return this.http.get(API_ROUTES.USER.GET_USER)
