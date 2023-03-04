@@ -25,6 +25,10 @@ export class ClientsComponent implements OnInit{
   titleModal:string='';
   puedeEditar:boolean = false;
   client: Client;
+  search: any;
+  country_id: any;
+  status_id: any;
+
   selectedClient: Client = {
     firstname: '',
     lastname: '',
@@ -38,6 +42,7 @@ export class ClientsComponent implements OnInit{
 
   //Form Client
   countries: SelectItem[] = [];
+  statusList: SelectItem[] = [];
   lstEstado: SelectItem[] = [];
   selectedEstado: string | undefined;
   //Confirm Dialog
@@ -53,8 +58,9 @@ export class ClientsComponent implements OnInit{
   }
 
   ngOnInit() {
-    const carga_1 = this.getClient();
+    const carga_1 = this.getClient(this.country_id, this.status_id, this.search);
     const carga_2 = this.getCountry();
+    this.getStatusList();
     const carga_3 = this.componentsInitials();
 
     Promise.all([carga_1,carga_2,carga_3]).then((resp)=>{
@@ -62,8 +68,18 @@ export class ClientsComponent implements OnInit{
     });
   }
 
-  getClient(){
-    this.adminService.getClients().then((clientes) => {
+  searchClient(){
+    if((this.search != null && this.search != '' && this.search.length > 1)
+      || (this.country_id != null && this.country_id != '')
+      || (this.status_id != null && this.status_id != '') ){
+      this.getClient(this.country_id, this.status_id, this.search);
+    }else{
+      this.getClient(null, null, null);
+    }
+  }
+
+  getClient(country_id: string | null, status_id: string | null, text: string |null){
+    this.adminService.getClients(country_id, status_id, text).then((clientes) => {
       if(clientes!=null || clientes.length >0){
 
       this.ltsClientes =clientes;
@@ -75,6 +91,10 @@ export class ClientsComponent implements OnInit{
         this.message('error', 'error', 'Busqueda fallida.')
       }
     });
+  }
+  getStatusList(){
+    this.statusList.push({ label: 'Inactivo', value: '0' });
+    this.statusList.push({ label: 'Activo', value: '1' });
   }
   getCountry(){
     this.nodeService.getCountry().then((paises:Country[])=>{
@@ -124,7 +144,7 @@ export class ClientsComponent implements OnInit{
           if(response!=null || response.length >0){
 
           console.log("RESPUESTA", response);
-          this.getClient();
+          this.getClient(null, null, this.search);
           this.clientDialog = false;
           this.showSuccess('success','success',`Se elimino al cliente ${client.lastname}.`)
           }else{
@@ -146,7 +166,7 @@ export class ClientsComponent implements OnInit{
             if((response!=null && response.status != 400) || response.length >0){
 
             console.log("RESPUESTA", response);
-            this.getClient();
+            this.getClient(null, null, this.search);
             this.showSuccess('success','success',`Se desactivo al cliente ${client.lastname}.`)
             }else{
               client.status = 1;

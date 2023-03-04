@@ -99,7 +99,7 @@ export class NewReservationComponent implements OnInit{
   }
 
   getClients() {
-    this.adminService.getClients().then((res: any[]) => {
+    this.adminService.getClients(null, null, null).then((res: any[]) => {
       if (res != null) {
 
         res.forEach(client => {

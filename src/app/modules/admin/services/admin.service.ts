@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ERRORS_CONST } from 'src/app/data/constants';
@@ -14,9 +14,21 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getClients() {
-
-    return this.http.get(API_ROUTES.CLIENTS.GET_CLIENTS)
+  getClients(country_id: string | null, status_id: string | null, text: string | null) {
+    let params = '';
+    let url = API_ROUTES.CLIENTS.GET_CLIENTS;
+    if(text != null && text != ''){
+      params += 'text=' + text + '&';
+    }
+    if(country_id != null && country_id != ''){
+      params += 'country_id=' + country_id + '&';
+    }
+    if(status_id != null && status_id != ''){
+      params += 'status=' + status_id + '&';
+    }
+    params = '?' + params;
+    url += params;
+    return this.http.get(url)
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)

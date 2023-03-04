@@ -15,9 +15,23 @@
                 </span>
             </div>
             <div class="p-toolbar-group-right">
+              <span style="padding-right: 1rem;">
+                <p-dropdown [style]="{'width':'100%'}" class="p-0" [options]="countries"
+                [(ngModel)]="country_id" placeholder="Selecciona el país"
+                (ngModelChange)="searchClient()"
+                [showClear]="true" [filter]="true">
+                </p-dropdown>
+              </span>
+              <span style="padding-right: 1rem;">
+                <p-dropdown [style]="{'width':'100%'}" class="p-0" [options]="statusList"
+                [(ngModel)]="status_id" placeholder="Selecciona el estado"
+                (ngModelChange)="searchClient()"
+                [showClear]="true" [filter]="true">
+                </p-dropdown>
+              </span>
                 <span class="p-float-label p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" id="Busqueda" pInputText />
+                    <input type="text" name="search" pInputText (ngModelChange)="searchClient()"  [(ngModel)]="search"  />
                     <label for="inputtext-right">Buscar:</label>
                 </span>
             </div>
