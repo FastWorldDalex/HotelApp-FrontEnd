@@ -69,6 +69,16 @@ export class UsersComponent implements OnInit{
       }
   }
 
+  async downloadExcel(){
+    const resp_excel:any = await this.adminService.downloadExcelUsers();
+    console.log("EXCEL", resp_excel);
+    if(resp_excel.status != 400){
+      window.open(resp_excel.detail, "_blank");
+    } else{
+      this.showSuccess('error', 'error', `${resp_excel.error.detail}.`);
+    }
+
+  }
   deleteUser(user: User){
     this.confirmationService.confirm({
       header: 'Eliminar usuario',

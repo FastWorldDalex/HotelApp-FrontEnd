@@ -68,6 +68,19 @@ export class RolesComponent implements OnInit{
         this.showSuccess('Error', 'Error', `${resp_Roles.error.detail}.`);
       }
   }
+
+
+  async downloadExcel(){
+    const resp_excel:any = await this.adminService.downloadExcelRoles();
+    console.log("EXCEL", resp_excel);
+    if(resp_excel.status != 400){
+      window.open(resp_excel.detail, "_blank");
+    } else{
+      this.showSuccess('error', 'error', `${resp_excel.error.detail}.`);
+    }
+
+  }
+
   deleteRol(rol: Rol){
     this.confirmationService.confirm({
       header: 'Eliminar rol',

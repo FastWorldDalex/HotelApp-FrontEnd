@@ -126,6 +126,14 @@ export class AdminService {
         .then(response => response)
         .catch(error => error)
     }
+
+  downloadExcelUsers() {
+    let url = API_ROUTES.USER.GET_USER + 'download-excel/';
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
   //Roles
   getRoles() {
     return this.http.get(API_ROUTES.ROLE.GET_ROLE)
@@ -150,5 +158,12 @@ export class AdminService {
         .toPromise()
         .then(response => response)
         .catch(error => error)
+  }
+  downloadExcelRoles() {
+    let url = API_ROUTES.ROLE.GET_ROLE + 'download-excel/';
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
   }
 }
