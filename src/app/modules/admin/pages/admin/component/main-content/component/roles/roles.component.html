@@ -7,13 +7,14 @@
     <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid">
         <p-toolbar>
             <div class="p-toolbar-group-left">
-              <span style="padding-right: 1rem;">
-                <p-button label="Crear rol" icon="pi pi-plus" styleClass="textSizeTable"
-                    (click)="coreNuevo('NUEVO')">
+                <span style="padding-right: 1rem;">
+                    <p-button label="Crear rol" icon="pi pi-plus" styleClass="textSizeTable"
+                        (click)="coreNuevo('NUEVO')">
+                    </p-button>
+                </span>
+                <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success" 
+                    (onClick)="downloadExcel()">
                 </p-button>
-              </span>
-              <p-button label="Descargar excel" icon="pi pi-file-excel" styleClass="textSizeTable p-button-success"  (onClick)="downloadExcel()">
-              </p-button>
             </div>
 
             <div class="p-toolbar-group-right">
@@ -62,23 +63,24 @@
                         <p-tag *ngIf="rol.status == 1"
                             styleClass="textSizeTable mr-2"
                             severity="success"
-                            value="ACTIVO"
-                        ></p-tag>
+                            value="ACTIVO">
+                        </p-tag>
                         <p-tag *ngIf="rol.status == 0"
                             styleClass="textSizeTable mr-2"
                             severity="danger"
-                            value="INACTIVO"
-                        ></p-tag>
+                            value="INACTIVO">
+                        </p-tag>
                     </td>
                     <td style="width: 10rem;">
-                      <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', rol)"
-                      class="buttonTable p-button-secondary" title="Ver detalle" ></button>
-                      <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', rol)"
-                          class="buttonTable" title="Editar rol"></button>
-                      <button pButton pRipple icon="pi pi-trash" (click)="deleteRol(rol)"
-                          class="buttonTable p-button-danger" title="Eliminar rol"></button>
-                      <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRol(rol)"
-                          class="buttonTable p-button-warning" title="Desactivar rol"></button>
+                        <button pButton pRipple icon="pi pi-eye" (click)="coreVer('VER', rol)"
+                            class="buttonTable p-button-secondary" title="Ver detalle">
+                        </button>
+                        <button pButton pRipple icon="pi pi-file-edit" (click)="coreEditar('EDITAR', rol)"
+                            class="buttonTable" title="Editar rol"></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteRol(rol)"
+                            class="buttonTable p-button-danger" title="Eliminar rol"></button>
+                        <button pButton pRipple icon="pi pi-check-square" (click)="changeStatusRol(rol)"
+                            class="buttonTable p-button-warning" title="Desactivar rol"></button>
                     </td>
                 </tr>
             </ng-template>

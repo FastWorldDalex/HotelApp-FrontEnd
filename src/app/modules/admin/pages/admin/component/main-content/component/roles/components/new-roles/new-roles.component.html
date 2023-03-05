@@ -1,0 +1,70 @@
+<p-dialog header="{{titulo}}" [(visible)]="isDisplay" [modal]="true" [style]="{ width: '30%',height: '760px'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-scrollPanel styleClass="custombar1">
+        <ng-template pTemplate="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel" for="">Nombres</label>
+                            </div>
+                            <!--input-->
+                            <div class="col-sm-12">
+                                <input type="text" [disabled]="isEdit" [(ngModel)]="rol.name" pInputText/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="formLabel">Descripción</label>
+                            </div>
+                            <!--input-->
+                            <div class="col-sm-12">
+                                <textarea rows="2" cols="30" pInputTextarea [autoResize]="true" [style]="{'overflow':'visible'}"
+                                    [(ngModel)]="rol.modules" [disabled]="isEdit">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div [hidden]="showStatus" class="col-sm-12">
+                        <div class="row">
+                            <!--label-->
+                            <div class="col-sm-12">
+                                <label class="mb-2">Estado:</label>
+                            </div>
+                            <!--input-->
+                            <div class="col" *ngFor="let estado of Estados" style="width: 100%;">
+                                <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value"
+                                        [(ngModel)]="rol.status" [disabled]="isEdit"></p-radioButton>
+                                <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-scrollPanel>
+    <ng-template pTemplate="footer">
+        <p-button (click)="isDisplay=false" label="Cancelar"
+            styleClass="p-button-danger"></p-button>
+        <p-button [disabled]="isEdit" icon="pi pi-save" (click)="coreGuardar()" label="Guardar"
+            styleClass="p-button-info"></p-button>
+    </ng-template>
+</p-dialog>
+
+<!--Start of Confirmation Modal-->
+<p-confirmDialog #cd icon="pi pi-exclamation-triangle">
+    <ng-template pTemplate="footer">
+        <button class="textSizeTable p-button-danger" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()">
+        </button>
+        <button class="textSizeTable p-button-info" pButton icon="pi pi-check" label="Si" (click)="cd.accept()">
+        </button>
+    </ng-template>
+</p-confirmDialog>
+<!--End of Confirmation Modal-->

@@ -68,8 +68,7 @@
                             </div>
                             <div class="col" *ngFor="let estado of Estados" style="width: 100%;">
                                 <p-radioButton [inputId]="estado.value" name="estado.label" [value]="estado.value"
-                                        [(ngModel)]="user.status">
-                                </p-radioButton>
+                                        [(ngModel)]="user.status" [disabled]="isEdit"></p-radioButton>
                                 <label style="margin-left: 0.5rem" [for]="estado.value">{{estado.label}}</label>
                             </div>
                         </div>

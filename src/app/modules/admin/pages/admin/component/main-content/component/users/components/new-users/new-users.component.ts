@@ -107,7 +107,7 @@ export class NewUsersComponent {
       this.showSuccess('success', 'Exitoso', 'Se registró al nuevo usuario.');
       location.reload();
     }else{
-      this.showSuccess('error','Error', 'No se pudo actualizar.');
+      this.showSuccess('error','Error', `${resp_User.error.detail}.`);
     }
   }
 
@@ -126,8 +126,9 @@ export class NewUsersComponent {
       this.isDisplay = false;
       console.log("UserEdited", resp_User)
       this.showSuccess('success','Exitoso', 'Se actualizó al usuario.');
+      location.reload();
     }else{
-      this.showSuccess('error','Error', 'No se pudo actualizar.');
+      this.showSuccess('error','Error', `${resp_User.error.detail}.`);
     }
   }
 

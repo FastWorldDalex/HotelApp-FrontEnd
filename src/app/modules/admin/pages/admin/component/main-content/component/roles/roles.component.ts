@@ -4,6 +4,7 @@ import { Titles } from 'src/app/shared/interface/interfaces';
 import { AdminService } from 'src/app/modules/admin/services/admin.service';
 //import { NewRolesComponent } from './components/new-roles/new-roles.component';
 import { Rol, RolDTO } from './interface/irole';
+import { NewRolesComponent } from './components/new-roles/new-roles.component';
 
 @Component({
   selector: 'app-roles',
@@ -12,8 +13,8 @@ import { Rol, RolDTO } from './interface/irole';
   providers: [MessageService]
 })
 export class RolesComponent implements OnInit{
-  /*@ViewChild(NewRolesComponent, { static: false })
-  newRolesComponent: NewRolesComponent = new NewRolesComponent();**/
+  @ViewChild(NewRolesComponent, { static: false })
+  newRolesComponent: NewRolesComponent = new NewRolesComponent();
 
   titulos: Titles[] = [];
   ltsRoles: RolDTO[] = [];
@@ -49,13 +50,13 @@ export class RolesComponent implements OnInit{
   }
 
   coreNuevo(accion:string){
-    //this.newRolesComponent.componentsInitials(accion, "ROL");
+    this.newRolesComponent.componentsInitials(accion, "ROL");
   }
   coreEditar(accion:string, rol: Rol){
-    //this.newRolesComponent.componentsInitials(accion, "ROL", rol);
+    this.newRolesComponent.componentsInitials(accion, "ROL", rol);
   }
   coreVer(accion:string, rol: Rol){
-    //this.newRolesComponent.componentsInitials(accion, "ROL",rol);
+    this.newRolesComponent.componentsInitials(accion, "ROL", rol);
   }
 
 
@@ -63,7 +64,7 @@ export class RolesComponent implements OnInit{
     const resp_Roles = await this.adminService?.getRoles();
       if((resp_Roles != null && resp_Roles.status != 400) || resp_Roles.length > 0){
         this.ltsRoles = resp_Roles;
-        this.message('success', 'exitoso', 'Busqueda realizada.')
+        this.message('success', 'exitoso', 'Busqueda realizada.');
       }else{
         this.showSuccess('Error', 'Error', `${resp_Roles.error.detail}.`);
       }
