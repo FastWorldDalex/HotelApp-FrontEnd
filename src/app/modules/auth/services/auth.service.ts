@@ -34,29 +34,30 @@ export class AuthService {
     msg: string;
     data: any;
     access_token:string;
+    modules: string;
   }> {
     const response = {
-      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:''
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:'', modules:''
     };
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': '*/*'})
     };
-    return this.http.post<{error:boolean, msg: string, data:any, access_token:string}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
+    return this.http.post<{error:boolean, msg: string, data:any, access_token:string, modules: string}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;
           response.error = r.error;
           response.data = r.data;
           response.access_token = r.access_token
+          response.modules = r.modules
           //this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           console.log("ERROR", r);
 
           if(!response.error){
             sessionStorage.setItem("access_token",JSON.stringify(r.access_token));
-            let modules = ["calendar", "clients", "rooms", "users", "roles"];
-            sessionStorage.setItem("modules",JSON.stringify(modules))
+            sessionStorage.setItem("modules",JSON.stringify(r.modules));
             this.router.navigateByUrl(INTERNAL_ROUTES.CALENDAR);
             console.log("entro",r.access_token);
           }
@@ -69,6 +70,46 @@ export class AuthService {
         })
       );
   }
+
+  getCurrentUser(): Observable<{
+    error: boolean;
+    msg: string;
+    data: any;
+    access_token:string;
+  }> {
+    const response = {
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:''
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': '*/*',
+        'Authorization': `Bearer ${ sessionStorage.getItem('access_token')}`})
+    };
+    return this.http.post<{error:boolean, msg: string, data:any, access_token:string}>(API_ROUTES.AUTH.CURRENT_USER, null, httpOptions)
+      .pipe(
+        map( r => {
+          console.log("getCurrentUser");
+          response.msg = r.msg;
+          response.error = r.error;
+          response.data = r.data;
+          //response.role.modules = r.role.modules
+          console.log(r.data);
+          if(!response.error){
+            //sessionStorage.setItem("modules",JSON.stringify(r.role.modules));
+            let modules = ["calendar", "clients", "rooms", "users", "roles"];
+            sessionStorage.setItem("modules",JSON.stringify(modules))
+            console.log("entro",r.access_token);
+          }
+          return response;
+        }),
+        catchError(e => {
+          response.error = true;
+          response.msg = e.error.detail;
+          return of(response)
+        })
+      );
+  }
+
 
   recoveryUser(
     data: {
@@ -143,6 +184,7 @@ export class AuthService {
     this.currentUser.next(nulo);
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
     sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("modules");
     sessionStorage.clear();
 
   }

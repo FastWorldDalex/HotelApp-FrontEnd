@@ -5,7 +5,8 @@ export const API_ROUTES ={
     AUTH: {
         LOGIN: `${ENV.url}auth/token`,
         RECOVERY: `${ENV.url}auth/recovery-password/`,
-        CHANGE_PASSWORD: `${ENV.url}auth/change-password/`
+        CHANGE_PASSWORD: `${ENV.url}auth/change-password/`,
+        CURRENT_USER: `${ENV.url}auth/me/`
     },
     CLIENTS: {
         GET_CLIENTS: `${ENV.url}clients/`
