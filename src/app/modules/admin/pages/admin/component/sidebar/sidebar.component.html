@@ -16,19 +16,19 @@
   <div class="modules">
     <h4>Módulos</h4>
     <div class="list-group">
-      <a class="list-group-item list-group-item-action " [ngClass]="currentModule == 'calendar' ? 'active' : ''" href="/admin/calendar">
+      <a class="list-group-item list-group-item-action " *ngIf="modules.includes('calendar')" [ngClass]="currentModule == 'calendar' ? 'active' : ''" href="/admin/calendar">
         <i class="pi pi-calendar"></i><span class="title">Disponibilidad</span><span class="child"><i class="pi pi-angle-right"></i></span>
       </a>
-      <a class="list-group-item list-group-item-action " [ngClass]="currentModule == 'clients' ? 'active' : ''" href="/admin/clients">
+      <a class="list-group-item list-group-item-action "  *ngIf="modules.includes('clients')"  [ngClass]="currentModule == 'clients' ? 'active' : ''" href="/admin/clients">
         <i class="pi pi-user"></i><span class="title">Clientes</span><span class="child"><i class="pi pi-angle-right"></i></span>
       </a>
-      <a class="list-group-item list-group-item-action " [ngClass]="currentModule == 'rooms' ? 'active' : ''" href="/admin/rooms">
+      <a class="list-group-item list-group-item-action "  *ngIf="modules.includes('rooms')"  [ngClass]="currentModule == 'rooms' ? 'active' : ''" href="/admin/rooms">
         <i class="pi pi-tablet"></i><span class="title">Habitaciones</span><span class="child"><i class="pi pi-angle-right"></i></span>
       </a>
-      <a class="list-group-item list-group-item-action " [ngClass]="currentModule == 'users' ? 'active' : ''" href="/admin/users">
+      <a class="list-group-item list-group-item-action "  *ngIf="modules.includes('users')"  [ngClass]="currentModule == 'users' ? 'active' : ''" href="/admin/users">
         <i class="pi pi-users"></i><span class="title">Usuarios</span><span class="child"><i class="pi pi-angle-right"></i></span>
       </a>
-      <a class="list-group-item list-group-item-action " [ngClass]="currentModule == 'roles' ? 'active' : ''" href="/admin/roles">
+      <a class="list-group-item list-group-item-action "  *ngIf="modules.includes('roles')"  [ngClass]="currentModule == 'roles' ? 'active' : ''" href="/admin/roles">
         <i class="pi pi-users"></i><span class="title">Roles</span><span class="child"><i class="pi pi-angle-right"></i></span>
       </a>
     </div>

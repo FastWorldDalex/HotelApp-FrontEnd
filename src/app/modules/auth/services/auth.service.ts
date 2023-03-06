@@ -55,9 +55,10 @@ export class AuthService {
 
           if(!response.error){
             sessionStorage.setItem("access_token",JSON.stringify(r.access_token));
+            let modules = ["calendar", "clients", "rooms", "users", "roles"];
+            sessionStorage.setItem("modules",JSON.stringify(modules))
             this.router.navigateByUrl(INTERNAL_ROUTES.CALENDAR);
             console.log("entro",r.access_token);
-
           }
           return response;
         }),
