@@ -6,26 +6,12 @@
           <a class="nav-link" (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></a>
         </li>
         <li class="nav-item dropdown account-menu">
-          <a class="nav-link dropdown-toggle account-image" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="../assets/img//users/user-1png.png" alt="Image" />
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end account-options">
-            <li class="account-detail">
-              <a class="dropdown-item" href="javascript:void(0)">
-                <img src="../assets/img//users/user-1png.png" alt="Image" />
-                <div class="detail">
-                  <span>Jonh Doe</span>
-                  <span>johndoe@gmail.com</span>
-                </div>
-              </a>
-            </li>
-            <li class="option">
-              <a class="dropdown-item" href="javascript:void(0)">Cambiar contraseña</a>
-            </li>
-            <li class="option">
-              <a class="dropdown-item" href="javascript:void(0)">Cerrar sesión</a>
-            </li>
-          </ul>
+          <p-splitButton label="Info" [model]="this.items" styleClass="p-button-text p-button-info">
+            <ng-template pTemplate="content">
+                <img alt="logo" src="{{user.img}}" style="width: 30px; margin-right: 0.5rem;" />
+                <span class="ml-2 flex align-items-center font-bold">{{user.name}}</span>
+            </ng-template>
+          </p-splitButton>
         </li>
       </ul>
     </div>

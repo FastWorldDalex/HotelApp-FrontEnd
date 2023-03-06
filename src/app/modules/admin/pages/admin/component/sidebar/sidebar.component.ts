@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  user: any;
   @Input() collapsed: boolean = false;
   currentModule: string = 'calendar';
   modules: any;
@@ -14,7 +15,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.getUserInfo();
     this.getModules();
 
     switch(this.router.url){
@@ -43,4 +44,25 @@ export class SidebarComponent implements OnInit {
       this.modules = [];
     }
   }
+
+
+  getUserInfo(){
+    if(sessionStorage.getItem("user") != null && sessionStorage.getItem("user") !=''){
+      let userInfo = JSON.parse(sessionStorage.getItem("user") || '{}');
+      this.user = {
+        name: userInfo.firstname + ' ' +userInfo.lastname,
+        email: userInfo.email,
+        role:  userInfo.role,
+        img: "../assets/img//users/user-1png.png"
+      };
+    }
+  }
+
+}
+
+export interface user{
+  name: String;
+  email: String;
+  role: String;
+  img: String;
 }

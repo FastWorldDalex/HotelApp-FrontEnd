@@ -35,15 +35,16 @@ export class AuthService {
     data: any;
     access_token:string;
     modules: string;
+    user: any;
   }> {
     const response = {
-      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:'', modules:''
+      error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null, access_token:'', modules:'', user:[]
     };
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': '*/*'})
     };
-    return this.http.post<{error:boolean, msg: string, data:any, access_token:string, modules: string}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
+    return this.http.post<{error:boolean, msg: string, data:any, access_token:string, modules: string, user : any}>(API_ROUTES.AUTH.LOGIN, data, httpOptions)
       .pipe(
         map( r => {
           response.msg = r.msg;
@@ -51,6 +52,7 @@ export class AuthService {
           response.data = r.data;
           response.access_token = r.access_token
           response.modules = r.modules
+          response.user = r.user
           //this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           console.log("ERROR", r);
@@ -58,6 +60,7 @@ export class AuthService {
           if(!response.error){
             sessionStorage.setItem("access_token",JSON.stringify(r.access_token));
             sessionStorage.setItem("modules",JSON.stringify(r.modules));
+            sessionStorage.setItem("user",JSON.stringify(r.user));
             this.router.navigateByUrl(INTERNAL_ROUTES.CALENDAR);
             console.log("entro",r.access_token);
           }
@@ -185,6 +188,7 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("modules");
+    sessionStorage.removeItem("user");
     sessionStorage.clear();
 
   }
