@@ -8,7 +8,7 @@
                         <div class="row">
                             <!--label-->
                             <div class="col-sm-12">
-                                <label class="formLabel" for="">Nombres</label>
+                                <label class="formLabel" for="">Nombre</label>
                             </div>
                             <!--input-->
                             <div class="col-sm-12">
@@ -17,18 +17,16 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="multiSelectForm col-sm-12">
                         <div class="row">
                             <!--label-->
                             <div class="col-sm-12">
-                                <label class="formLabel">Descripción</label>
+                                <label class="formLabel">Módulos</label>
                             </div>
                             <!--input-->
-                            <div class="col-sm-12">
-                                <textarea rows="2" cols="30" pInputTextarea [autoResize]="true" [style]="{'overflow':'visible'}"
-                                    [(ngModel)]="rol.modules" [disabled]="isEdit">
-                                </textarea>
-                            </div>
+                            <p-multiSelect [options]="lstModules" display="chip" defaultLabel="Selecciona los módulos"
+                                [(ngModel)]="rol.modules_list" [disabled]="isEdit">
+                            </p-multiSelect>
                         </div>
                     </div>
 

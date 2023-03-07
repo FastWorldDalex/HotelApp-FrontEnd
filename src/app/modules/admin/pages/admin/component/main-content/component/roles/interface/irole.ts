@@ -4,7 +4,7 @@ export class Rol {
   }
   id?:            number=0;
   name:       string='';
-  modules:      string='';
+  modules_list:      string[]=[];
   status:         number=0;
   created_date?:  Date;
 }

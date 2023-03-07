@@ -17,6 +17,7 @@ export class NewRolesComponent {
   showStatus: boolean = false;
   eventHtpp: boolean = false;
   rol: Rol = new Rol();
+  lstModules: SelectItem[] = [];
   Estados: SelectItem[] = [{
     label: 'ACTIVO',
     value: 1,
@@ -28,6 +29,13 @@ export class NewRolesComponent {
   constructor(private adminService?: AdminService,
     private messageService?: MessageService) {
     
+  }
+
+  ngOnInit() {
+    const p1 = this.getModules();
+    Promise.all([p1]).then((res) => {
+
+    });
   }
 
   componentsInitials(_accion: string, _titulo: string, _data?: any): void {
@@ -64,6 +72,16 @@ export class NewRolesComponent {
       default:
         return;
     }
+  }
+
+  getModules() {
+    this.adminService?.getModules().then((res: any[]) => {
+      if (res != null) {
+        res.forEach(module => {
+          this.lstModules.push({ label: module.name, value: module.id });
+        });
+      }
+    });
   }
 
   async postRol(){

@@ -185,6 +185,13 @@ export class AdminService {
       .catch(error => error)
   }
 
+  getModules(){
+    return this.http.get(API_ROUTES.MODULE.GET_MODULE,{ headers: this.headers })
+    .toPromise()
+    .then(response => response as any[])
+    .catch(error => error)
+  }
+
   getCountry(){
     return this.http.get(API_ROUTES.COUNTRY.GET_COUNTRY,{ headers: this.headers })
       .toPromise()

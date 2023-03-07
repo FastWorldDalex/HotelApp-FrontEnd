@@ -31,5 +31,8 @@ export const API_ROUTES ={
     },
     ROLE: {
         GET_ROLE: `${ENV.url}roles/`
+    },
+    MODULE: {
+        GET_MODULE: `${ENV.url}modules/`
     }
 };
