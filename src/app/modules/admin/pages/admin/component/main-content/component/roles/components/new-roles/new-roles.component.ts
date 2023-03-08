@@ -28,7 +28,7 @@ export class NewRolesComponent {
 
   constructor(private adminService?: AdminService,
     private messageService?: MessageService) {
-    
+
   }
 
   ngOnInit() {
@@ -45,6 +45,8 @@ export class NewRolesComponent {
     this.isEdit = false;
     switch (_accion) {
       case 'NUEVO':
+        this.rol.name = '';
+        this.rol.modules_list = [];
         this.rol.status = 1;
         this.showStatus = true;
         break;
@@ -59,7 +61,7 @@ export class NewRolesComponent {
         break;
     }
   }
-  
+
 
   coreGuardar() {
     switch (this.accion) {
