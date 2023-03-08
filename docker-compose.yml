@@ -1,0 +1,9 @@
+version: '3.5'
+services: # Here we define our service(s)
+    angular-service: # The name of the service
+      build: ./ # Location of our Dockerfile
+      volumes: # Volume binding
+        - ./:/usr/src/app
+      ports:
+        - '4200:4200' # Port mapping
+      command: "rpm run dev"
