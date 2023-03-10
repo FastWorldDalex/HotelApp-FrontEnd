@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { Titles } from 'src/app/shared/interface/interfaces';
 import { AdminService } from 'src/app/modules/admin/services/admin.service';
 import { NewUsersComponent } from './components/new-users/new-users.component';
-import { User, UserDTO } from './interface/iuser';
+import { User, UserDTO, Role } from './interface/iuser';
 
 @Component({
   selector: 'app-users',
@@ -15,8 +15,14 @@ export class UsersComponent implements OnInit{
   @ViewChild(NewUsersComponent, { static: false })
   newUsersComponent: NewUsersComponent = new NewUsersComponent();
 
+  search: any;
+  role_id: any;
+  status_id: any;
+  roles: SelectItem[] = [];
+
   titulos: Titles[] = [];
   ltsUsers: UserDTO[] = [];
+  statusList: SelectItem[] = [];
   user: User;
 
   constructor(
@@ -41,10 +47,12 @@ export class UsersComponent implements OnInit{
   }
 
   ngOnInit() {
-    const carga_1 = this.getUsers();
-    const carga_2 = this.componentsInitials();
+    const carga_1 = this.getUsers(null, null, null);
+    const carga_2 = this.getRoles();
+    const carga_3 = this.getStatusList();
+    const carga_4 = this.componentsInitials();
 
-    Promise.all([carga_1, carga_2]).then((resp)=>{
+    Promise.all([carga_1, carga_2, carga_3, carga_4]).then((resp)=>{
 
     });
   }
@@ -59,14 +67,36 @@ export class UsersComponent implements OnInit{
     this.newUsersComponent.componentsInitials(accion, "USUARIO",user);
   }
 
-  async getUsers(){
-    const resp_Users = await this.adminService?.getUsers();
+  searchUser(){
+    if((this.search != null && this.search != '' && this.search.length > 1)
+      || (this.role_id != null && this.role_id != '')
+      || (this.status_id != null && this.status_id != '') ){
+      this.getUsers(this.role_id, this.status_id, this.search);
+    }else{
+      this.getUsers(null, null, null);
+    }
+  }
+  async getUsers(role_id: string | null, status_id: string | null, text: string |null){
+    const resp_Users = await this.adminService?.getUsers(role_id, status_id, text);
       if((resp_Users != null && resp_Users.status != 400) || resp_Users.length > 0){
         this.ltsUsers = resp_Users;
         this.message('success', 'exitoso', 'Busqueda realizada.')
       }else{
         this.showSuccess('Error', 'Error', `${resp_Users.error.detail}.`);
       }
+  }
+
+  getStatusList(){
+    this.statusList.push({ label: 'Inactivo', value: '0' });
+    this.statusList.push({ label: 'Activo', value: '1' });
+  }
+
+  getRoles(){
+    this.adminService.getRoles().then((roles:Role[])=>{
+      roles.forEach(e => {
+        this.roles.push({ label: e.name, value: e.id });
+      });
+    })
   }
 
   async downloadExcel(){
@@ -88,7 +118,7 @@ export class UsersComponent implements OnInit{
           if(resp_User != null || resp_User.status != 400){
 
           console.log("RESPUESTA", resp_User);
-          this.getUsers();
+          this.getUsers(this.role_id, this.status_id, this.search);
           this.showSuccess('success','success',`Se elimino al usuario ${user.username}.`)
           }else{
             console.log("FALLO INSERTAR USUARIO");
@@ -109,7 +139,7 @@ export class UsersComponent implements OnInit{
             if((resp_User != null && resp_User.status != 400) || resp_User.length >0){
 
             console.log("RESPUESTA", resp_User);
-            this.getUsers();
+            this.getUsers(this.role_id, this.status_id, this.search);
             this.showSuccess('success','success',`Se desactivo al usuario ${user.username}.`)
             }else{
               user.status = 1;

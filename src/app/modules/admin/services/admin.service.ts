@@ -134,8 +134,22 @@ export class AdminService {
       .catch(error => error)
   }
     //Users
-    getUsers() {
-      return this.http.get(API_ROUTES.USER.GET_USER,{ headers: this.headers })
+    getUsers(role_id: string | null, status_id: string | null, text: string | null) {
+      let params = '';
+    let url = API_ROUTES.USER.GET_USER;
+    if(text != null && text != ''){
+      params += 'text=' + text + '&';
+    }
+    if(role_id != null && role_id != ''){
+      params += 'role_id=' + role_id + '&';
+    }
+    if(status_id != null && status_id != ''){
+      params += 'status=' + status_id + '&';
+    }
+    params = '?' + params;
+    url += params;
+
+    return this.http.get(url,{ headers: this.headers })
         .toPromise()
         .then(response => response as any[])
         .catch(error => error)
