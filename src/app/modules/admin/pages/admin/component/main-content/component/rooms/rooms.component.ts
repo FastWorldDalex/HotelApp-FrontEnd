@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { AdminService } from 'src/app/modules/admin/services/admin.service';
 import { Titles } from 'src/app/shared/interface/interfaces';
 import { Room } from './interface/iroom';
+import { RoomType } from './interface/irooomtype';
 import { NewRoomsComponent } from './components/new-rooms/new-rooms.component';
 
 @Component({
@@ -16,7 +17,13 @@ export class RoomsComponent implements OnInit{
   @ViewChild(NewRoomsComponent, { static: false })
   newRoomsComponent: NewRoomsComponent = new NewRoomsComponent();
 
+  search: any;
+  type_id: any;
+  status_id: any;
+
+  types: SelectItem[] = [];
   titulos: Titles[] = [];
+  statusList: SelectItem[] = [];
   ltsRooms: Room[] = [];
   room: Room;
 
@@ -29,16 +36,28 @@ export class RoomsComponent implements OnInit{
   }
 
   ngOnInit() {
-    const carga_1 = this.getRooms();
+    const carga_1 = this.getRooms(this.type_id, this.status_id, this.search);
     const carga_2 = this.componentsInitials();
-
-    Promise.all([carga_1, carga_2]).then((resp)=>{
+    const carga_3 =this.getTypes();
+    this.getStatusList();
+    Promise.all([carga_1, carga_2, carga_3]).then((resp)=>{
 
     });
   }
 
-  getRooms(){
-    this.adminService.getRooms().then((rooms) => {
+  searchRoom(){
+    if((this.search != null && this.search != '' && this.search.length > 1)
+      || (this.type_id != null && this.type_id != '')
+      || (this.status_id != null && this.status_id != '') ){
+      this.getRooms(this.type_id, this.status_id, this.search);
+    }else{
+      this.getRooms(null, null, null);
+    }
+  }
+
+
+  getRooms(type_id: string | null, status_id: string | null, text: string |null){
+    this.adminService.getRooms(type_id, status_id, text).then((rooms) => {
       if(rooms!=null || rooms.length >0){
         this.ltsRooms = rooms;
         this.message('success', 'exitoso', 'Busqueda realizada.')
@@ -48,6 +67,18 @@ export class RoomsComponent implements OnInit{
     });
   }
 
+  getStatusList(){
+    this.statusList.push({ label: 'Inactivo', value: '0' });
+    this.statusList.push({ label: 'Activo', value: '1' });
+  }
+
+  getTypes(){
+    this.adminService.getRoomType().then((types:RoomType[])=>{
+      types.forEach(e => {
+        this.types.push({ label: e.name, value: e.id });
+      });
+    })
+  }
 
   async downloadExcel(){
     const resp_excel:any = await this.adminService.downloadExcelRooms();
@@ -84,7 +115,7 @@ export class RoomsComponent implements OnInit{
             if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
 
             console.log("RESPUESTA", resp_Room);
-            this.getRooms();
+            this.getRooms(this.type_id, this.status_id, this.search);
             this.showSuccess('success','success',`Se eliminó la habitación ${room.name}.`)
             }else{
               console.log("FALLO INSERTAR CLIENTE");
@@ -153,7 +184,7 @@ export class RoomsComponent implements OnInit{
             if((resp_Room!=null && resp_Room.status != 400) || resp_Room.length >0){
 
             console.log("RESPUESTA", resp_Room);
-            this.getRooms();
+            this.getRooms(this.type_id, this.status_id, this.search);
             this.showSuccess('success','success',`Se desactivo la habitación ${room.name}.`)
             }else{
               room.status = 1;

@@ -4,7 +4,7 @@
       <h3>Habitaciones</h3>
       <p>Aquí podrás ver la información de todas las habitaciones del hotel</p>
   </div>
-  <div class="col-sm-12 col-md-12 container" style="padding: 20px">
+  <div class="col-sm-12 offset-sm-2 col-md-12 offset-md-0 container-fluid" style="padding: 5px">
     <p-toolbar>
       <div class="p-toolbar-group-left">
         <p-button label="Crear habitación" icon="pi pi-plus" styleClass="textSizeTable"
@@ -16,13 +16,26 @@
         </p-button>
         </span>
       </div>
-
       <div class="p-toolbar-group-right">
-        <span class="p-float-label p-input-icon-right">
-          <i class="pi pi-search"></i>
-          <input type="text" id="Busqueda" pInputText />
-          <label for="inputtext-right">Buscar:</label>
+        <span style="padding-right: 1rem;">
+          <p-dropdown [style]="{'width':'100%'}" class="p-0" [options]="types"
+          [(ngModel)]="type_id" placeholder="Selecciona el tipo"
+          (ngModelChange)="searchRoom()"
+          [showClear]="true" [filter]="true">
+          </p-dropdown>
         </span>
+        <span style="padding-right: 1rem;">
+          <p-dropdown [style]="{'width':'100%'}" class="p-0" [options]="statusList"
+          [(ngModel)]="status_id" placeholder="Selecciona el estado"
+          (ngModelChange)="searchRoom()"
+          [showClear]="true" [filter]="true">
+          </p-dropdown>
+        </span>
+          <span class="p-float-label p-input-icon-right">
+              <i class="pi pi-search"></i>
+              <input type="text" name="search" pInputText (ngModelChange)="searchRoom()"  [(ngModel)]="search"  />
+              <label for="inputtext-right">Buscar:</label>
+          </span>
       </div>
     </p-toolbar>
 

@@ -81,9 +81,22 @@ export class AdminService {
       .catch(error => error)
   }
 
-  getRooms() {
+  getRooms(type_id: string | null, status_id: string | null, text: string | null) {
+    let params = '';
+    let url = API_ROUTES.ROOM.GET_ROOM;
+    if(text != null && text != ''){
+      params += 'text=' + text + '&';
+    }
+    if(type_id != null && type_id != ''){
+      params += 'type_id=' + type_id + '&';
+    }
+    if(status_id != null && status_id != ''){
+      params += 'status=' + status_id + '&';
+    }
+    params = '?' + params;
+    url += params;
 
-    return this.http.get(API_ROUTES.ROOM.GET_ROOM,{ headers: this.headers })
+    return this.http.get(url,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)
@@ -109,6 +122,13 @@ export class AdminService {
   downloadExcelRooms() {
     let url = API_ROUTES.ROOM.GET_ROOM + 'download-excel/';
     return this.http.get(url, { headers: this.headers })
+      .toPromise()
+      .then(response => response as any[])
+      .catch(error => error)
+  }
+
+  getRoomType() {
+    return this.http.get(API_ROUTES.ROOM_TYPE.GET_ROOM_TYPE,{ headers: this.headers })
       .toPromise()
       .then(response => response as any[])
       .catch(error => error)

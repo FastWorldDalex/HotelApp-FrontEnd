@@ -20,6 +20,9 @@ export const API_ROUTES ={
     ROOM: {
         GET_ROOM:`${ENV.url}rooms/`
     },
+    ROOM_TYPE: {
+      GET_ROOM_TYPE:`${ENV.url}room-types/`
+    },
     ACCOUNTING_DOCUMENT: {
         GET_ACCOUNT_DOCUMENT: `${ENV.url}accounting-documents/`
     },
