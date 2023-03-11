@@ -41,7 +41,7 @@ export class CalendarComponent implements OnInit{
     calendarOptions: CalendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek', // dayGridWeek
-      initialDate: '2023-02-27',
+      initialDate: '2023-03-03',
       locale: esLocale,
       headerToolbar: {
         left: 'prev,next today',
@@ -148,7 +148,7 @@ export class CalendarComponent implements OnInit{
       this.calendarOptions = {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek', // dayGridWeek
-        initialDate: '2023-02-27',
+        initialDate: '2023-03-03',
         locale: esLocale,
         headerToolbar: {
           left: 'prev,next today',
